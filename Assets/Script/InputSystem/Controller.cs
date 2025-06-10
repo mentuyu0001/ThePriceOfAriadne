@@ -42,8 +42,12 @@ public class Controller : MonoBehaviour
     {
         while (isMoving)
         {
-            Vector3 move = new Vector3(moveInput.x, 0f, 0f) * speed * Time.deltaTime;
-            transform.Translate(move);
+            if (rb != null)
+            {
+                // Rigidbody2Dを使って移動を制御
+                Vector2 move = new Vector2(moveInput.x * speed, rb.linearVelocity.y);
+                rb.linearVelocity = move; // 速度を直接設定
+            }
             await UniTask.Yield(PlayerLoopTiming.Update); // 毎フレーム待機
         }
     }
