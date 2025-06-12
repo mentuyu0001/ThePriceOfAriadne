@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 public class Controller : MonoBehaviour
 {
     private float speed = 10f;
+    private float force = 1f;//加速度の大きさ
     private Vector2 moveInput = Vector2.zero;
     private bool isMoving = false;
     private Rigidbody2D rb; // Rigidbodyを追加
@@ -44,9 +45,15 @@ public class Controller : MonoBehaviour
         {
             if (rb != null)
             {
-                // Rigidbody2Dを使って移動を制御
-                Vector2 move = new Vector2(moveInput.x * speed, rb.linearVelocity.y);
-                rb.linearVelocity = move; // 速度を直接設定
+                // 現在の速度を取得
+                Vector2 currentVelocity = rb.linearVelocity;
+
+                // x方向の速度が一定値(speed)を超えないように制御
+                if (Mathf.Abs(currentVelocity.x) < speed)
+                {
+                    Vector2 moveForce = new Vector2(moveInput.x * force, 0); // x方向の力を計算
+                    rb.AddForce(moveForce, ForceMode2D.Force); // 力を加える
+                }
             }
             await UniTask.Yield(PlayerLoopTiming.Update); // 毎フレーム待機
         }
