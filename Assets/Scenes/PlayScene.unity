@@ -267,6 +267,7 @@ GameObject:
   - component: {fileID: 70446706}
   - component: {fileID: 70446708}
   - component: {fileID: 70446707}
+  - component: {fileID: 70446709}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -566,6 +567,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &70446709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70446702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee358b2f9393d41758b529ddd1a33956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameOverManager: {fileID: 774299497}
 --- !u!1 &498434889
 GameObject:
   m_ObjectHideFlags: 0
@@ -580,7 +594,7 @@ GameObject:
   - component: {fileID: 498434893}
   m_Layer: 3
   m_Name: FallCheck
-  m_TagString: Untagged
+  m_TagString: FallObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
