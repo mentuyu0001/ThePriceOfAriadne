@@ -12,7 +12,7 @@ public class ObjectInteractionTrigger : MonoBehaviour
     // マップに落ちているパーツオブジェクトのタグ
     [SerializeField] private string partsTag = "Parts";
     // PlayerManagerの参照
-    [SerializeField] private PlayerManager playerManager;
+    [SerializeField] private PartsManager partsManager;
     // 決定ボタンの入力アクション
     [SerializeField] private InputActionProperty interactAction;
     // 接触しているコライダー
@@ -51,7 +51,7 @@ public class ObjectInteractionTrigger : MonoBehaviour
             }
 
             // プレイヤーのパーツとマップに落ちているパーツを交換
-            playerManager.ExchangeParts(mapParts);
+            partsManager.ExchangeParts(mapParts);
         }
     }
 

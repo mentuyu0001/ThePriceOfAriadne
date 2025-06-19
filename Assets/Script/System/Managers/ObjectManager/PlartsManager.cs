@@ -5,7 +5,7 @@ using UnityEngine;
 /// プレイヤーが装備しているパーツとマップに落ちているパーツを交換するスクリプト
 /// </summary>
 
-public class PlayerManager : MonoBehaviour
+public class PartsManager : MonoBehaviour
 {
     // PlayerCustomizerの参照
     [SerializeField] private PlayerCustomizer playerCustomizer;
