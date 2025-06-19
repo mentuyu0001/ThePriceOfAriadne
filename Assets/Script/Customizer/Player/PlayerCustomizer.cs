@@ -31,6 +31,9 @@ public class PlayerCustomizer : MonoBehaviour
         // 能力を再計算する
         // 左足の計算
         switch(playerParts.LeftArm) {
+            case PartsChara.Normal:
+                break;
+
             case PartsChara.Theif:
                 playerStatus.CanUnlock = statusData.ThiefCanUnlock;
                 break;
@@ -46,6 +49,9 @@ public class PlayerCustomizer : MonoBehaviour
 
         // 右足の計算
         switch(playerParts.RightArm) {
+            case PartsChara.Normal:
+                break;
+
             case PartsChara.Theif:
                 playerStatus.CanUnlock = statusData.ThiefCanUnlock;
                 break;
@@ -61,6 +67,9 @@ public class PlayerCustomizer : MonoBehaviour
 
         // 左腕の計算
         switch(playerParts.LeftLeg) {
+            case PartsChara.Normal:
+                break;
+
             case PartsChara.Theif:
                 playerStatus.MoveSpeed = statusData.ThiefMoveSpeed;
                 break;
@@ -76,6 +85,9 @@ public class PlayerCustomizer : MonoBehaviour
 
         // 右腕の計算
         switch(playerParts.RightLeg) {
+            case PartsChara.Normal:
+                break;
+
             case PartsChara.Theif:
                 playerStatus.MoveSpeed = statusData.ThiefMoveSpeed;
                 break;
@@ -93,7 +105,7 @@ public class PlayerCustomizer : MonoBehaviour
     // 取得したパーツの装備箇所と種類を引数にし、
     // 元々装備してたパーツの種類を返すメソッド
     public PartsChara ChangePlayerParts(PartsSlot slot, PartsChara chara) {
-        PartsChara befChara = PartsChara.Normal;
+        PartsChara befChara = PartsChara.None;
 
         // すでに装備しているパーツを取り出し、新しいものと交換する
         switch(slot) {
@@ -118,7 +130,7 @@ public class PlayerCustomizer : MonoBehaviour
                 break;
             
             default:
-                Debug.LogError("不明な装備");
+                Debug.LogError("不明な装備スロット");
                 break;
         }
 
