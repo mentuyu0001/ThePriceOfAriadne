@@ -106,19 +106,26 @@ public class PlayerCustomizer : MonoBehaviour
     // 元々装備してたパーツの種類を返すメソッド
     public PartsChara ChangePlayerParts(PartsSlot slot, PartsChara chara) {
         PartsChara befChara = PartsChara.None;
+        
+        Debug.Log("交換前のプレイヤーパーツの種類: LeftArm -> " + playerParts.LeftArm
+         + ", RightArm -> " + playerParts.RightArm + ", LeftLeg -> "
+          + playerParts.LeftLeg
+           + ", RightLeg -> " + playerParts.RightLeg);
+        
 
         // すでに装備しているパーツを取り出し、新しいものと交換する
-        switch(slot) {
+        switch (slot)
+        {
             case PartsSlot.LeftArm:
                 befChara = playerParts.LeftArm;
                 playerParts.LeftArm = chara;
                 break;
-            
+
             case PartsSlot.RightArm:
                 befChara = playerParts.RightArm;
                 playerParts.RightArm = chara;
                 break;
-            
+
             case PartsSlot.LeftLeg:
                 befChara = playerParts.LeftLeg;
                 playerParts.LeftLeg = chara;
@@ -128,7 +135,7 @@ public class PlayerCustomizer : MonoBehaviour
                 befChara = playerParts.RightLeg;
                 playerParts.RightLeg = chara;
                 break;
-            
+
             default:
                 Debug.LogError("不明な装備スロット");
                 break;
@@ -136,6 +143,11 @@ public class PlayerCustomizer : MonoBehaviour
 
         // 能力を変更する
         ChangePlayerStatus();
+
+        Debug.Log("交換後のプレイヤーパーツの種類: LeftArm -> " + playerParts.LeftArm
+         + ", RightArm -> " + playerParts.RightArm + ", LeftLeg -> "
+          + playerParts.LeftLeg
+           + ", RightLeg -> " + playerParts.RightLeg);
 
         return befChara;
     }
