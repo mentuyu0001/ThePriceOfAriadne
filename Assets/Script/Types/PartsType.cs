@@ -6,6 +6,7 @@ namespace Parts.Types
 
     // パーツの場所を保存する型
     public enum PartsSlot {
+        None,
         LeftArm,
         RightArm,
         LeftLeg,
@@ -14,6 +15,7 @@ namespace Parts.Types
 
     // どのキャラかを保存する型
     public enum PartsChara {
+        None,
         Normal,
         Theif,
         Muscle,
