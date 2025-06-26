@@ -31,4 +31,13 @@ public class PressMachinePlate : MonoBehaviour
             transform.root.gameObject.GetComponent<PressMachineBase>().OnPlateCollisionEnter();
         }
     }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.name == playerName)
+        {
+            // Playerが離れたら、親オブジェクトのPressMachineBaseスクリプトから関数を呼び出す
+            transform.root.gameObject.GetComponent<PressMachineBase>().OnPlateCollisionExit();
+        }
+    }
 }

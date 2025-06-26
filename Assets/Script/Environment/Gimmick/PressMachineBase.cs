@@ -36,6 +36,10 @@ public class PressMachineBase : StoppableGimick
     private CancellationTokenSource cancellationTokenSource;
     // Playerの死亡判定用、PressAreaに入ったらtrueになる
     private bool isInsidePressArea;
+    // Playerの死亡判定用、Plateに接触している間trueになる
+    // PlayerがPressArea内でジャンプし、Plateに接触してからPressAreaに入った時、
+    // 正しくゲームオーバーを呼び出すために使用
+    private bool isOnPlate;
     //DOTweenのシーケンス
     private Sequence MoveSequence;
 
@@ -91,6 +95,7 @@ public class PressMachineBase : StoppableGimick
         // トークンを生成
         cancellationTokenSource = new CancellationTokenSource();
         isInsidePressArea = false;
+        isOnPlate = false;
         // プレス機のPlateを初期位置へ
         plate.transform.localPosition = posStart;
         //DOTweenのシーケンスを定義
@@ -107,7 +112,7 @@ public class PressMachineBase : StoppableGimick
         MoveSequence.Append(plateRigidBody.DOLocalPath(
             path: new Vector2[] { posReady, posPressed },
             duration: 1.0f
-        ).SetEase(Ease.InQuint));
+        ).SetEase(Ease.InQuint));   // 動きを5次関数に変更（中身を変えたらコメントも変えること）
         // 落下位置へ移動したらちょっと待つ
         MoveSequence.AppendInterval(1.5f);
         // Plateを再びスタート位置へ移動
@@ -165,6 +170,11 @@ public class PressMachineBase : StoppableGimick
         {
             isInsidePressArea = true;
             Debug.Log("Player entered PressArea");
+            // Plateと接触中にPressAreaに入ったらゲームオーバーを呼び出す
+            if (isOnPlate == true)
+            {
+                gameOverManager.GameOver();
+            }
         }
     }
 
@@ -182,10 +192,17 @@ public class PressMachineBase : StoppableGimick
     // PlateにPlayerが接触した時に、PressMachinePlateスクリプトから呼び出す
     public void OnPlateCollisionEnter()
     {
+        isOnPlate = true;
         if (isInsidePressArea == true)
         {
             gameOverManager.GameOver();
         }
+    }
+
+    // PlayerがPlateから離れた時に、PressMachinePlateスクリプトから呼び出す
+    public void OnPlateCollisionExit()
+    {
+        isOnPlate = false;
     }
 
 }
