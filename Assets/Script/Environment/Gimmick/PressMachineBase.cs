@@ -24,8 +24,8 @@ public class PressMachineBase : StoppableGimick
     private string playerName;
     // Plateの開始位置（ローカル座標）
     [SerializeField] private Vector2 posStart;
-    // Plateのスタンバイ位置（ローカル座標）
-    [SerializeField] private Vector2 posReady;
+    // // Plateのスタンバイ位置（ローカル座標）
+    // [SerializeField] private Vector2 posReady;
     // Plateの落下位置（ローカル座標）
     [SerializeField] private Vector2 posPressed;
     //プレス機のクールタイム
@@ -101,16 +101,16 @@ public class PressMachineBase : StoppableGimick
         //DOTweenのシーケンスを定義
         MoveSequence = DOTween.Sequence();
         // シーケンスに動作を追加---------------------------------------------
-        // Plateをスタンバイ位置へ移動
-        MoveSequence.Append(plateRigidBody.DOLocalPath(
-            path: new Vector2[] { posStart, posReady },
-            duration: 0.2f
-        ));
-        // スタンバイ位置へ移動したらちょっと待つ
-        MoveSequence.AppendInterval(1.0f);
+        // // Plateをスタンバイ位置へ移動
+        // MoveSequence.Append(plateRigidBody.DOLocalPath(
+        //     path: new Vector2[] { posStart, posReady },
+        //     duration: 0.2f
+        // ));
+        // // スタンバイ位置へ移動したらちょっと待つ
+        // MoveSequence.AppendInterval(1.0f);
         // Plateを落下位置へ移動
         MoveSequence.Append(plateRigidBody.DOLocalPath(
-            path: new Vector2[] { posReady, posPressed },
+            path: new Vector2[] { posStart, posPressed },
             duration: 1.0f
         ).SetEase(Ease.InQuint));   // 動きを5次関数に変更（中身を変えたらコメントも変えること）
         // 落下位置へ移動したらちょっと待つ
@@ -137,23 +137,23 @@ public class PressMachineBase : StoppableGimick
     {
         // 非同期処理をキャンセル
         cancellationTokenSource.Cancel();
-        // Plateをスタート位置へ移動
-        Vector2 posNow = plate.transform.localPosition;
-        plateRigidBody.DOLocalPath(
-            path: new Vector2[] { posNow, posStart },
-            duration: 1.0f
-        );
+        // // Plateをスタート位置へ移動
+        // Vector2 posNow = plate.transform.localPosition;
+        // plateRigidBody.DOLocalPath(
+        //     path: new Vector2[] { posNow, posStart },
+        //     duration: 1.0f
+        // );
         Debug.Log("Stopped PressMachine!");
     }
 
     // StopGimick関数のデバッグ用--------------
-    // private void Update()
-    // {
-    //     if (Input.GetKeyDown(KeyCode.K))
-    //     {
-    //         StopGimick();
-    //     }
-    // }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            StopGimick();
+        }
+    }
     // -----------------------------------------
 
     // オブジェクトが破棄される時に非同期処理をキャンセルする
