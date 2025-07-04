@@ -11,8 +11,16 @@ public class PlayerCustomizer : MonoBehaviour
     [SerializeField] private PlayerParts playerParts;
     [SerializeField] private PlayerStatus playerStatus;
 
+    // Controllerの取得
+    [SerializeField] private Controller controller;
+
     // データファイルの取得
     [SerializeField] private PlayerStatusData statusData;
+
+    private void Awake() {
+        ChangePlayerStatus();
+        controller.SetStatus();
+    }
 
     // プレイヤーの能力値を初期状態にリセットする関数
     private void resetStatus() {
@@ -29,7 +37,7 @@ public class PlayerCustomizer : MonoBehaviour
         resetStatus();
 
         // 能力を再計算する
-        // 左足の計算
+        // 左腕の計算
         switch(playerParts.LeftArm) {
             case PartsChara.Normal:
                 break;
@@ -47,7 +55,7 @@ public class PlayerCustomizer : MonoBehaviour
                 break;
         }
 
-        // 右足の計算
+        // 右腕の計算
         switch(playerParts.RightArm) {
             case PartsChara.Normal:
                 break;
@@ -65,7 +73,7 @@ public class PlayerCustomizer : MonoBehaviour
                 break;
         }
 
-        // 左腕の計算
+        // 左脚の計算
         switch(playerParts.LeftLeg) {
             case PartsChara.Normal:
                 break;
@@ -83,7 +91,7 @@ public class PlayerCustomizer : MonoBehaviour
                 break;
         }
 
-        // 右腕の計算
+        // 右脚の計算
         switch(playerParts.RightLeg) {
             case PartsChara.Normal:
                 break;
@@ -143,6 +151,9 @@ public class PlayerCustomizer : MonoBehaviour
 
         // 能力を変更する
         ChangePlayerStatus();
+
+        // 変更した能力をコントローラーに反映させる
+        controller.SetStatus();
 
         Debug.Log("交換後のプレイヤーパーツの種類: LeftArm -> " + playerParts.LeftArm
          + ", RightArm -> " + playerParts.RightArm + ", LeftLeg -> "

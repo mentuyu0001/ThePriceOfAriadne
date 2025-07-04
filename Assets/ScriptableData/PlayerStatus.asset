@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalMoveSpeed: 10
   normalCanUnlock: 0
-  normalJumpForce: 10
+  normalJumpForce: 5
   normalCanPushHeavyObject: 0
   thiefMoveSpeed: 20
   thiefCanUnlock: 1
-  muscleJumpForce: 20
+  muscleJumpForce: 10
   muscleCanPushHeavyObject: 1

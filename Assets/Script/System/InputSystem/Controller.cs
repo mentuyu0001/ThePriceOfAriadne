@@ -4,13 +4,14 @@ using Cysharp.Threading.Tasks;
 
 public class Controller : MonoBehaviour
 {
-    private float maxSpeed = 10f;
+    private float maxSpeed; // 最大スピード
+    private float jumpForce; // ジャンプ力
     private float force = 1f;//加速度の大きさ
     private Vector2 moveInput = Vector2.zero;
     private bool isMoving = false;
     private Rigidbody2D rb; // Rigidbodyを追加
-    private float jumpForce = 5f; // ジャンプ力
     [SerializeField] private LayerMask groundLayer; // 地面のレイヤーを指定
+    [SerializeField] private PlayerStatus playerStatus; // プレイヤーステータスを取得
 
     private void Start()
     {
@@ -19,6 +20,15 @@ public class Controller : MonoBehaviour
         {
             Debug.LogError("Rigidbodyがアタッチされていません！");
         }
+
+        // ステータスのリセット
+        SetStatus();
+    }
+
+    public void SetStatus() 
+    {
+        maxSpeed = playerStatus.MoveSpeed;
+        jumpForce = playerStatus.JumpForce;
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -43,17 +53,27 @@ public class Controller : MonoBehaviour
     {
         while (isMoving)
         {
+            float targetVelocityX, forceX = 0f;
+
             if (rb != null)
             {
                 // 入力方向(moveInput.x)に最大速度を掛け合わせる
-                float targetVelocityX = maxSpeed * moveInput.x;
+                targetVelocityX = maxSpeed * moveInput.x;
                 // (目標速度 - 現在の速度) / 時間 = 必要な加速度
                 // これに質量を掛けたものが力になる (AddForceは質量を考慮してくれる)
-                float forceX = (targetVelocityX - rb.linearVelocity.x);
+                forceX = (targetVelocityX - rb.linearVelocity.x);
 
-                // 水平方向に力を加える (垂直方向の動きには影響を与えない)
-                rb.AddForce(new Vector2(forceX, 0f));
+                // レイキャストで地面判定
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.6f, groundLayer);
+                if (hit.collider == null)
+                {
+                    // 空中にいる場合は移動の強さを1/10にする
+                    forceX /= 10;   // ちょっとマジックナンバーすぎるかも。修正案あれば。
+                }
             }
+            // 水平方向に力を加える (垂直方向の動きには影響を与えない)
+            rb.AddForce(new Vector2(forceX, 0f));
+
             await UniTask.Yield(PlayerLoopTiming.Update); // 毎フレーム待機
         }
     }
