@@ -4,7 +4,7 @@ using Cysharp.Threading.Tasks;
 
 public class Controller : MonoBehaviour
 {
-    private float speed = 10f;
+    private float maxSpeed = 10f;
     private float force = 1f;//加速度の大きさ
     private Vector2 moveInput = Vector2.zero;
     private bool isMoving = false;
@@ -45,15 +45,14 @@ public class Controller : MonoBehaviour
         {
             if (rb != null)
             {
-                // 現在の速度を取得
-                Vector2 currentVelocity = rb.linearVelocity;
+                // 入力方向(moveInput.x)に最大速度を掛け合わせる
+                float targetVelocityX = maxSpeed * moveInput.x;
+                // (目標速度 - 現在の速度) / 時間 = 必要な加速度
+                // これに質量を掛けたものが力になる (AddForceは質量を考慮してくれる)
+                float forceX = (targetVelocityX - rb.linearVelocity.x);
 
-                // x方向の速度が一定値(speed)を超えないように制御
-                if (Mathf.Abs(currentVelocity.x) < speed)
-                {
-                    Vector2 moveForce = new Vector2(moveInput.x * force, 0); // x方向の力を計算
-                    rb.AddForce(moveForce, ForceMode2D.Force); // 力を加える
-                }
+                // 水平方向に力を加える (垂直方向の動きには影響を与えない)
+                rb.AddForce(new Vector2(forceX, 0f));
             }
             await UniTask.Yield(PlayerLoopTiming.Update); // 毎フレーム待機
         }
