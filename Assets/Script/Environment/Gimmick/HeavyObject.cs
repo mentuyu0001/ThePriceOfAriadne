@@ -27,6 +27,10 @@ public class HeavyObject : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        
+        // 初期状態ではX方向とY方向を固定
+        rb.constraints = RigidbodyConstraints2D.FreezePosition;
+        
         if (player != null)
         {
             playerRb = player.GetComponent<Rigidbody2D>();
@@ -55,15 +59,26 @@ public class HeavyObject : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (!isPlayerTouching) return;
-        if (player != null && collision.gameObject == player && playerStatus != null && playerStatus.CanPushHeavyObject)
+        if (player != null && collision.gameObject == player && playerStatus != null)
         {
-            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-            PushObject();
-        }
-        else
-        {
-            StopPushing();
+            if (playerStatus.CanPushHeavyObject)
+            {
+                // 全ての移動制限を解除（Z軸回転は許可）
+                rb.constraints = RigidbodyConstraints2D.None;
+                if (!isPushing)
+                {
+                    PushObject();
+                }
+            }
+            else
+            {
+                // X方向とY方向を固定（Z軸回転は許可）
+                rb.constraints = RigidbodyConstraints2D.FreezePosition;
+                if (isPushing)
+                {
+                    StopPushing();
+                }
+            }
         }
     }
 
