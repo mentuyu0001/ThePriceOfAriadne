@@ -12,11 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a3c573af02d442d8a34aedd0955173, type: 3}
   m_Name: PlayerStatus
   m_EditorClassIdentifier: 
-  normalMoveSpeed: 10
-  normalCanUnlock: 0
-  normalJumpForce: 10
+  normalFriction: 3.5
+  normalAirResistance: 10
+  normalMoveSpeed: 7.5
+  normalCanUnlock: 1
+  normalJumpForce: 5
   normalCanPushHeavyObject: 0
+  theifFriction: 10
+  theifAirResistance: 30
   thiefMoveSpeed: 20
   thiefCanUnlock: 1
-  muscleJumpForce: 20
+  muscleJumpForce: 10
   muscleCanPushHeavyObject: 1
