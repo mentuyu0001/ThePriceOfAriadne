@@ -18,8 +18,8 @@ MonoBehaviour:
   normalCanUnlock: 1
   normalJumpForce: 5
   normalCanPushHeavyObject: 0
-  theifFriction: 5
-  theifAirResistance: 50
+  theifFriction: 10
+  theifAirResistance: 30
   thiefMoveSpeed: 20
   thiefCanUnlock: 1
   muscleJumpForce: 10

@@ -61,6 +61,11 @@ public class Controller : MonoBehaviour
         // 新しい Material を設定
         col.sharedMaterial.friction = friction;
         Debug.Log(col.sharedMaterial.friction);
+
+        // Unity 6向けの強制更新処理を追加
+        col.enabled = false;
+        col.enabled = true;
+        // 他に良い実装方法あったら募集
     }
 
     public void OnMove(InputAction.CallbackContext context)

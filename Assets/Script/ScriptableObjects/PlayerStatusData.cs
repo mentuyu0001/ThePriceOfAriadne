@@ -17,7 +17,7 @@ public class PlayerStatusData : ScriptableObject
 
     // 泥棒状態のステータスデータ
     [SerializeField] private float theifFriction = 5.0f;
-    [SerializeField] private float theifAirResistance = 50.0f;
+    [SerializeField] private float theifAirResistance = 30.0f;
     [SerializeField] private float thiefMoveSpeed = 20.0f;
     [SerializeField] private bool thiefCanUnlock = true; 
     // マッチョのステータスデータ
