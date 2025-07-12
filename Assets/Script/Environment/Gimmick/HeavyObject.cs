@@ -17,8 +17,6 @@ public class HeavyObject : MonoBehaviour
     private float distanceThreshold; // 離れすぎないようにする距離
 
     private float distanceThresholdPlus = 0.6f; // プレイヤーが離れすぎたときの距離閾値
-
-    private bool isPlayerTouching = false;
     private bool isPushing = false;
     private Rigidbody2D rb;
     private Rigidbody2D playerRb;
@@ -29,7 +27,7 @@ public class HeavyObject : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         
         // 初期状態ではX方向とY方向を固定
-        rb.constraints = RigidbodyConstraints2D.FreezePosition;
+        //rb.constraints = RigidbodyConstraints2D.FreezePosition;
         
         if (player != null)
         {
@@ -48,23 +46,14 @@ public class HeavyObject : MonoBehaviour
             Debug.LogWarning("SpriteRendererが見つかりませんでした。distanceThresholdをデフォルト値に設定します。");
         }
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (player != null && collision.gameObject == player)
-        {
-            isPlayerTouching = true;
-        }
-    }
-
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (player != null && collision.gameObject == player && playerStatus != null)
         {
             if (playerStatus.CanPushHeavyObject)
             {
-                // 全ての移動制限を解除（Z軸回転は許可）
-                rb.constraints = RigidbodyConstraints2D.None;
+                // X軸,y軸の移動制限を解除（Z軸回転は禁止）
+                rb.constraints = RigidbodyConstraints2D.FreezeRotation;
                 if (!isPushing)
                 {
                     PushObject();
@@ -72,8 +61,8 @@ public class HeavyObject : MonoBehaviour
             }
             else
             {
-                // X方向とY方向を固定（Z軸回転は許可）
-                rb.constraints = RigidbodyConstraints2D.FreezePosition;
+                // 全て固定（X軸、Y軸移動とZ軸回転すべて禁止）
+                rb.constraints = RigidbodyConstraints2D.FreezeAll;
                 if (isPushing)
                 {
                     StopPushing();
@@ -97,9 +86,7 @@ public class HeavyObject : MonoBehaviour
     {
         if (player != null && collision.gameObject == player)
         {
-            isPlayerTouching = false;
             StopPushing();
-            Debug.Log("Player has stopped touching the heavy object.");
         }
     }
     private async UniTaskVoid MoveLoop()
