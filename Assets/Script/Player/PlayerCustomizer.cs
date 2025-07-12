@@ -24,6 +24,8 @@ public class PlayerCustomizer : MonoBehaviour
 
     // プレイヤーの能力値を初期状態にリセットする関数
     private void resetStatus() {
+        playerStatus.Friction = statusData.NormalFriction;
+        playerStatus.AirResistance = statusData.NormalAirResistance;
         playerStatus.MoveSpeed = statusData.NormalMoveSpeed;
         playerStatus.CanUnlock = statusData.NormalCanUnlock;
         playerStatus.JumpForce = statusData.NormalJumpForce;
@@ -79,6 +81,8 @@ public class PlayerCustomizer : MonoBehaviour
                 break;
 
             case PartsChara.Theif:
+                playerStatus.Friction = statusData.TheifFriction;
+                playerStatus.AirResistance = statusData.TheifAirResistance;
                 playerStatus.MoveSpeed = statusData.ThiefMoveSpeed;
                 break;
             
@@ -97,6 +101,8 @@ public class PlayerCustomizer : MonoBehaviour
                 break;
 
             case PartsChara.Theif:
+                playerStatus.Friction = statusData.TheifFriction;
+                playerStatus.AirResistance = statusData.TheifAirResistance;
                 playerStatus.MoveSpeed = statusData.ThiefMoveSpeed;
                 break;
             

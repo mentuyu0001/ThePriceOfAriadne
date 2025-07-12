@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Cysharp.Threading.Tasks;
+using Parts.Types;
 
 public class Controller : MonoBehaviour
 {
@@ -10,8 +11,14 @@ public class Controller : MonoBehaviour
     private Vector2 moveInput = Vector2.zero;
     private bool isMoving = false;
     private Rigidbody2D rb; // Rigidbodyを追加
+    private Collider2D col; // Collider2Dを追加
     [SerializeField] private LayerMask groundLayer; // 地面のレイヤーを指定
     [SerializeField] private PlayerStatus playerStatus; // プレイヤーステータスを取得
+    [SerializeField] private PlayerParts playerParts; // プレイヤーパーを取得
+
+    // 摩擦の設定
+    [SerializeField] private float friction;
+    [SerializeField] private float airResistance;
 
     private void Start()
     {
@@ -21,14 +28,39 @@ public class Controller : MonoBehaviour
             Debug.LogError("Rigidbodyがアタッチされていません！");
         }
 
-        // ステータスのリセット
-        SetStatus();
+        col = GetComponent<Collider2D>(); // Colliderの取得
+
+        if (col == null)
+        {
+            Debug.LogError("Colliderがアタッチされていません！");
+        }
+
+        if (col.sharedMaterial == null)
+        {
+            Debug.LogError("Physics Materialがアタッチされていません！");
+        }
     }
 
+    // Controllerに能力を反映させる
     public void SetStatus() 
     {
+        // 移動速度に応じて抵抗を変更する
+        friction = playerStatus.Friction;
+        airResistance = playerStatus.AirResistance;
+
+        // 最大スピードと最大ジャンプ力を変更する
         maxSpeed = playerStatus.MoveSpeed;
         jumpForce = playerStatus.JumpForce;
+
+        if (col == null) {
+            col = GetComponent<Collider2D>(); // Colliderの取得
+        }
+
+        // 既存の PhysicsMaterial2D をコピーして変更（元を直接いじると他にも影響する）
+
+        // 新しい Material を設定
+        col.sharedMaterial.friction = friction;
+        Debug.Log(col.sharedMaterial.friction);
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -55,6 +87,8 @@ public class Controller : MonoBehaviour
         {
             float targetVelocityX, forceX = 0f;
 
+            Debug.Log(col.sharedMaterial.friction);
+
             if (rb != null)
             {
                 // 入力方向(moveInput.x)に最大速度を掛け合わせる
@@ -68,7 +102,7 @@ public class Controller : MonoBehaviour
                 if (hit.collider == null)
                 {
                     // 空中にいる場合は移動の強さを1/10にする
-                    forceX /= 10;   // ちょっとマジックナンバーすぎるかも。修正案あれば。
+                    forceX /= airResistance;   // ちょっとマジックナンバーすぎるかも。修正案あれば。
                 }
             }
             // 水平方向に力を加える (垂直方向の動きには影響を与えない)
