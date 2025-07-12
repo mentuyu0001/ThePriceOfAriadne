@@ -10,9 +10,11 @@ public class RustyLever : MonoBehaviour
     [SerializeField]
     private GameObject player; // Playerオブジェクトをアサイン
 
+    [SerializeField]
+    private PlayerStatus playerStatus; // PlayerStatusをアサイン    
     private bool isLeverRotated = false; // レバーが傾いているかどうか
-
     private Quaternion initialRotation; // 初期Rotationを保存
+
 
     void Start()
     {
@@ -23,6 +25,10 @@ public class RustyLever : MonoBehaviour
         if (player == null)
         {
             Debug.LogError("Playerオブジェクトがアサインされていません！");
+        }
+        if (playerStatus == null)
+        {
+            Debug.LogError("PlayerStatusがアサインされていません！");
         }
 
         // 初期Rotationを保存
@@ -39,23 +45,34 @@ public class RustyLever : MonoBehaviour
 
     public void RotateLever()
     {
-        if (pivot != null)
+        // PlayerStatusがない、またはCanPushHeavyObjectがfalseの場合は処理を行わない
+        if (playerStatus.CanPushHeavyObject)
         {
-            if (!isLeverRotated)
+            if (pivot != null)
             {
-                // レバーを傾ける処理
-                pivot.transform.Rotate(Vector3.forward, 45f);
-                isLeverRotated = true;
+                if (!isLeverRotated)
+                {
+                    // レバーを傾ける処理
+                    pivot.transform.Rotate(Vector3.forward, 45f);
+                    isLeverRotated = true;
+                }
+                else
+                {
+                    // レバーを元の状態に戻す処理
+                    ResetLeverRotation();
+                }
             }
             else
             {
-                // レバーを元の状態に戻す処理
-                ResetLeverRotation();
+                Debug.LogError("Leverオブジェクトがアサインされていません！");
             }
+
         }
         else
         {
-            Debug.LogError("Leverオブジェクトがアサインされていません！");
+
+            Debug.Log("レバーを動かすには重いものを押す能力が必要です。");
+            return;
         }
     }
 
@@ -66,3 +83,5 @@ public class RustyLever : MonoBehaviour
         isLeverRotated = false;
     }
 }
+
+/// ObjectInteractionTrigger.cs
