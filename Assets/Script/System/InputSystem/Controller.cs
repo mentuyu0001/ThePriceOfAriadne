@@ -3,6 +3,10 @@ using UnityEngine.InputSystem;
 using Cysharp.Threading.Tasks;
 using Parts.Types;
 
+/// <summary>
+/// プレイヤーが操作するコントローラーのスクリプト
+/// </summary>
+
 public class Controller : MonoBehaviour
 {
     private float maxSpeed; // 最大スピード
@@ -24,10 +28,6 @@ public class Controller : MonoBehaviour
     [Header("壁判定の設定")]
     [Tooltip("壁と判定する地面からの最小角度")]
     [SerializeField, Range(30f, 90f)] private float wallAngleThreshold = 45f;
-    [Tooltip("壁に張り付かないようにするための、摩擦ゼロのマテリアル")]
-    [SerializeField] private PhysicsMaterial2D slipperyMaterial;
-    private PhysicsMaterial2D originalMaterial;
-    private int wallContactCount = 0; // 壁との接触数を数えるカウンター
 
 
     private void Start()
@@ -66,8 +66,6 @@ public class Controller : MonoBehaviour
             col = GetComponent<Collider2D>(); // Colliderの取得
         }
 
-        // 既存の PhysicsMaterial2D をコピーして変更（元を直接いじると他にも影響する）
-
         // 新しい Material を設定
         col.sharedMaterial.friction = friction;
         // Debug.Log(col.sharedMaterial.friction);
@@ -85,12 +83,22 @@ public class Controller : MonoBehaviour
             moveInput = context.ReadValue<Vector2>();
             if (!isMoving)
             {
+                // 動き始めたら摩擦を0にする
+                col.sharedMaterial.friction = 0;
+                col.enabled = false;
+                col.enabled = true;
+
                 isMoving = true;
                 MoveLoop().Forget(); // 非同期ループを開始
             }
         }
         else if (context.canceled)
         {
+            // 止まってる場合は摩擦を有効化する
+            col.sharedMaterial.friction = friction;
+            col.enabled = false;
+            col.enabled = true;
+
             moveInput = Vector2.zero;
             isMoving = false;
         }
@@ -101,8 +109,6 @@ public class Controller : MonoBehaviour
         while (isMoving)
         {
             float targetVelocityX, forceX = 0f;
-
-            // Debug.Log(col.sharedMaterial.friction);
 
             if (rb != null)
             {
@@ -116,8 +122,8 @@ public class Controller : MonoBehaviour
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.6f, groundLayer);
                 if (hit.collider == null)
                 {
-                    // 空中にいる場合は移動の強さを1/10にする
-                    forceX /= airResistance;   // ちょっとマジックナンバーすぎるかも。修正案あれば。
+                    // 空中にいる場合は移動の強さを弱める
+                    forceX /= airResistance;
                 }
             }
             // 水平方向に力を加える (垂直方向の動きには影響を与えない)
@@ -148,46 +154,4 @@ public class Controller : MonoBehaviour
             }
         }
     }
-
-    /*
-    // 壁との接触判定を考慮するメソッド
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        // 接触した点の法線をチェック
-        foreach (var contact in collision.contacts)
-        {
-            float angle = Vector2.Angle(contact.normal, Vector2.up);
-            if (angle > wallAngleThreshold)
-            {
-                // 壁との接触なのでカウンターを増やす
-                wallContactCount++;
-                break; // この衝突判定では壁だと分かったのでループを抜ける
-            }
-        }
-
-        // 壁との接触が1つ以上あれば、滑るマテリアルに切り替える
-        if (wallContactCount > 0 && col.sharedMaterial != slipperyMaterial)
-        {
-            col.sharedMaterial = slipperyMaterial;
-        }
-    }
-
-    // オブジェクトから離れた瞬間に呼ばれる
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        // OnCollisionExit2Dでは衝突「点」が取得できないため、
-        // 離れたオブジェクトが壁だったかを判定するのは難しい。
-        // そのため、ここでは一旦すべての接触が壁だった可能性を考慮してカウンターを減らす。
-        if (wallContactCount > 0)
-        {
-            wallContactCount = 0;
-        }
-
-        // 壁との接触がなくなった場合、元のマテリアルに戻す
-        if (wallContactCount == 0 && col.sharedMaterial != originalMaterial)
-        {
-            col.sharedMaterial = originalMaterial;
-        }
-    }
-    */
 }
