@@ -11,7 +11,6 @@ public class Controller : MonoBehaviour
 {
     private float maxSpeed; // 最大スピード
     private float jumpForce; // ジャンプ力
-    private float force = 1f;//加速度の大きさ
     private Vector2 moveInput = Vector2.zero;
     private bool isMoving = false;
     private Rigidbody2D rb; // Rigidbodyを追加
