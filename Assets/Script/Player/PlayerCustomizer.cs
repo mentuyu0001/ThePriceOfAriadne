@@ -30,6 +30,10 @@ public class PlayerCustomizer : MonoBehaviour
         playerStatus.CanUnlock = statusData.NormalCanUnlock;
         playerStatus.JumpForce = statusData.NormalJumpForce;
         playerStatus.CanPushHeavyObject = statusData.NormalCanPushHeavyObject;
+        playerStatus.CanWalkOnFire = statusData.NormalCanWalkOnFire;
+        playerStatus.CanShootWater = statusData.NormalCanShootWater;
+        playerStatus.CanWalkSilently = statusData.NormalCanWalkSilently;
+        playerStatus.CanThrowKnife = statusData.NormalCanThrowKnife;
     }
 
     // 装備したパーツの能力を設定する関数
@@ -51,6 +55,14 @@ public class PlayerCustomizer : MonoBehaviour
             case PartsChara.Muscle:
                 playerStatus.CanPushHeavyObject = statusData.MuscleCanPushHeavyObject;
                 break;
+            
+            case PartsChara.Fire:
+                playerStatus.CanShootWater = statusData.FireCanShootWater;
+                break;
+            
+            case PartsChara.Assassin:
+                playerStatus.CanThrowKnife = statusData.AssassinCanThrowKnife;
+                break;
 
             default:
                 Debug.LogError("不明な装備");
@@ -68,6 +80,14 @@ public class PlayerCustomizer : MonoBehaviour
 
             case PartsChara.Muscle:
                 playerStatus.CanPushHeavyObject = statusData.MuscleCanPushHeavyObject;
+                break;
+            
+            case PartsChara.Fire:
+                playerStatus.CanShootWater = statusData.FireCanShootWater;
+                break;
+            
+            case PartsChara.Assassin:
+                playerStatus.CanThrowKnife = statusData.AssassinCanThrowKnife;
                 break;
 
             default:
@@ -90,6 +110,14 @@ public class PlayerCustomizer : MonoBehaviour
                 playerStatus.JumpForce = statusData.MuscleJumpForce;
                 break;
             
+            case PartsChara.Fire:
+                playerStatus.CanWalkOnFire = statusData.FireCanWalkOnFire;
+                break;
+            
+            case PartsChara.Assassin:
+                playerStatus.CanWalkSilently = statusData.AssassinCanWalkSilently;
+                break;
+            
             default:
                 Debug.LogError("不明な装備");
                 break;
@@ -108,6 +136,14 @@ public class PlayerCustomizer : MonoBehaviour
             
             case PartsChara.Muscle:
                 playerStatus.JumpForce = statusData.MuscleJumpForce;
+                break;
+            
+            case PartsChara.Fire:
+                playerStatus.CanWalkOnFire = statusData.FireCanWalkOnFire;
+                break;
+            
+            case PartsChara.Assassin:
+                playerStatus.CanWalkSilently = statusData.AssassinCanWalkSilently;
                 break;
             
             default:

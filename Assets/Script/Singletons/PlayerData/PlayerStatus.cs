@@ -17,6 +17,14 @@ public class PlayerStatus : MonoBehaviour
     // ムキムキマッチョマンに関するパーツ
     private float jumpForce; // ジャンプ力
     private bool canPushHeavyObject; // 重いものを動かせるかどうか
+    
+    // 消防士に関するパーツ
+    private bool canWalkOnFire; // 炎の上を歩けるかどうか
+    private bool canShootWater; // 水を出せるかどうか
+
+    // アサシンに関するパーツ
+    private bool canWalkSilently; // 音を殺して歩けるかどうか
+    private bool canThrowKnife; // ナイフを投げれるかどうか
 
     // プロパティ
     public float Friction {
@@ -31,7 +39,7 @@ public class PlayerStatus : MonoBehaviour
 
     public float MoveSpeed {
         get { return moveSpeed; }
-        set { moveSpeed = Mathf.Max(0f, value); }
+        set { moveSpeed = value; }
     }
 
     public bool CanUnlock {
@@ -41,11 +49,31 @@ public class PlayerStatus : MonoBehaviour
 
     public float JumpForce {
         get { return jumpForce; }
-        set { jumpForce = Mathf.Max(0f, value); }
+        set { jumpForce = value; }
     }
 
     public bool CanPushHeavyObject {
         get { return canPushHeavyObject; }
         set { canPushHeavyObject = value; }
+    }
+
+    public bool CanWalkOnFire {
+        get { return canWalkOnFire; }
+        set { canWalkOnFire = value; }
+    }
+
+    public bool CanShootWater {
+        get { return canShootWater; }
+        set { canShootWater = value; }
+    }
+
+    public bool CanWalkSilently {
+        get { return canWalkSilently; }
+        set { canWalkSilently = value; }
+    }
+
+    public bool CanThrowKnife {
+        get { return canThrowKnife; }
+        set { canThrowKnife = value; }
     }
 }

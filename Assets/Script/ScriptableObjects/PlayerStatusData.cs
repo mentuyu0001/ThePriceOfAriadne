@@ -14,6 +14,10 @@ public class PlayerStatusData : ScriptableObject
     [SerializeField] private bool normalCanUnlock = false;
     [SerializeField] private float normalJumpForce = 10.0f;
     [SerializeField] private bool normalCanPushHeavyObject = false;
+    [SerializeField] private bool normalCanWalkOnFire = false;
+    [SerializeField] private bool normalCanShootWater = false;
+    [SerializeField] private bool normalCanWalkSilently = false;
+    [SerializeField] private bool normalCanThrowKnife = false;
 
     // 泥棒状態のステータスデータ
     [SerializeField] private float theifFriction = 5.0f;
@@ -23,7 +27,12 @@ public class PlayerStatusData : ScriptableObject
     // マッチョのステータスデータ
     [SerializeField] private float muscleJumpForce = 20.0f;
     [SerializeField] private bool muscleCanPushHeavyObject = true;
-
+    // 消防士のステータスデータ
+    [SerializeField] private bool fireCanWalkOnFire = true;
+    [SerializeField] private bool fireCanShootWater = true;
+    // アサシンのステータスデータ
+    [SerializeField] private bool assassinCanWalkSilently = true;
+    [SerializeField] private bool assassinCanThrowKnife = true;
 
     // --- プロパティ ---
     public float NormalFriction => normalFriction;
@@ -32,6 +41,10 @@ public class PlayerStatusData : ScriptableObject
     public bool NormalCanUnlock => normalCanUnlock;
     public float NormalJumpForce => normalJumpForce;
     public bool NormalCanPushHeavyObject => normalCanPushHeavyObject;
+    public bool NormalCanWalkOnFire => normalCanWalkOnFire;
+    public bool NormalCanShootWater => normalCanShootWater;
+    public bool NormalCanWalkSilently => normalCanWalkSilently;
+    public bool NormalCanThrowKnife => normalCanThrowKnife;
 
     public float TheifFriction => theifFriction;
     public float TheifAirResistance => theifAirResistance;
@@ -40,4 +53,10 @@ public class PlayerStatusData : ScriptableObject
 
     public float MuscleJumpForce => muscleJumpForce;
     public bool MuscleCanPushHeavyObject => muscleCanPushHeavyObject;
+
+    public bool FireCanWalkOnFire => fireCanWalkOnFire;
+    public bool FireCanShootWater => fireCanShootWater;
+
+    public bool AssassinCanWalkSilently => assassinCanWalkSilently;
+    public bool AssassinCanThrowKnife => assassinCanThrowKnife;
 }

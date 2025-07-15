@@ -19,5 +19,7 @@ namespace Parts.Types
         Normal,
         Theif,
         Muscle,
+        Assassin,
+        Fire,
     }
 }
