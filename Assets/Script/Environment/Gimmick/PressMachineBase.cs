@@ -147,13 +147,13 @@ public class PressMachineBase : StoppableGimick
     }
 
     // StopGimick関数のデバッグ用--------------
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            StopGimick();
-        }
-    }
+    // private void Update()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.K))
+    //     {
+    //         StopGimick();
+    //     }
+    // }
     // -----------------------------------------
 
     // オブジェクトが破棄される時に非同期処理をキャンセルする
