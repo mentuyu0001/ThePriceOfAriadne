@@ -1,0 +1,208 @@
+using UnityEngine;
+using Cysharp.Threading.Tasks;
+using System.Threading;
+using System;
+using Cysharp.Threading.Tasks.Triggers;
+using DG.Tweening;
+
+
+/// <summary>
+/// プレス機を動かすスクリプト。プレス機の台座にアタッチすること。
+/// </summary>
+
+public class PressMachineBase : StoppableGimick
+{
+    // Plateオブジェクト
+    [SerializeField] private GameObject plate;
+    // Plateの落下位置の判定用オブジェクト
+    [SerializeField] private GameObject pressArea;
+    //GameOverManagerを参照
+    [SerializeField] private GameOverManager gameOverManager;
+    //Playerオブジェクトの参照
+    [SerializeField] private GameObject player;
+    //Playerオブジェクトのオブジェクト名
+    private string playerName;
+    // Plateの開始位置（ローカル座標）
+    [SerializeField] private Vector2 posStart;
+    // // Plateのスタンバイ位置（ローカル座標）
+    // [SerializeField] private Vector2 posReady;
+    // Plateの落下位置（ローカル座標）
+    [SerializeField] private Vector2 posPressed;
+    //プレス機のクールタイム
+    [SerializeField] private float coolTime;
+    // PlateオブジェクトのRigidBody2D
+    private Rigidbody2D plateRigidBody;
+    // キャンセレーショントークン
+    private CancellationTokenSource cancellationTokenSource;
+    // Playerの死亡判定用、PressAreaに入ったらtrueになる
+    private bool isInsidePressArea;
+    // Playerの死亡判定用、Plateに接触している間trueになる
+    // PlayerがPressArea内でジャンプし、Plateに接触してからPressAreaに入った時、
+    // 正しくゲームオーバーを呼び出すために使用
+    private bool isOnPlate;
+    //DOTweenのシーケンス
+    private Sequence MoveSequence;
+
+    void Start()
+    {
+        // オブジェクトがアタッチされているかチェック
+        if (plate == null)
+        {
+            Debug.LogError("PressMachineBase: Plate object is undefined.");
+        }
+        else
+        {
+            if (plate.GetComponent<BoxCollider2D>() == null)
+            {
+                Debug.LogError("PressMachineBase: BoxCollider2D cannnot found in Plate");
+            }
+        }
+        if (pressArea == null)
+        {
+            Debug.LogError("PressMachineBase: PressArea is undefined");
+        }
+        else
+        {
+            // PressAreaのBoxCollider2Dがアタッチされているかチェック
+            BoxCollider2D boxCollider2D = pressArea.GetComponent<BoxCollider2D>();
+            if (boxCollider2D == null)
+            {
+                Debug.LogError("PressMachineBase: BoxCollider2D cannnot found in PressArea.");
+            }
+            else
+            {
+                // isTriggerをオンにする
+                boxCollider2D.isTrigger = true;
+            }
+        }
+        plateRigidBody = plate.GetComponent<Rigidbody2D>();
+        if (plateRigidBody == null)
+        {
+            Debug.LogError("PressMachineBase: RigidBody2D component cannot found in Plate object.");
+        }
+        if (gameOverManager == null)
+        {
+            Debug.LogError("PressMachineBase: GameOverManager cannnot found.");
+        }
+        if (player != null)
+        {
+            playerName = player.name;
+        }
+        else
+        {
+            Debug.LogError("PressMachineBase: Player cannot found.");
+        }
+        // トークンを生成
+        cancellationTokenSource = new CancellationTokenSource();
+        isInsidePressArea = false;
+        isOnPlate = false;
+        // プレス機のPlateを初期位置へ
+        plate.transform.localPosition = posStart;
+        //DOTweenのシーケンスを定義
+        MoveSequence = DOTween.Sequence();
+        // シーケンスに動作を追加---------------------------------------------
+        // // Plateをスタンバイ位置へ移動
+        // MoveSequence.Append(plateRigidBody.DOLocalPath(
+        //     path: new Vector2[] { posStart, posReady },
+        //     duration: 0.2f
+        // ));
+        // // スタンバイ位置へ移動したらちょっと待つ
+        // MoveSequence.AppendInterval(1.0f);
+        // Plateを落下位置へ移動
+        MoveSequence.Append(plateRigidBody.DOLocalPath(
+            path: new Vector2[] { posStart, posPressed },
+            duration: 1.0f
+        ).SetEase(Ease.InQuint));   // 動きを5次関数に変更（中身を変えたらコメントも変えること）
+        // 落下位置へ移動したらちょっと待つ
+        MoveSequence.AppendInterval(1.5f);
+        // Plateを再びスタート位置へ移動
+        MoveSequence.Append(plateRigidBody.DOLocalPath(
+            path: new Vector2[] { posPressed, posStart },
+            duration: 4.0f
+        ));
+        // 指定されたクールタイム分だけ待つ
+        MoveSequence.AppendInterval(coolTime);
+        // -------------------------------------------------------------------
+        // 動作開始
+        MoveLoop(cancellationTokenSource.Token);
+    }
+
+    void MoveLoop(CancellationToken MyToken = default)
+    {
+        MoveSequence.SetLoops(-1, LoopType.Restart).WithCancellation(MyToken);
+    }
+
+    // プレス機の動作を止める関数
+    public override void StopGimick()
+    {
+        // 非同期処理をキャンセル
+        cancellationTokenSource.Cancel();
+        // // Plateをスタート位置へ移動
+        // Vector2 posNow = plate.transform.localPosition;
+        // plateRigidBody.DOLocalPath(
+        //     path: new Vector2[] { posNow, posStart },
+        //     duration: 1.0f
+        // );
+        Debug.Log("Stopped PressMachine!");
+    }
+
+    // StopGimick関数のデバッグ用--------------
+    // private void Update()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.K))
+    //     {
+    //         StopGimick();
+    //     }
+    // }
+    // -----------------------------------------
+
+    // オブジェクトが破棄される時に非同期処理をキャンセルする
+    private void OnDestroy()
+    {
+        // 非同期処理をキャンセル
+        cancellationTokenSource.Cancel();
+    }
+
+    // PlayerがPressAreaへ入ったことを検知する
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (pressArea != null && collision.gameObject.name == playerName)
+        {
+            isInsidePressArea = true;
+            Debug.Log("Player entered PressArea");
+            // Plateと接触中にPressAreaに入ったらゲームオーバーを呼び出す
+            if (isOnPlate == true)
+            {
+                gameOverManager.GameOver();
+            }
+        }
+    }
+
+    // PlayerがPressAreaから出たことを検知する
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (pressArea != null && collision.gameObject.name == playerName)
+        {
+            isInsidePressArea = false;
+            Debug.Log("Player exited PressArea");
+        }
+    }
+
+    // PlateにPlayerが挟まれたか判定する
+    // PlateにPlayerが接触した時に、PressMachinePlateスクリプトから呼び出す
+    public void OnPlateCollisionEnter()
+    {
+        isOnPlate = true;
+        if (isInsidePressArea == true)
+        {
+            gameOverManager.GameOver();
+        }
+    }
+
+    // PlayerがPlateから離れた時に、PressMachinePlateスクリプトから呼び出す
+    public void OnPlateCollisionExit()
+    {
+        isOnPlate = false;
+    }
+
+}
