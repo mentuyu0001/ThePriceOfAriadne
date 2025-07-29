@@ -205,4 +205,13 @@ public class PressMachineBase : StoppableGimick
         isOnPlate = false;
     }
 
+
+    // StoppableGimickに追加した抽象メソッドを実装
+    public override bool IsRunning => MoveSequence.IsActive(); // ギミックが動作中かどうかを示すプロパティ
+    public override void StartGimick()
+    {
+        // ギミックを再起動するために、シーケンスをリセット
+        MoveSequence.Restart();
+        Debug.Log("Started PressMachine!");
+    }
 }

@@ -10,7 +10,16 @@ public class StopButton : MonoBehaviour
     {
         if (stoppableGimick != null)
         {
-            stoppableGimick.StopGimick();
+            if (stoppableGimick.IsRunning)
+            {
+                Debug.Log("Stopping the gimick");
+                stoppableGimick.StopGimick();
+            }
+            else
+            {
+                Debug.Log("Gimick is not running.");
+                stoppableGimick.StartGimick();
+            }
         }
     }
 }

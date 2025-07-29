@@ -31,7 +31,14 @@ public class Laser : StoppableGimick
             gameOverManager.GameOver(); // GameOverManagerのインスタンスを使用して呼び出す
         }
     }
+    public override bool IsRunning => isActive; // ギミックが動作中かどうかを示すプロパティ
 
+    public override void StartGimick()
+    {
+        // StopableGimmickのStartGimickメソッドをオーバーライド
+        isActive = true;
+        laserBeam.SetActive(true); // レーザー本体を表示する
+    } 
     public override void StopGimick()
     {
         // StopableGimmickのStopGimickメソッドをオーバーライド
