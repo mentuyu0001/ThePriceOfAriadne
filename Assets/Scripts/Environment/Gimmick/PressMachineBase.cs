@@ -42,6 +42,9 @@ public class PressMachineBase : StoppableGimick
     private bool isOnPlate;
     //DOTweenのシーケンス
     private Sequence MoveSequence;
+    // プレス機が落下中かを判定するbool型変数
+    // 落下中にプレイヤーがPressArea内にいて、isOnPlateがtrueならゲームオーバーを呼び出す
+    private bool isFalling;
 
     void Start()
     {
@@ -112,7 +115,9 @@ public class PressMachineBase : StoppableGimick
         MoveSequence.Append(plateRigidBody.DOLocalPath(
             path: new Vector2[] { posStart, posPressed },
             duration: 1.0f
-        ).SetEase(Ease.InQuint));   // 動きを5次関数に変更（中身を変えたらコメントも変えること）
+        ).SetEase(Ease.InQuint))   // 動きを5次関数に変更（中身を変えたらコメントも変えること）
+        .OnStart(() => { isFalling = true; })   // 落下開始時にisFallingをtrueにする
+        .OnComplete(() => { isFalling = false; });  // 落下終了時にisFallingをfalseにする
         // 落下位置へ移動したらちょっと待つ
         MoveSequence.AppendInterval(1.5f);
         // Plateを再びスタート位置へ移動
@@ -170,8 +175,8 @@ public class PressMachineBase : StoppableGimick
         {
             isInsidePressArea = true;
             Debug.Log("Player entered PressArea");
-            // Plateと接触中にPressAreaに入ったらゲームオーバーを呼び出す
-            if (isOnPlate == true)
+            // Plateと接触中かつPlateが落下している時にPressAreaに入ったらゲームオーバーを呼び出す
+            if (isOnPlate == true && isFalling == true)
             {
                 gameOverManager.GameOver();
             }
