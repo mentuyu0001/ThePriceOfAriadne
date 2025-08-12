@@ -365,9 +365,10 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  sizeModifier: {x: 1, y: 0.1}
+  groundCheckBuffer: 0
   playerStatus: {fileID: 1704125957}
   playerParts: {fileID: 1872299853}
-  wallAngleThreshold: 45
 --- !u!114 &70446706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -610,6 +611,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   partsTag: Parts
   partsManager: {fileID: 356738044}
+  leverTag: RustyLever
+  stopButtonTag: StopButton
   interactAction:
     m_UseReference: 1
     m_Action:
@@ -622,6 +625,7 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  showDebugLogs: 0
 --- !u!1 &275332652
 GameObject:
   m_ObjectHideFlags: 0
@@ -2392,9 +2396,9 @@ MonoBehaviour:
   gameOverManager: {fileID: 774299497}
   player: {fileID: 70446702}
   posStart: {x: 0, y: -1.6}
-  posReady: {x: 0, y: -1.1}
   posPressed: {x: 0, y: -4.85}
   coolTime: 1.5
+  isMovingAtStart: 0
 --- !u!1 &2135820185
 GameObject:
   m_ObjectHideFlags: 0
