@@ -16,6 +16,8 @@ public class Controller : MonoBehaviour
     private Rigidbody2D rb; // Rigidbodyを追加
     private Collider2D col; // Collider2Dを追加
     [SerializeField] private LayerMask groundLayer; // 地面のレイヤーを指定
+    [SerializeField] private Vector2 sizeModifier = new Vector2(1.0f, 0.1f); // レイを飛ばす際のコライダーサイズ 例：幅は90%、高さは20%
+    [SerializeField] private float groundCheckBuffer = 0f; // コライダーの底辺から伸ばすレイの長さ
     [SerializeField] private PlayerStatus playerStatus; // プレイヤーステータスを取得
     [SerializeField] private PlayerParts playerParts; // プレイヤーパーを取得
 
@@ -45,7 +47,7 @@ public class Controller : MonoBehaviour
     }
 
     // Controllerに能力を反映させる
-    public void SetStatus() 
+    public void SetStatus()
     {
         // 移動速度に応じて抵抗を変更する
         friction = playerStatus.Friction;
@@ -55,7 +57,8 @@ public class Controller : MonoBehaviour
         maxSpeed = playerStatus.MoveSpeed;
         jumpForce = playerStatus.JumpForce;
 
-        if (col == null) {
+        if (col == null)
+        {
             col = GetComponent<Collider2D>(); // Colliderの取得
         }
 
@@ -113,8 +116,8 @@ public class Controller : MonoBehaviour
                 // これに質量を掛けたものが力になる (AddForceは質量を考慮してくれる)
                 forceX = (targetVelocityX - rb.linearVelocity.x);
 
-                // レイキャストで地面判定
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.6f, groundLayer);
+                // ボックスキャストで地面判定
+                RaycastHit2D hit = GetGroundHitInfo();
                 if (hit.collider == null)
                 {
                     // 空中にいる場合は移動の強さを弱める
@@ -132,13 +135,13 @@ public class Controller : MonoBehaviour
     {
         if (context.performed && rb != null)
         {
-            // レイキャストで地面判定
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.6f, groundLayer);
+            // ボックスキャストで地面判定
+            RaycastHit2D hit = GetGroundHitInfo();
             if (hit.collider != null)
             {
                 // ヒットしたオブジェクトとの距離をデバッグログに出力
                 // Debug.Log($"Hit object: {hit.collider.name}, Distance: {hit.distance}");
-                
+
                 // 地面にいる場合のみジャンプ処理を実行
                 rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                 // Debug.Log("Jumping");
@@ -148,5 +151,61 @@ public class Controller : MonoBehaviour
                 // Debug.Log("No ground detected.");
             }
         }
+    }
+
+    // Gizmoを描画するためのメソッド
+    void OnDrawGizmos()
+    {
+        col = GetComponent<Collider2D>(); // Colliderの取得
+        // Gizmoの描画も、同じロジックでサイズを計算して反映させる
+        Bounds bounds = col.bounds;
+        Vector2 castOrigin = bounds.center;
+
+        // ★★★ 変更点 ★★★
+        float castWidth = bounds.size.x * sizeModifier.x;
+        float castHeight = bounds.size.y * sizeModifier.y;
+        Vector2 castSize = new Vector2(castWidth, castHeight);
+
+        float castDistance = bounds.extents.y + groundCheckBuffer;
+
+        RaycastHit2D hit = Physics2D.BoxCast(castOrigin, castSize, 0f, Vector2.down, castDistance, groundLayer);
+        Gizmos.color = hit.collider != null ? Color.red : Color.green;
+
+        Vector3 endPosition = (Vector2)castOrigin + (Vector2.down * castDistance);
+        Gizmos.DrawWireCube(endPosition, castSize);
+        
+        // 可視化のために、Update内と同じパラメータでBoxCastを再度実行します
+
+        // ボックスキャストが何かに当たったかどうかに応じて、ギズモの色を決定します
+        if (hit.collider != null)
+        {
+            // ヒットした場合：赤色で表示
+            Gizmos.color = Color.red;
+        }
+        else
+        {
+            // ヒットしなかった場合（空中にいる場合）：緑色で表示
+            Gizmos.color = Color.green;
+        }
+    }
+
+    // レイを飛ばし、地面との接触情報を取得する関数
+    private RaycastHit2D GetGroundHitInfo()
+    {
+        // colliderの外接短形を取得
+        Bounds bounds = col.bounds;
+
+        // キャストのパラメータをboundsから動的に決定
+        Vector2 castOrigin = bounds.center; // キャストの開始位置はコライダーの中心
+        // レイのサイズ
+        float castWidth = bounds.size.x * sizeModifier.x;
+        float castHeight = bounds.size.y * sizeModifier.y;
+        Vector2 castSize = new Vector2(castWidth, castHeight); // 元のサイズから倍率で実際のサイズを決める
+        float castDistance = bounds.extents.y + groundCheckBuffer; // キャスト距離（下方向に飛ばすレイの長さ）
+
+        // ヒットしたかどうかで色分け
+        RaycastHit2D hit = Physics2D.BoxCast(castOrigin, castSize, 0f, Vector2.down, castDistance, groundLayer);
+
+        return hit;
     }
 }
