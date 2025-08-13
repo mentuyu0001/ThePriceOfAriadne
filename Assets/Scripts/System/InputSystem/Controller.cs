@@ -19,7 +19,8 @@ public class Controller : MonoBehaviour
     [SerializeField] private Vector2 sizeModifier = new Vector2(1.0f, 0.1f); // レイを飛ばす際のコライダーサイズ 例：幅は90%、高さは20%
     [SerializeField] private float groundCheckBuffer = 0f; // コライダーの底辺から伸ばすレイの長さ
     [SerializeField] private PlayerStatus playerStatus; // プレイヤーステータスを取得
-    [SerializeField] private PlayerParts playerParts; // プレイヤーパーを取得
+    [SerializeField] private PlayerParts playerParts; // プレイヤーパーツを取得
+    [SerializeField] private PlayerAnimationParameters playerAnimationParameters; // プレイヤーアニメーターで使う変数管理を取得
 
     // 摩擦の設定
     private float friction;
@@ -153,6 +154,7 @@ public class Controller : MonoBehaviour
         }
     }
 
+    /*
     // Gizmoを描画するためのメソッド
     void OnDrawGizmos()
     {
@@ -188,6 +190,7 @@ public class Controller : MonoBehaviour
             Gizmos.color = Color.green;
         }
     }
+    */
 
     // レイを飛ばし、地面との接触情報を取得する関数
     private RaycastHit2D GetGroundHitInfo()
