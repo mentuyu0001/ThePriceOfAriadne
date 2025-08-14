@@ -32,7 +32,7 @@ public class PlayerCustomizer : MonoBehaviour
         playerStatus.CanPushHeavyObject = statusData.NormalCanPushHeavyObject;
         playerStatus.CanWalkOnFire = statusData.NormalCanWalkOnFire;
         playerStatus.CanShootWater = statusData.NormalCanShootWater;
-        playerStatus.CanWalkSilently = statusData.NormalCanWalkSilently;
+        playerStatus.CanDoubleJump = statusData.NormalCanDoubleJump;
         playerStatus.CanThrowKnife = statusData.NormalCanThrowKnife;
     }
 
@@ -115,7 +115,7 @@ public class PlayerCustomizer : MonoBehaviour
                 break;
             
             case PartsChara.Assassin:
-                playerStatus.CanWalkSilently = statusData.AssassinCanWalkSilently;
+                playerStatus.CanDoubleJump = statusData.AssassinCanDoubleJump;
                 break;
             
             default:
@@ -143,7 +143,7 @@ public class PlayerCustomizer : MonoBehaviour
                 break;
             
             case PartsChara.Assassin:
-                playerStatus.CanWalkSilently = statusData.AssassinCanWalkSilently;
+                playerStatus.CanDoubleJump = statusData.AssassinCanDoubleJump;
                 break;
             
             default:

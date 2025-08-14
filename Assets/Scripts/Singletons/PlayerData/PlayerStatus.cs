@@ -23,7 +23,7 @@ public class PlayerStatus : MonoBehaviour
     private bool canShootWater; // 水を出せるかどうか
 
     // アサシンに関するパーツ
-    private bool canWalkSilently; // 音を殺して歩けるかどうか
+    private bool canDoubleJump; // 音を殺して歩けるかどうか
     private bool canThrowKnife; // ナイフを投げれるかどうか
 
     // プロパティ
@@ -67,9 +67,9 @@ public class PlayerStatus : MonoBehaviour
         set { canShootWater = value; }
     }
 
-    public bool CanWalkSilently {
-        get { return canWalkSilently; }
-        set { canWalkSilently = value; }
+    public bool CanDoubleJump {
+        get { return canDoubleJump; }
+        set { canDoubleJump = value; }
     }
 
     public bool CanThrowKnife {

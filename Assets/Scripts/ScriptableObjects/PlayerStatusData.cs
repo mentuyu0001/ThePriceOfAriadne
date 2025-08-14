@@ -16,7 +16,7 @@ public class PlayerStatusData : ScriptableObject
     [SerializeField] private bool normalCanPushHeavyObject = false;
     [SerializeField] private bool normalCanWalkOnFire = false;
     [SerializeField] private bool normalCanShootWater = false;
-    [SerializeField] private bool normalCanWalkSilently = false;
+    [SerializeField] private bool normalCanDoubleJump = false;
     [SerializeField] private bool normalCanThrowKnife = false;
 
     // 泥棒状態のステータスデータ
@@ -31,7 +31,7 @@ public class PlayerStatusData : ScriptableObject
     [SerializeField] private bool fireCanWalkOnFire = true;
     [SerializeField] private bool fireCanShootWater = true;
     // アサシンのステータスデータ
-    [SerializeField] private bool assassinCanWalkSilently = true;
+    [SerializeField] private bool assassinCanDoubleJump = true;
     [SerializeField] private bool assassinCanThrowKnife = true;
 
     // --- プロパティ ---
@@ -43,7 +43,7 @@ public class PlayerStatusData : ScriptableObject
     public bool NormalCanPushHeavyObject => normalCanPushHeavyObject;
     public bool NormalCanWalkOnFire => normalCanWalkOnFire;
     public bool NormalCanShootWater => normalCanShootWater;
-    public bool NormalCanWalkSilently => normalCanWalkSilently;
+    public bool NormalCanDoubleJump => normalCanDoubleJump;
     public bool NormalCanThrowKnife => normalCanThrowKnife;
 
     public float TheifFriction => theifFriction;
@@ -57,6 +57,6 @@ public class PlayerStatusData : ScriptableObject
     public bool FireCanWalkOnFire => fireCanWalkOnFire;
     public bool FireCanShootWater => fireCanShootWater;
 
-    public bool AssassinCanWalkSilently => assassinCanWalkSilently;
+    public bool AssassinCanDoubleJump => assassinCanDoubleJump;
     public bool AssassinCanThrowKnife => assassinCanThrowKnife;
 }
