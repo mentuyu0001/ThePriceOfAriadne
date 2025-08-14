@@ -40,9 +40,8 @@ public class Laser : StoppableGimick
         isActive = true;
         laserBeam.SetActive(true); // レーザー本体を表示する
 
-        // target.Start()の呼び出しを削除
-        // 代わりにGameObjectをアクティブにする
-        target.gameObject.SetActive(true);
+        // ターゲットの動作を再開
+        target.RestartTarget();
     }
 
     public override void StopGimick()

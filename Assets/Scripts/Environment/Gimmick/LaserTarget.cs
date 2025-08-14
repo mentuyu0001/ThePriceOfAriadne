@@ -1,6 +1,9 @@
 using UnityEngine;
 using DG.Tweening;
 
+/// <summary>
+/// レーザーのターゲットを上下に動かすスクリプト
+/// </summary>
 public class LaserTarget : MonoBehaviour
 {
     [SerializeField] private Transform laserStand;
@@ -15,61 +18,69 @@ public class LaserTarget : MonoBehaviour
     [Header("位置調整")]
     [SerializeField] private float targetHeight = 1.0f;
     
+    // ゲームスタート時に停止させておくか判定するbool型変数
+    // trueならゲームスタート時は動く状態
+    [SerializeField] private bool isMovingAtStart;
+    
+    // DoTweenのシーケンス
     private Sequence moveSequence;
     private float topPosition;
     private float bottomPosition;
     
     void Start()
     {
+        // オブジェクトの初期化チェック
+        if (laserStand == null || underStand == null)
+        {
+            Debug.LogError("LaserTarget: LaserStand または UnderStand が設定されていません");
+            return;
+        }
+        
         // 初期設定を行う
         Initialize();
         
-        // 初期状態でもアニメーションを開始する
-        if (laserStand != null && underStand != null)
+        // DoTweenの初期設定
+        DOTween.Init();
+        // こちらが指示するまでアニメーションを開始しないようにする
+        DOTween.defaultAutoPlay = AutoPlay.None;
+        
+        // DoTweenのシーケンスを定義
+        moveSequence = DOTween.Sequence();
+        
+        // シーケンスにアニメーションを追加
+        if (startFromTop)
         {
-            StartAnimation();
+            // 上から下へ、下から上へのループを作成
+            moveSequence.Append(transform.DOMoveY(bottomPosition, moveDuration).SetEase(easeType))
+                      .AppendInterval(delayBetweenMovement)
+                      .Append(transform.DOMoveY(topPosition, moveDuration).SetEase(easeType))
+                      .AppendInterval(delayBetweenMovement);
         }
-    }
-    
-    // オブジェクトがアクティブになるたびに呼ばれる
-    void OnEnable()
-    {
-        // Start()が既に実行済みかチェック
-        if (gameObject.activeInHierarchy && Time.timeSinceLevelLoad > 0.1f)
+        else
         {
-            // アクティブになったらアニメーションを開始
-            if (laserStand != null && underStand != null)
-            {
-                StartAnimation();
-            }
+            // 下から上へ、上から下へのループを作成
+            moveSequence.Append(transform.DOMoveY(topPosition, moveDuration).SetEase(easeType))
+                      .AppendInterval(delayBetweenMovement)
+                      .Append(transform.DOMoveY(bottomPosition, moveDuration).SetEase(easeType))
+                      .AppendInterval(delayBetweenMovement);
         }
-    }
-    
-    void OnDisable()
-    {
-        // 非アクティブ時にアニメーションを停止
-        if (moveSequence != null)
+        
+        // ループを設定
+        moveSequence.SetLoops(-1, LoopType.Restart);
+        
+        // 初期位置の設定
+        SetInitialPosition();
+        
+        // スタート時から動かすのであれば、アニメーションを開始する
+        if (isMovingAtStart)
         {
-            moveSequence.Kill();
-            moveSequence = null;
+            StartTarget();
         }
-    }
-    
-    void OnDestroy()
-    {
-        // シーンが切り替わる際などにTweenをクリーンアップ
-        moveSequence?.Kill();
     }
     
     // 初期化処理
     private void Initialize()
     {
-        if (laserStand == null || underStand == null)
-        {
-            Debug.LogError("LaserStand または UnderStand が設定されていません");
-            return;
-        }
-
         // Targetの高さを取得（スプライトの場合）
         SpriteRenderer renderer = GetComponent<SpriteRenderer>();
         if (renderer != null)
@@ -82,10 +93,9 @@ public class LaserTarget : MonoBehaviour
         bottomPosition = underStand.position.y + (targetHeight / 2);
     }
     
-    // アニメーションを開始
-    private void StartAnimation()
+    // 初期位置の設定
+    private void SetInitialPosition()
     {
-        // 開始位置を設定
         if (startFromTop)
         {
             transform.position = new Vector3(transform.position.x, topPosition, transform.position.z);
@@ -94,57 +104,66 @@ public class LaserTarget : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, bottomPosition, transform.position.z);
         }
-        
-        // 移動シーケンスを作成
-        CreateMovementSequence(topPosition, bottomPosition);
+    }
+    
+    // アニメーション開始
+    public void StartTarget()
+    {
+        if (moveSequence != null)
+        {
+            // シーケンスをリセットして再スタート
+            moveSequence.Restart();
+            Debug.Log("LaserTarget: ターゲットの動作を開始しました");
+        }
+    }
+    
+    // アニメーション停止
+    public void StopTarget()
+    {
+        if (moveSequence != null)
+        {
+            // アニメーションを停止
+            moveSequence.Pause();
+            Debug.Log("LaserTarget: ターゲットを停止しました");
+
+            // ターゲットを非表示にする
+            gameObject.SetActive(false);
+        }
+    }
+    
+    // オブジェクトが破棄される時にアニメーションを停止する
+    private void OnDestroy()
+    {
+        if (moveSequence != null)
+        {
+            moveSequence.Kill();
+        }
+    }
+    
+    // オブジェクトが非アクティブになる時にアニメーションを停止する
+    private void OnDisable()
+    {
+        if (moveSequence != null && moveSequence.IsActive())
+        {
+            moveSequence.Pause();
+        }
+    }
+    
+    // オブジェクトがアクティブになる時にアニメーションを再開する（オプション）
+    private void OnEnable()
+    {
+        if (moveSequence != null && isMovingAtStart && !moveSequence.IsActive())
+        {
+            StartTarget();
+        }
     }
     
     // 外部からアニメーションを再開するためのメソッド
     public void RestartTarget()
     {
         gameObject.SetActive(true);
-        // OnEnableが呼ばれ、アニメーションが開始される
-    }
-
-    private void CreateMovementSequence(float topPosition, float bottomPosition)
-    {
-        moveSequence = DOTween.Sequence();
-
-        if (startFromTop)
-        {
-            // 上から下へ、下から上へのループを作成
-            moveSequence.Append(transform.DOMoveY(bottomPosition, moveDuration).SetEase(easeType))
-                        .AppendInterval(delayBetweenMovement)
-                        .Append(transform.DOMoveY(topPosition, moveDuration).SetEase(easeType))
-                        .AppendInterval(delayBetweenMovement);
-        }
-        else
-        {
-            // 下から上へ、上から下へのループを作成
-            moveSequence.Append(transform.DOMoveY(topPosition, moveDuration).SetEase(easeType))
-                        .AppendInterval(delayBetweenMovement)
-                        .Append(transform.DOMoveY(bottomPosition, moveDuration).SetEase(easeType))
-                        .AppendInterval(delayBetweenMovement);
-        }
-
-        // 無限ループ設定
-        moveSequence.SetLoops(-1, LoopType.Restart);
-    }
-    
-    // アニメーションを停止してターゲットを非表示にする
-    public void StopTarget()
-    {
-        // アニメーションを停止
-        if (moveSequence != null)
-        {
-            moveSequence.Kill();
-            moveSequence = null;
-        }
-        
-        // ターゲットを非表示にする
-        gameObject.SetActive(false);
-        
-        Debug.Log("LaserTarget: ターゲットを停止して非表示にしました");
+        moveSequence.Restart();
     }
 }
+
 
