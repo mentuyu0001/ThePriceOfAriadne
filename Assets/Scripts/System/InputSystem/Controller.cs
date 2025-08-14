@@ -111,6 +111,14 @@ public class Controller : MonoBehaviour
 
             if (rb != null)
             {
+                // 移動方向に応じてプレイヤー画像を反転させる
+                // 右向きならY軸の角度を0、左向きなら180にする
+                if (moveInput.x == 1) {
+                    transform.rotation = Quaternion.Euler(0, 0, 0);
+                } else if (moveInput.x == -1) {
+                    transform.rotation = Quaternion.Euler(0, 180, 0);
+                }
+
                 // 入力方向(moveInput.x)に最大速度を掛け合わせる
                 targetVelocityX = maxSpeed * moveInput.x;
                 // (目標速度 - 現在の速度) / 時間 = 必要な加速度
