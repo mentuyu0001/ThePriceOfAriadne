@@ -16,6 +16,7 @@ public class PlayerStatusData : ScriptableObject
     [SerializeField] private bool normalCanPushHeavyObject = false;
     [SerializeField] private bool normalCanWalkOnFire = false;
     [SerializeField] private bool normalCanShootWater = false;
+    [SerializeField] private bool normalCanChargeWater = false;// 貯水機能のために追記
     [SerializeField] private bool normalCanDoubleJump = false;
     [SerializeField] private bool normalCanThrowKnife = false;
 
@@ -30,6 +31,7 @@ public class PlayerStatusData : ScriptableObject
     // 消防士のステータスデータ
     [SerializeField] private bool fireCanWalkOnFire = true;
     [SerializeField] private bool fireCanShootWater = true;
+    [SerializeField] private bool fireCanChargeWater = true; // 貯水機能のために追記
     // アサシンのステータスデータ
     [SerializeField] private bool assassinCanDoubleJump = true;
     [SerializeField] private bool assassinCanThrowKnife = true;
@@ -56,6 +58,7 @@ public class PlayerStatusData : ScriptableObject
 
     public bool FireCanWalkOnFire => fireCanWalkOnFire;
     public bool FireCanShootWater => fireCanShootWater;
+    public bool FireCanChargeWater => fireCanChargeWater; // 貯水機能のために追記
 
     public bool AssassinCanDoubleJump => assassinCanDoubleJump;
     public bool AssassinCanThrowKnife => assassinCanThrowKnife;

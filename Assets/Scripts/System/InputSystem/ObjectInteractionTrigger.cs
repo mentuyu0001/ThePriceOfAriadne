@@ -17,6 +17,8 @@ public class ObjectInteractionTrigger : MonoBehaviour
     [SerializeField] private string leverTag = "RustyLever";
     // ストップボタンのタグ
     [SerializeField] private string stopButtonTag = "StopButton";
+    // 水タンク用のタグを追加
+    [SerializeField] private string waterTankTag = "WaterTank";
     // 決定ボタンの入力アクション
     [SerializeField] private InputActionProperty interactAction;
     // 接触しているコライダー
@@ -42,6 +44,9 @@ public class ObjectInteractionTrigger : MonoBehaviour
         InteractLever(this.GetCancellationTokenOnDestroy()).Forget();
         // ストップボタンにインタラクト可能にする
         InteractStopButton(this.GetCancellationTokenOnDestroy()).Forget();
+        // 水タンクとの相互作用を追加
+        InteractWaterTank(this.GetCancellationTokenOnDestroy()).Forget();
+        
         
         // 起動時に周囲のオブジェクトを確認
         CheckSurroundingObjects();
@@ -56,7 +61,8 @@ public class ObjectInteractionTrigger : MonoBehaviour
         {
             if (collider.gameObject.CompareTag(partsTag) || 
                 collider.gameObject.CompareTag(leverTag) || 
-                collider.gameObject.CompareTag(stopButtonTag))
+                collider.gameObject.CompareTag(stopButtonTag) ||
+                collider.gameObject.CompareTag(waterTankTag))
             {
                 // すでに接触しているオブジェクトを設定
                 touchingCollision = collider;
@@ -115,18 +121,24 @@ public class ObjectInteractionTrigger : MonoBehaviour
     {
         return Interact<StopButton>(stopButtonTag, stopButton => stopButton.PressButton(), ct);
     }
+    // 水タンクにインタラクトするメソッド
+    private UniTask InteractWaterTank(CancellationToken ct)
+    {
+        return Interact<WaterTank>(waterTankTag, waterTank => waterTank.ChargeWater(), ct);
+    }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag(partsTag) || 
             collision.gameObject.CompareTag(leverTag) || 
-            collision.gameObject.CompareTag(stopButtonTag))
+            collision.gameObject.CompareTag(stopButtonTag) ||
+            collision.gameObject.CompareTag(waterTankTag))
         {
             touchingCollision = collision;
             if (showDebugLogs) Debug.Log($"トリガーエンター: {collision.gameObject.name}");
         }
     }
-
+    
     public void OnTriggerExit2D(Collider2D collision)
     {
         if (touchingCollision == collision)

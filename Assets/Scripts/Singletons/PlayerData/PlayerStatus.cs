@@ -21,6 +21,8 @@ public class PlayerStatus : MonoBehaviour
     // 消防士に関するパーツ
     private bool canWalkOnFire; // 炎の上を歩けるかどうか
     private bool canShootWater; // 水を出せるかどうか
+    //貯水機能のために追記
+    private bool canChargeWater; // 水をチャージできるかどうか
 
     // アサシンに関するパーツ
     private bool canDoubleJump; // 音を殺して歩けるかどうか
@@ -67,7 +69,14 @@ public class PlayerStatus : MonoBehaviour
         set { canShootWater = value; }
     }
 
-    public bool CanDoubleJump {
+    //貯水機能のために追記
+    public bool CanChargeWater
+    {
+        get { return canChargeWater; }
+        set { canChargeWater = value; }
+    }
+    public bool CanDoubleJump
+    {
         get { return canDoubleJump; }
         set { canDoubleJump = value; }
     }

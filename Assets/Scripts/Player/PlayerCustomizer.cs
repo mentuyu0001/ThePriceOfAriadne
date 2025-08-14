@@ -55,9 +55,9 @@ public class PlayerCustomizer : MonoBehaviour
             case PartsChara.Muscle:
                 playerStatus.CanPushHeavyObject = statusData.MuscleCanPushHeavyObject;
                 break;
-            
+            //ShotWater->ChargeWaterに変更
             case PartsChara.Fire:
-                playerStatus.CanShootWater = statusData.FireCanShootWater;
+                playerStatus.CanChargeWater = statusData.FireCanChargeWater;
                 break;
             
             case PartsChara.Assassin:
@@ -82,8 +82,9 @@ public class PlayerCustomizer : MonoBehaviour
                 playerStatus.CanPushHeavyObject = statusData.MuscleCanPushHeavyObject;
                 break;
             
+            //ShotWater->ChargeWaterに変更
             case PartsChara.Fire:
-                playerStatus.CanShootWater = statusData.FireCanShootWater;
+                playerStatus.CanChargeWater = statusData.FireCanChargeWater;
                 break;
             
             case PartsChara.Assassin:
