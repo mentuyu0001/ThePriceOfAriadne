@@ -1,0 +1,232 @@
+fileFormatVersion: 2
+guid: bab8eefedb4984de99e289d5ecbbde83
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ChestBackMaterial
+    second: {fileID: 2100000, guid: 5d7ca09cf526742a886bfa8cf618aba1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ChestFrontMaterial
+    second: {fileID: 2100000, guid: 33771e5a580034de99cb4b95ccbe557f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ChestMiddleMaterial
+    second: {fileID: 2100000, guid: 681e5c2b976554c0782b20c85c4fbf53, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ElbowBackLMaterial
+    second: {fileID: 2100000, guid: f5817362604ac4f8c83d0ba2103ff0f3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ElbowBackRMaterial
+    second: {fileID: 2100000, guid: 09bd15ad9b483407295ac28cc31077aa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ElbowFrontLMaterial
+    second: {fileID: 2100000, guid: 9a6535e24998d442da10546fee1530bd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ElbowFrontRMaterial
+    second: {fileID: 2100000, guid: 14fedac24203b42be92aebbcc4393142, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ForeArmLMaterial
+    second: {fileID: 2100000, guid: 7bb129c65c5de4c85926d08183e9658e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ForeArmRMaterial
+    second: {fileID: 2100000, guid: 7456498d4bb124fbc99e874928ecd7be, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ForeLegLMaterial
+    second: {fileID: 2100000, guid: 2cfdaa30409a148f6b867c2f615bb23c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ForeLegRMaterial
+    second: {fileID: 2100000, guid: d7665df9fba2547b8a0648187395b4b2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: HairMaterial
+    second: {fileID: 2100000, guid: d5396f2ac386d4f52b5b3402b38dc9bb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: KneeBackLMaterial
+    second: {fileID: 2100000, guid: 9125054d6191e438a8f57828a1363e62, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: KneeBackRMaterial
+    second: {fileID: 2100000, guid: d45bc24ed73ad4ffea27a02a54662e9a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: KneeFrontLMaterial
+    second: {fileID: 2100000, guid: 4babd5766922a41079e83edf84772599, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: KneeFrontRMaterial
+    second: {fileID: 2100000, guid: b4e801471d4bb4287b4369ace3803337, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LeftwardHeadMaterial
+    second: {fileID: 2100000, guid: 2966377a337af4006a287bc5fc8e747b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LeftwardUpperLegLMaterial
+    second: {fileID: 2100000, guid: e9d85e1e6be624221b4c25bda653e14a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LeftwardUpperLegRMaterial
+    second: {fileID: 2100000, guid: e4972bf23dac04e03a370a0b89732286, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: NeckMaterial
+    second: {fileID: 2100000, guid: 01b975cc418f74fac8c555f7ae7140e0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RightwardHeadMaterial
+    second: {fileID: 2100000, guid: 9374a2c475e4348e4ba3f0dbd323db55, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RightwardUpperLegLMaterial
+    second: {fileID: 2100000, guid: 4064bc30e070d4957b319fc9def997f9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RightwardUpperLegRMaterial
+    second: {fileID: 2100000, guid: 58d3ee7d0a416494497ab47f10bfdcf9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: UpperArmLMaterial
+    second: {fileID: 2100000, guid: 9c5134fbd3dc64dd5b5cd5a910a47d4f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: UpperArmRMaterial
+    second: {fileID: 2100000, guid: ceedebba17eab4651bc4aca09b917b0b, type: 2}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
