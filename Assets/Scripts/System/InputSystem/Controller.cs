@@ -21,6 +21,7 @@ public class Controller : MonoBehaviour
     [SerializeField] private PlayerStatus playerStatus; // プレイヤーステータスを取得
     [SerializeField] private PlayerParts playerParts; // プレイヤーパーツを取得
     [SerializeField] private PlayerAnimationParameters playerAnimationParameters; // プレイヤーアニメーターで使う変数管理を取得
+    [SerializeField] private PlayerAirChecker airChecker; // プレイヤーの空中判定を行うスクリプトの取得
 
     // 摩擦の設定
     private float friction;
@@ -124,10 +125,7 @@ public class Controller : MonoBehaviour
                 // (目標速度 - 現在の速度) / 時間 = 必要な加速度
                 // これに質量を掛けたものが力になる (AddForceは質量を考慮してくれる)
                 forceX = (targetVelocityX - rb.linearVelocity.x);
-
-                // ボックスキャストで地面判定
-                RaycastHit2D hit = GetGroundHitInfo();
-                if (hit.collider == null)
+                if (!airChecker.IsGround)
                 {
                     // 空中にいる場合は移動の強さを弱める
                     forceX /= airResistance;
@@ -144,79 +142,16 @@ public class Controller : MonoBehaviour
     {
         if (context.performed && rb != null)
         {
-            // ボックスキャストで地面判定
-            RaycastHit2D hit = GetGroundHitInfo();
-            if (hit.collider != null)
+            if (airChecker.IsGround)
             {
-                // ヒットしたオブジェクトとの距離をデバッグログに出力
-                // Debug.Log($"Hit object: {hit.collider.name}, Distance: {hit.distance}");
-
                 // 地面にいる場合のみジャンプ処理を実行
                 rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-                // Debug.Log("Jumping");
-            }
-            else
+            } else
             {
                 // Debug.Log("No ground detected.");
             }
         }
-    }
 
-    /*
-    // Gizmoを描画するためのメソッド
-    void OnDrawGizmos()
-    {
-        col = GetComponent<Collider2D>(); // Colliderの取得
-        // Gizmoの描画も、同じロジックでサイズを計算して反映させる
-        Bounds bounds = col.bounds;
-        Vector2 castOrigin = bounds.center;
-
-        // ★★★ 変更点 ★★★
-        float castWidth = bounds.size.x * sizeModifier.x;
-        float castHeight = bounds.size.y * sizeModifier.y;
-        Vector2 castSize = new Vector2(castWidth, castHeight);
-
-        float castDistance = bounds.extents.y + groundCheckBuffer;
-
-        RaycastHit2D hit = Physics2D.BoxCast(castOrigin, castSize, 0f, Vector2.down, castDistance, groundLayer);
-        Gizmos.color = hit.collider != null ? Color.red : Color.green;
-
-        Vector3 endPosition = (Vector2)castOrigin + (Vector2.down * castDistance);
-        Gizmos.DrawWireCube(endPosition, castSize);
-        
-        // 可視化のために、Update内と同じパラメータでBoxCastを再度実行します
-
-        // ボックスキャストが何かに当たったかどうかに応じて、ギズモの色を決定します
-        if (hit.collider != null)
-        {
-            // ヒットした場合：赤色で表示
-            Gizmos.color = Color.red;
-        }
-        else
-        {
-            // ヒットしなかった場合（空中にいる場合）：緑色で表示
-            Gizmos.color = Color.green;
-        }
-    }
-    */
-
-    // レイを飛ばし、地面との接触情報を取得する関数
-    private RaycastHit2D GetGroundHitInfo()
-    {
-        // colliderの外接短形を取得
-        Bounds bounds = col.bounds;
-
-        // キャストのパラメータをboundsから動的に決定
-        Vector2 castOrigin = bounds.center; // キャストの開始位置はコライダーの中心
-        // レイのサイズ
-        float castWidth = bounds.size.x * sizeModifier.x;
-        float castHeight = bounds.size.y * sizeModifier.y;
-        Vector2 castSize = new Vector2(castWidth, castHeight); // 元のサイズから倍率で実際のサイズを決める
-        float castDistance = bounds.extents.y + groundCheckBuffer; // キャスト距離（下方向に飛ばすレイの長さ）
-
-        // ヒットしたかどうかで色分け
-        RaycastHit2D hit = Physics2D.BoxCast(castOrigin, castSize, 0f, Vector2.down, castDistance, groundLayer);
-
-        return hit;
+        Debug.Log(airChecker.IsGround);
     }
 }

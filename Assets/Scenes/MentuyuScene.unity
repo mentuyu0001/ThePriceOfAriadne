@@ -269,6 +269,7 @@ GameObject:
   - component: {fileID: 70446707}
   - component: {fileID: 70446709}
   - component: {fileID: 70446710}
+  - component: {fileID: 70446711}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -370,6 +371,7 @@ MonoBehaviour:
   playerStatus: {fileID: 1704125957}
   playerParts: {fileID: 1872299853}
   playerAnimationParameters: {fileID: 0}
+  airChecker: {fileID: 70446711}
 --- !u!114 &70446706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -627,6 +629,23 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   showDebugLogs: 0
+--- !u!114 &70446711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70446702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f203e0ae580c45bbafed87acb4f6d1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  sizeModifier: {x: 1, y: 0.1}
+  groundCheckBuffer: 0
 --- !u!1 &275332652
 GameObject:
   m_ObjectHideFlags: 0
