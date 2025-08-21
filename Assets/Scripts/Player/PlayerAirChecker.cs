@@ -41,7 +41,11 @@ public class PlayerAirChecker : MonoBehaviour
             RaycastHit2D hit = GetGroundHitInfo();
 
             // hit.colliderがnullでなければ何かにヒットしている（＝地面にいる）と判定
-            if (hit.collider != null);
+            if (hit.collider != null) {
+                isGround = true;
+            } else {
+                isGround = false;
+            }
 
             // 1フレーム待機
             await UniTask.Yield(PlayerLoopTiming.Update);
@@ -67,4 +71,42 @@ public class PlayerAirChecker : MonoBehaviour
 
         return hit;
     }
+
+    /*
+    // Gizmoを描画するためのメソッド
+    void OnDrawGizmos()
+    {
+        col = GetComponent<Collider2D>(); // Colliderの取得
+        // Gizmoの描画も、同じロジックでサイズを計算して反映させる
+        Bounds bounds = col.bounds;
+        Vector2 castOrigin = bounds.center;
+
+        // ★★★ 変更点 ★★★
+        float castWidth = bounds.size.x * sizeModifier.x;
+        float castHeight = bounds.size.y * sizeModifier.y;
+        Vector2 castSize = new Vector2(castWidth, castHeight);
+
+        float castDistance = bounds.extents.y + groundCheckBuffer;
+
+        RaycastHit2D hit = Physics2D.BoxCast(castOrigin, castSize, 0f, Vector2.down, castDistance, groundLayer);
+        Gizmos.color = hit.collider != null ? Color.red : Color.green;
+
+        Vector3 endPosition = (Vector2)castOrigin + (Vector2.down * castDistance);
+        Gizmos.DrawWireCube(endPosition, castSize);
+        
+        // 可視化のために、Update内と同じパラメータでBoxCastを再度実行します
+
+        // ボックスキャストが何かに当たったかどうかに応じて、ギズモの色を決定します
+        if (hit.collider != null)
+        {
+            // ヒットした場合：赤色で表示
+            Gizmos.color = Color.red;
+        }
+        else
+        {
+            // ヒットしなかった場合（空中にいる場合）：緑色で表示
+            Gizmos.color = Color.green;
+        }
+    }
+    */
 }
