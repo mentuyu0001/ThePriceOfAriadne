@@ -24,4 +24,10 @@ public class PlayerRunTimeStatus : MonoBehaviour
         get {return canThrowKnife;}
         set {canThrowKnife = value;}
     }
+
+    public void ResetRunTimeStatus() {
+        CanDoubleJump = false;
+        CanShootWater = false;
+        CanThrowKnife = false;
+    }
 }
