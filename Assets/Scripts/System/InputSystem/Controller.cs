@@ -22,6 +22,7 @@ public class Controller : MonoBehaviour
     [SerializeField] private PlayerParts playerParts; // プレイヤーパーツを取得
     [SerializeField] private PlayerAnimationParameters playerAnimationParameters; // プレイヤーアニメーターで使う変数管理を取得
     [SerializeField] private PlayerAirChecker airChecker; // プレイヤーの空中判定を行うスクリプトの取得
+    [SerializeField] private PlayerRunTimeStatus runTimeStatus; // パーツによって得られるステータス情報の取得
 
     // 摩擦の設定
     private float friction;
@@ -149,6 +150,12 @@ public class Controller : MonoBehaviour
             } else
             {
                 // Debug.Log("No ground detected.");
+                // 二段ジャンプの処理
+                if (runTimeStatus.CanDoubleJump) {
+                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0); // y成分の速さを0にしてからジャンプの力を入れる
+                    rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                    runTimeStatus.CanDoubleJump = false;
+                }
             }
         }
 

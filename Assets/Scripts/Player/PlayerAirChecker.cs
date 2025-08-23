@@ -14,6 +14,8 @@ public class PlayerAirChecker : MonoBehaviour
     [SerializeField] private LayerMask groundLayer; // 地面のレイヤーを指定
     [SerializeField] private Vector2 sizeModifier = new Vector2(1.0f, 0.1f); // レイを飛ばす際のコライダーサイズ 例：幅は90%、高さは20%
     [SerializeField] private float groundCheckBuffer = 0f; // コライダーの底辺から伸ばすレイの長さ
+    [SerializeField] private PlayerRunTimeStatus runTimeStatus; // 二段ジャンプのプロパティを取得
+    [SerializeField] private PlayerStatus playerStatus; // 二段ジャンプできるかどうかを取得する
 
     private void Start() {
         col = GetComponent<Collider2D>(); // Colliderの取得
@@ -34,18 +36,25 @@ public class PlayerAirChecker : MonoBehaviour
     // レイを飛ばし続け、地面に設置したらisGroundをtrueにする
     private async UniTaskVoid AirChecker() 
     {
+        bool wasGround = false; // 過去の接地状態を保持する変数
+
         // このオブジェクトが破棄されるまでループを続ける
         while (!this.GetCancellationTokenOnDestroy().IsCancellationRequested)
         {
+
             // GetGroundHitInfo() を呼び出して地面との接触情報を取得
             RaycastHit2D hit = GetGroundHitInfo();
+            isGround = hit.collider != null;
+            
+            Debug.Log(playerStatus.CanDoubleJump);
 
-            // hit.colliderがnullでなければ何かにヒットしている（＝地面にいる）と判定
-            if (hit.collider != null) {
-                isGround = true;
-            } else {
-                isGround = false;
+            if (!wasGround && isGround) {
+                if (playerStatus.CanDoubleJump) {
+                    runTimeStatus.CanDoubleJump = true;
+                }
             }
+
+            wasGround = isGround; // 変更を同期させる
 
             // 1フレーム待機
             await UniTask.Yield(PlayerLoopTiming.Update);

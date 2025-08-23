@@ -25,7 +25,7 @@ public class PlayerStatus : MonoBehaviour
     private bool canChargeWater; // 水をチャージできるかどうか
 
     // アサシンに関するパーツ
-    private bool canDoubleJump; // 音を殺して歩けるかどうか
+    private bool canDoubleJump; // 二段ジャンプできるかどうか
     private bool canThrowKnife; // ナイフを投げれるかどうか
 
     // プロパティ
