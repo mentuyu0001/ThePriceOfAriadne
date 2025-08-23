@@ -2,15 +2,9 @@ using UnityEngine;
 
 public class Knife : MonoBehaviour
 {
-    [SerializeField] private float throwForce = 10f; // ナイフの速度
-    private Rigidbody2D rb;
-
-    void Start()
-    {
-        rb = this.gameObject.GetComponent<Rigidbody2D>();
-        // ナイフの飛ぶ方向（右向き）に力を加える
-        rb.AddForce(Vector2.right * throwForce, ForceMode2D.Impulse);
-    }
+    /// <summary>
+    /// ナイフのが当たったらオブジェクトの消去を行うスクリプト
+    /// </summary>
 
     // 何かに当たった時の処理
     void OnTriggerEnter2D(Collider2D other)
