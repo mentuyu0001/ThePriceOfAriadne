@@ -9,6 +9,7 @@ TagManager:
   - RustyLever
   - StopButton
   - WaterTank
+  - PlayerDetection
   layers:
   - Default
   - TransparentFX

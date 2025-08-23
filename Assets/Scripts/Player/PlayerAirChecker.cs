@@ -45,8 +45,6 @@ public class PlayerAirChecker : MonoBehaviour
             // GetGroundHitInfo() を呼び出して地面との接触情報を取得
             RaycastHit2D hit = GetGroundHitInfo();
             isGround = hit.collider != null;
-            
-            Debug.Log(playerStatus.CanDoubleJump);
 
             if (!wasGround && isGround) {
                 if (playerStatus.CanDoubleJump) {

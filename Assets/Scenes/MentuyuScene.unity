@@ -270,6 +270,7 @@ GameObject:
   - component: {fileID: 70446709}
   - component: {fileID: 70446710}
   - component: {fileID: 70446711}
+  - component: {fileID: 70446712}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -652,6 +653,22 @@ MonoBehaviour:
     m_Bits: 8
   sizeModifier: {x: 1, y: 0.1}
   groundCheckBuffer: 0
+  runTimeStatus: {fileID: 2045294080}
+  playerStatus: {fileID: 1704125957}
+--- !u!114 &70446712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70446702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb77c8e61cd3a45368b35179c20f388d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  knifePrefab: {fileID: 6781993412671898257, guid: 548c319fd1c9d4861844c9d8e45005b1, type: 3}
+  spawnOffsetX: 1.5
   runTimeStatus: {fileID: 2045294080}
   playerStatus: {fileID: 1704125957}
 --- !u!1 &174777210
@@ -1184,6 +1201,10 @@ PrefabInstance:
       propertyPath: gameOverManager
       value: 
       objectReference: {fileID: 774299497}
+    - target: {fileID: 3143544893604437553, guid: 4fa5f4811a09b4fdaa1595703f6af022, type: 3}
+      propertyPath: m_TagString
+      value: PlayerDetection
+      objectReference: {fileID: 0}
     - target: {fileID: 4158996020203178185, guid: 4fa5f4811a09b4fdaa1595703f6af022, type: 3}
       propertyPath: m_Name
       value: FallingCeiling
@@ -3045,7 +3066,7 @@ GameObject:
   - component: {fileID: 2043468820}
   - component: {fileID: 2043468819}
   m_Layer: 0
-  m_Name: AssassineRightArm
+  m_Name: AssassineRightLeg
   m_TagString: Parts
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3109,7 +3130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 356f4e32259594e318e53d24579ace57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotType: 4
+  slotType: 2
   charaType: 4
 --- !u!4 &2043468821
 Transform:
