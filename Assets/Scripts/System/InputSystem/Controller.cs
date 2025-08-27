@@ -23,6 +23,7 @@ public class Controller : MonoBehaviour
     [SerializeField] private PlayerAirChecker airChecker; // プレイヤーの空中判定を行うスクリプトの取得
     [SerializeField] private PlayerRunTimeStatus runTimeStatus; // パーツによって得られるステータス情報の取得
 
+    [SerializeField] private PlayerAnimationManager playerAnimationManager; // プレイヤーアニメーションマネージャーの取得
     // 摩擦の設定
     private float friction;
     private float airResistance;
@@ -88,6 +89,10 @@ public class Controller : MonoBehaviour
                 col.enabled = true;
 
                 isMoving = true;
+
+                // Walkアニメーションの開始
+                playerAnimationManager.AniWalkTrue();
+
                 MoveLoop().Forget(); // 非同期ループを開始
             }
         }
@@ -101,6 +106,9 @@ public class Controller : MonoBehaviour
 
             moveInput = Vector2.zero;
             isMoving = false;
+
+            // Walkアニメーションの停止
+            playerAnimationManager.AniWalkFalse();
         }
     }
 
@@ -146,6 +154,9 @@ public class Controller : MonoBehaviour
             {
                 // 地面にいる場合のみジャンプ処理を実行
                 rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+
+                // ジャンプアニメーションの開始
+                playerAnimationManager.AniJumpTrue();
             } else
             {
                 // Debug.Log("No ground detected.");
@@ -154,10 +165,13 @@ public class Controller : MonoBehaviour
                     rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0); // y成分の速さを0にしてからジャンプの力を入れる
                     rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                     runTimeStatus.CanDoubleJump = false;
+                    
+                    // ジャンプアニメーションの開始
+                    playerAnimationManager.AniJumpTrue();
                 }
             }
         }
 
-        Debug.Log(airChecker.IsGround);
+        // Debug.Log(airChecker.IsGround);
     }
 }

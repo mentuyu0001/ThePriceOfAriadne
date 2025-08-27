@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerAnimationParameters : MonoBehaviour
+public class PlayerAnimationManager : MonoBehaviour
 {
     /// <summary>
     /// プレイヤーアニメーションのtrue/falseを設定するマネージャー

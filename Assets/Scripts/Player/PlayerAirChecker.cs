@@ -1,5 +1,6 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using System.Threading;
 
 public class PlayerAirChecker : MonoBehaviour
 {
@@ -17,7 +18,14 @@ public class PlayerAirChecker : MonoBehaviour
     [SerializeField] private PlayerRunTimeStatus runTimeStatus; // 二段ジャンプのプロパティを取得
     [SerializeField] private PlayerStatus playerStatus; // 二段ジャンプできるかどうかを取得する
 
+    [SerializeField] private PlayerAnimationManager playerAnimationManager; // プレイヤーアニメーションマネージャーの取得
+
+    private CancellationToken cancellationTokenOnDestroy; // キャンセルトークンを保存する変数
+
     private void Start() {
+        // オブジェクトが生きている間に確実に一度呼び出し、トークンをキャッシュする
+        this.cancellationTokenOnDestroy = this.GetCancellationTokenOnDestroy();
+
         col = GetComponent<Collider2D>(); // Colliderの取得
 
         if (col == null)
@@ -39,7 +47,7 @@ public class PlayerAirChecker : MonoBehaviour
         bool wasGround = false; // 過去の接地状態を保持する変数
 
         // このオブジェクトが破棄されるまでループを続ける
-        while (!this.GetCancellationTokenOnDestroy().IsCancellationRequested)
+        while (!this.cancellationTokenOnDestroy.IsCancellationRequested)
         {
 
             // GetGroundHitInfo() を呼び出して地面との接触情報を取得
@@ -50,6 +58,8 @@ public class PlayerAirChecker : MonoBehaviour
                 if (playerStatus.CanDoubleJump) {
                     runTimeStatus.CanDoubleJump = true;
                 }
+
+                playerAnimationManager.AniJumpFalse(); // ジャンプアニイメーションの停止
             }
 
             wasGround = isGround; // 変更を同期させる
