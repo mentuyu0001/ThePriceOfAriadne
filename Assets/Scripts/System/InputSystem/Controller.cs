@@ -20,7 +20,6 @@ public class Controller : MonoBehaviour
     [SerializeField] private float groundCheckBuffer = 0f; // コライダーの底辺から伸ばすレイの長さ
     [SerializeField] private PlayerStatus playerStatus; // プレイヤーステータスを取得
     [SerializeField] private PlayerParts playerParts; // プレイヤーパーツを取得
-    [SerializeField] private PlayerAnimationParameters playerAnimationParameters; // プレイヤーアニメーターで使う変数管理を取得
     [SerializeField] private PlayerAirChecker airChecker; // プレイヤーの空中判定を行うスクリプトの取得
     [SerializeField] private PlayerRunTimeStatus runTimeStatus; // パーツによって得られるステータス情報の取得
 
