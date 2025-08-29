@@ -8,7 +8,8 @@ public class BurningFireCheckZone : MonoBehaviour
     [SerializeField] private GameObject warningUI; // 警告表示用のUI（オプション）
     [SerializeField] private Collider2D fireFieldCollider; // 炎フィールドの物理コライダー
     [SerializeField] private Collider2D fireFieldColliderOpposite; // 反対側の炎フィールドの物理コライダー
-    
+    [SerializeField] private GameObject burnibgFire; // 炎オブジェクト（消火後に非表示にするため）
+    [SerializeField] private bool isRightCheckZone; // 右側の炎ゾーンかどうか
     private void Start()
     {
         // 初期状態では炎のコライダーを常に有効化
@@ -16,7 +17,7 @@ public class BurningFireCheckZone : MonoBehaviour
         {
             fireFieldCollider.enabled = true;
         }
-        
+
         if (fireFieldColliderOpposite != null)
         {
             fireFieldColliderOpposite.enabled = true;
@@ -60,19 +61,27 @@ public class BurningFireCheckZone : MonoBehaviour
             }
         }
     }
-    
+
     // 炎が消火された時に呼び出すメソッド
     public void FireExtinguished()
     {
-        // 炎が消えたら、コライダーを無効化して通り抜けられるようにする
-        if (fireFieldCollider != null)
+
+        // Playerオブジェクトから水発射コンポーネントを取得と実行
+        ShootWaterController shootWater = player.GetComponent<ShootWaterController>();
+        shootWater.ShootWater();
+        Debug.Log($"プレイヤーの向き: {(shootWater.playerDirectionRight)}");
+        if (shootWater.playerDirectionRight != isRightCheckZone)
         {
-            fireFieldCollider.enabled = false;
+            // 炎オブジェクトを非表示にする
+            if (burnibgFire != null)
+            {
+                burnibgFire.SetActive(false);
+            }
+            Debug.Log("炎が消火されました！");
         }
-        
-        if (fireFieldColliderOpposite != null)
+        else
         {
-            fireFieldColliderOpposite.enabled = false;
+            Debug.Log("反対向きに水を発射してしまった！");
         }
     }
 }
