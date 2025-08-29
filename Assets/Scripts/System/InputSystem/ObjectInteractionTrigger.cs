@@ -17,8 +17,10 @@ public class ObjectInteractionTrigger : MonoBehaviour
     [SerializeField] private string leverTag = "RustyLever";
     // ストップボタンのタグ
     [SerializeField] private string stopButtonTag = "StopButton";
-    // 水タンク用のタグを追加
+    // 水タンク用のタグ
     [SerializeField] private string waterTankTag = "WaterTank";
+    // 燃え盛る炎のタグ
+    [SerializeField] private string burningFireTag = "BurningFire";
     // 決定ボタンの入力アクション
     [SerializeField] private InputActionProperty interactAction;
     // 接触しているコライダー
@@ -44,9 +46,10 @@ public class ObjectInteractionTrigger : MonoBehaviour
         InteractLever(this.GetCancellationTokenOnDestroy()).Forget();
         // ストップボタンにインタラクト可能にする
         InteractStopButton(this.GetCancellationTokenOnDestroy()).Forget();
-        // 水タンクとの相互作用を追加
+        // 水タンクにインタラクト可能にする
         InteractWaterTank(this.GetCancellationTokenOnDestroy()).Forget();
-        
+        // 燃え盛る炎にインタラクト可能にする
+        InteractBurningFire(this.GetCancellationTokenOnDestroy()).Forget();
         
         // 起動時に周囲のオブジェクトを確認
         CheckSurroundingObjects();
@@ -62,7 +65,8 @@ public class ObjectInteractionTrigger : MonoBehaviour
             if (collider.gameObject.CompareTag(partsTag) || 
                 collider.gameObject.CompareTag(leverTag) || 
                 collider.gameObject.CompareTag(stopButtonTag) ||
-                collider.gameObject.CompareTag(waterTankTag))
+                collider.gameObject.CompareTag(waterTankTag)||
+                collider.gameObject.CompareTag(burningFireTag))
             {
                 // すでに接触しているオブジェクトを設定
                 touchingCollision = collider;
@@ -84,22 +88,22 @@ public class ObjectInteractionTrigger : MonoBehaviour
         {
             await interactAction.action.OnStartedAsync(ct);
             
-            if (showDebugLogs) Debug.Log($"インタラクション試行: 現在のコライダー {(touchingCollision ? touchingCollision.gameObject.name : "なし")}");
+            //if (showDebugLogs) Debug.Log($"インタラクション試行: 現在のコライダー {(touchingCollision ? touchingCollision.gameObject.name : "なし")}");
             
             if (touchingCollision == null || !touchingCollision.gameObject.CompareTag(tag))
             {
-                if (showDebugLogs) Debug.Log($"対象外オブジェクト: {(touchingCollision ? touchingCollision.gameObject.name : "なし")}");
+                //if (showDebugLogs) Debug.Log($"対象外オブジェクト: {(touchingCollision ? touchingCollision.gameObject.name : "なし")}");
                 continue;
             }
 
             var component = touchingCollision.gameObject.GetComponent<T>();
             if (component == null)
             {
-                Debug.LogError($"{typeof(T).Name} コンポーネントが見つかりません。対象: {touchingCollision.gameObject.name}");
+                //Debug.LogError($"{typeof(T).Name} コンポーネントが見つかりません。対象: {touchingCollision.gameObject.name}");
                 continue;
             }
 
-            if (showDebugLogs) Debug.Log($"{typeof(T).Name} と正常にインタラクト: {touchingCollision.gameObject.name}");
+            //if (showDebugLogs) Debug.Log($"{typeof(T).Name} と正常にインタラクト: {touchingCollision.gameObject.name}");
             onInteract(component);
         }
     }
@@ -126,16 +130,21 @@ public class ObjectInteractionTrigger : MonoBehaviour
     {
         return Interact<WaterTank>(waterTankTag, waterTank => waterTank.ChargeWater(), ct);
     }
-
+    // 燃え盛る炎にインタラクトするメソッド
+    private UniTask InteractBurningFire(CancellationToken ct)
+    {
+        return Interact<BurningFireCheckZone>(burningFireTag, burningFire => burningFire.FireExtinguished(), ct);
+    }
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag(partsTag) || 
             collision.gameObject.CompareTag(leverTag) || 
             collision.gameObject.CompareTag(stopButtonTag) ||
-            collision.gameObject.CompareTag(waterTankTag))
+            collision.gameObject.CompareTag(waterTankTag) ||
+            collision.gameObject.CompareTag(burningFireTag))
         {
             touchingCollision = collision;
-            if (showDebugLogs) Debug.Log($"トリガーエンター: {collision.gameObject.name}");
+            //if (showDebugLogs) Debug.Log($"トリガーエンター: {collision.gameObject.name}");
         }
     }
     
@@ -144,7 +153,7 @@ public class ObjectInteractionTrigger : MonoBehaviour
         if (touchingCollision == collision)
         {
             touchingCollision = null;
-            if (showDebugLogs) Debug.Log($"トリガー退出: {collision.gameObject.name}");
+            //if (showDebugLogs) Debug.Log($"トリガー退出: {collision.gameObject.name}");
         }
     }
 

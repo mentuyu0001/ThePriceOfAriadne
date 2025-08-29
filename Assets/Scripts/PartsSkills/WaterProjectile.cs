@@ -29,16 +29,6 @@ public class WaterProjectile : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        
-        // 地面や壁に当たった場合も消滅する
-        if (collision.CompareTag("Ground") || collision.CompareTag("Wall"))
-        {
-            // 効果音やエフェクトを再生
-            PlaySplashEffect(collision.transform.position);
-            
-            // 水は消滅
-            Destroy(gameObject);
-        }
     }
     
     // 水滴エフェクトを再生
@@ -49,11 +39,5 @@ public class WaterProjectile : MonoBehaviour
         {
             Instantiate(splashEffect, position, Quaternion.identity);
         }
-    }
-    
-    // 実行時に対象を設定するメソッド（プログラムから設定する場合）
-    public void SetTarget(GameObject fire)
-    {
-        targetFire = fire;
     }
 }
