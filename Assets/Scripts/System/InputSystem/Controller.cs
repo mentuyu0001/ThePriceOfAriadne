@@ -28,6 +28,8 @@ public class Controller : MonoBehaviour
     private float friction;
     private float airResistance;
 
+    public bool isInputEnabled = true; // 入力を受け付けるかどうかのフラグ
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>(); // Rigidbodyを取得
@@ -77,6 +79,7 @@ public class Controller : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (!isInputEnabled) return; // 入力が無効な場合は何もしない
         if (context.performed)
         {
             moveInput = context.ReadValue<Vector2>();
@@ -148,6 +151,7 @@ public class Controller : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
+        if (!isInputEnabled) return; // 入力が無効な場合は何もしない
         if (context.performed && rb != null)
         {
             if (airChecker.IsGround)
@@ -157,15 +161,17 @@ public class Controller : MonoBehaviour
 
                 // ジャンプアニメーションの開始
                 playerAnimationManager.AniJumpTrue();
-            } else
+            }
+            else
             {
                 // Debug.Log("No ground detected.");
                 // 二段ジャンプの処理
-                if (runTimeStatus.CanDoubleJump) {
+                if (runTimeStatus.CanDoubleJump)
+                {
                     rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0); // y成分の速さを0にしてからジャンプの力を入れる
                     rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                     runTimeStatus.CanDoubleJump = false;
-                    
+
                     // ジャンプアニメーションの開始
                     playerAnimationManager.AniJumpTrue();
                 }
@@ -173,5 +179,18 @@ public class Controller : MonoBehaviour
         }
 
         // Debug.Log(airChecker.IsGround);
+    }
+
+    // 移動入力状態をリセットするメソッド
+    public void ResetMoveInput()
+    {
+        // 移動入力をゼロにリセット
+        moveInput = Vector2.zero;
+        
+        // 移動フラグをリセット
+        isMoving = false;
+        
+        // 必要に応じて他の移動関連の状態もリセット
+        // 例: ジャンプフラグなど
     }
 }
