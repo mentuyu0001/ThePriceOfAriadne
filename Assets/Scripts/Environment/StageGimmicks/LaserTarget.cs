@@ -9,6 +9,12 @@ public class LaserTarget : MonoBehaviour
     [SerializeField] private Transform laserStand;
     [SerializeField] private Transform underStand;
     
+    // Laserオブジェクトへの参照を追加
+    [SerializeField] private Laser laser;
+    
+    // ナイフのタグ名を定義
+    [SerializeField] private string knifeTag = "Knife";
+    
     [Header("アニメーション設定")]
     [SerializeField] private float moveDuration = 2.0f;
     [SerializeField] private float delayBetweenMovement = 0.5f;
@@ -34,6 +40,12 @@ public class LaserTarget : MonoBehaviour
         {
             Debug.LogError("LaserTarget: LaserStand または UnderStand が設定されていません");
             return;
+        }
+        
+        // Laserオブジェクトの参照チェック
+        if (laser == null)
+        {
+            Debug.LogWarning("LaserTarget: Laserオブジェクトが設定されていません");
         }
         
         // 初期設定を行う
@@ -128,6 +140,44 @@ public class LaserTarget : MonoBehaviour
 
             // ターゲットを非表示にする
             gameObject.SetActive(false);
+        }
+    }
+    
+    // ナイフとの衝突を検出する（Collider2Dを使用している場合）
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // 衝突したオブジェクトがナイフタグを持っているか確認
+        if (collision.CompareTag(knifeTag))
+        {
+            // Laserギミックを停止
+            if (laser != null)
+            {
+                laser.StopGimick();
+                Debug.Log("LaserTarget: ナイフとの衝突を検知し、レーザーギミックを停止しました");
+            }
+            else
+            {
+                Debug.LogError("LaserTarget: Laserオブジェクトが設定されていないため、StopGimmick()を呼び出せません");
+            }
+        }
+    }
+    
+    // 物理衝突を検出する（Rigidbodyを使用している場合）
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // 衝突したオブジェクトがナイフタグを持っているか確認
+        if (collision.gameObject.CompareTag(knifeTag))
+        {
+            // Laserギミックを停止
+            if (laser != null)
+            {
+                laser.StopGimick();
+                Debug.Log("LaserTarget: ナイフとの衝突を検知し、レーザーギミックを停止しました");
+            }
+            else
+            {
+                Debug.LogError("LaserTarget: Laserオブジェクトが設定されていないため、StopGimmick()を呼び出せません");
+            }
         }
     }
     
