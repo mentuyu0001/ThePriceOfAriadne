@@ -42,7 +42,8 @@ public class EnterKeyActionTrigger : MonoBehaviour
 
     private Vector3 fixedPosition;
     private bool keepPositionFixed = false;
-
+    private PlayerAirChecker airChecker; // 空中判定のコンポーネント
+    private ThrowKnifeController throwKnife; // ナイフを投げるコンポーネント
     // Unityの初期化処理
     private void Start()
     {
@@ -57,6 +58,11 @@ public class EnterKeyActionTrigger : MonoBehaviour
         {
             originalConstraints = playerRigidbody.constraints;
         }
+        // 空中判定のコンポーネントを取得
+        airChecker = player.GetComponent<PlayerAirChecker>();
+        // ナイフを投げるコンポーネントを取得と実行
+        throwKnife = player.GetComponent<ThrowKnifeController>();
+
     }
 
     // オブジェクトに干渉する or ナイフを投げるメソッドを実行
@@ -88,8 +94,11 @@ public class EnterKeyActionTrigger : MonoBehaviour
             // 以下、元のインタラクションコード
             bool interacted = false;
 
-            // 何かと接触していれば、そのオブジェクトとインタラクションを試みる
-            if (touchingCollision != null)
+            // 地面と接地しているかどうかを確認
+            bool isGrounded =  airChecker.IsGround;
+
+            // 何かと接触かつ地面にいる場合、そのオブジェクトとインタラクションを試みる
+            if (touchingCollision != null && isGrounded)
             {
                 if (touchingCollision.gameObject.CompareTag(partsTag))
                 {
@@ -157,8 +166,6 @@ public class EnterKeyActionTrigger : MonoBehaviour
             if (!interacted)
             {
                 if (showDebugLogs) Debug.Log("インタラクションなし: ナイフを投げます");
-                // Playerオブジェクトからナイフを投げるコンポーネントを取得と実行
-                ThrowKnifeController throwKnife = player.GetComponent<ThrowKnifeController>();
                 // プレイヤーのThrowKnifeメソッドを呼び出す
                 throwKnife.ThrowKnife();
             }
