@@ -333,6 +333,24 @@ public class GameLifetimeScope : LifetimeScope
         {
             Debug.LogError("PlayerオブジェクトにShootWaterControllerコンポーネントが見つかりません");
         }
+
+        // TrackingCamera
+        var trackingCamera = Object.FindObjectOfType<TrackingCamera>();
+        if (trackingCamera != null)
+        {
+            // 1. インスタンスを登録
+            builder.RegisterInstance(trackingCamera);
+            // 2. 構築後にDIを実行
+            builder.RegisterBuildCallback(resolver =>
+            {
+                resolver.Inject(trackingCamera);
+            });
+            if (enableDebugLog) Debug.Log("TrackingCameraに注入予約しました");
+        }
+        else
+        {
+            Debug.LogError("TrackingCameraコンポーネントが見つかりません");
+        }
     }
 
 }
