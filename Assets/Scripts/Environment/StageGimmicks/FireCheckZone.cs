@@ -1,11 +1,12 @@
 using UnityEngine;
+using VContainer;
  /// <summary>
  /// プレイヤーが炎の上を歩けるかどうかをチェックするゾーン
  /// </summary>
 public class FireCheckZone : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
-    [SerializeField] private PlayerStatus playerStatus;
+    [Inject] private GameObject player;
+    [Inject] private PlayerStatus playerStatus;
     [SerializeField] private GameObject warningUI; // 警告表示用のUI（オプション）
     [SerializeField] private Collider2D fireFieldCollider; // 炎フィールドの物理コライダー
     [SerializeField] private Collider2D fireFieldColliderOpposite; // 反対側の炎フィールドの物理コライダー

@@ -530,6 +530,47 @@ public class GameLifetimeScope : LifetimeScope
         {
             Debug.LogError("WaterTankコンポーネントが見つかりません");
         }
+
+        // FireCheckZone
+        var fireCheckZones = Object.FindObjectsByType<FireCheckZone>(FindObjectsSortMode.None);
+        if (fireCheckZones.Length > 0)
+        {
+            // 1. リストを登録
+            builder.RegisterInstance<IReadOnlyList<FireCheckZone>>(fireCheckZones);
+            // 2. 構築後にDIを実行
+            builder.RegisterBuildCallback(resolver =>
+            {
+                foreach (var fireCheckZone in fireCheckZones)
+                {
+                    resolver.Inject(fireCheckZone);
+                }
+            });
+            if (enableDebugLog) Debug.Log($"{fireCheckZones.Length}個のFireCheckZoneを登録 & 注入予約");
+        }
+        else
+        {
+            Debug.LogWarning("FireCheckZoneコンポーネントが見つかりません");
+        }
+        // BurningFireCheckZone
+        var burningFireCheckZones = Object.FindObjectsByType<BurningFireCheckZone>(FindObjectsSortMode.None);
+        if (burningFireCheckZones.Length > 0)
+        {
+            // 1. リストを登録
+            builder.RegisterInstance<IReadOnlyList<BurningFireCheckZone>>(burningFireCheckZones);
+            // 2. 構築後にDIを実行
+            builder.RegisterBuildCallback(resolver =>
+            {
+                foreach (var burningFireCheckZone in burningFireCheckZones)
+                {
+                    resolver.Inject(burningFireCheckZone); 
+                }
+            });
+            if (enableDebugLog) Debug.Log($"{burningFireCheckZones.Length}個のBurningFireCheckZoneを登録 & 注入予約");
+        }
+        else
+        {
+            Debug.LogWarning("BurningFireCheckZoneコンポーネントが見つかりません");
+        }
     }
 
 }
