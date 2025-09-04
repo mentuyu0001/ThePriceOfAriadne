@@ -96,6 +96,18 @@ public class GameLifetimeScope : LifetimeScope
             Debug.LogError("PlayerオブジェクトにPlayerPartsコンポーネントが見つかりません");
         }
 
+        // PartsManagerを登録
+        var partsManager = Object.FindAnyObjectByType<PartsManager>();
+        if (partsManager != null)
+        {
+            builder.RegisterInstance(partsManager);
+            if (enableDebugLog) Debug.Log($"PartsManagerが正常に登録されました: {partsManager.name}");
+        }
+        else
+        {
+            Debug.LogError("PartsManagerコンポーネントが見つかりません");
+        }       
+
         // PlayerAnimationManagerを登録
         var playerAnimationManager = Object.FindAnyObjectByType<PlayerAnimationManager>();
         if (playerAnimationManager != null)
@@ -213,7 +225,26 @@ public class GameLifetimeScope : LifetimeScope
         else
         {
             Debug.LogError("PlayerオブジェクトにPlayerFallActionコンポーネントが見つかりません");
-        }   
+        }
+
+
+        // EnterKeyActionTrigger
+        var enterKeyActionTrigger = player.GetComponent<EnterKeyActionTrigger>();
+        if (enterKeyActionTrigger != null)
+        {
+            // 1. インスタンスを登録
+            builder.RegisterInstance(enterKeyActionTrigger);        
+            // 2. 構築後にDIを実行
+            builder.RegisterBuildCallback(resolver =>
+            {
+                resolver.Inject(enterKeyActionTrigger);
+            });
+            if (enableDebugLog) Debug.Log("EnterKeyActionTriggerに注入予約しました");
+        }
+        else
+        {
+            Debug.LogError("PlayerオブジェクトにEnterKeyActionTriggerコンポーネントが見つかりません");
+        }      
         
         if (enableDebugLog) Debug.Log("GameLifetimeScope 登録完了");
     }
