@@ -8,9 +8,11 @@ using System.Collections.Generic;
 /// </summary>
 public class GameLifetimeScope : LifetimeScope
 {
+    [SerializeField] private bool enableDebugLog = false; // デバッグログの表示制御
+
     protected override void Configure(IContainerBuilder builder)
     {
-        Debug.Log("GameLifetimeScope 登録開始");
+        if (enableDebugLog) Debug.Log("GameLifetimeScope 登録開始");
 
         // Player, Ground, GameOverManager, PlayerStatusの登録（ここは変更なし）
         #region Singleton_Objects
@@ -19,7 +21,7 @@ public class GameLifetimeScope : LifetimeScope
         if (player != null)
         {
             builder.RegisterInstance(player);
-            Debug.Log($"Playerが正常に登録されました: {player.name}");
+            if (enableDebugLog) Debug.Log($"Playerが正常に登録されました: {player.name}");
         }
         else
         {
@@ -31,7 +33,7 @@ public class GameLifetimeScope : LifetimeScope
         if (ground != null)
         {
             builder.RegisterInstance(ground);
-            Debug.Log($"Groundコンポーネントが正常に登録されました: {ground.name}");
+            if (enableDebugLog) Debug.Log($"Groundコンポーネントが正常に登録されました: {ground.name}");
         }
         else
         {
@@ -43,7 +45,7 @@ public class GameLifetimeScope : LifetimeScope
         if (gameOverManager != null)
         {
             builder.RegisterInstance(gameOverManager);
-            Debug.Log($"GameOverManagerが正常に登録されました: {gameOverManager.name}");
+            if (enableDebugLog) Debug.Log($"GameOverManagerが正常に登録されました: {gameOverManager.name}");
         }
         else
         {
@@ -59,7 +61,7 @@ public class GameLifetimeScope : LifetimeScope
             if (playerStatus != null)
             {
                 builder.RegisterInstance(playerStatus);
-                Debug.Log($"PlayerStatusが正常に登録されました: {playerStatus.name}");
+                if (enableDebugLog) Debug.Log($"PlayerStatusが正常に登録されました: {playerStatus.name}");
             }
             else
             {
@@ -70,7 +72,7 @@ public class GameLifetimeScope : LifetimeScope
             if (playerRunTimeStatus != null)
             {
                 builder.RegisterInstance(playerRunTimeStatus);
-                Debug.Log($"PlayerRunTimeStatusが正常に登録されました: {playerRunTimeStatus.name}");
+                if (enableDebugLog) Debug.Log($"PlayerRunTimeStatusが正常に登録されました: {playerRunTimeStatus.name}");
             }
             else
             {
@@ -87,7 +89,7 @@ public class GameLifetimeScope : LifetimeScope
         if (playerParts != null)
         {
             builder.RegisterInstance(playerParts);
-            Debug.Log($"PlayerPartsが正常に登録されました: {playerParts.name}");
+            if (enableDebugLog) Debug.Log($"PlayerPartsが正常に登録されました: {playerParts.name}");
         }
         else
         {
@@ -99,23 +101,28 @@ public class GameLifetimeScope : LifetimeScope
         if (playerAnimationManager != null)
         {
             builder.RegisterInstance(playerAnimationManager);
-            Debug.Log($"PlayerAnimationManagerが正常に登録されました: {playerAnimationManager.name}");
+            if (enableDebugLog) Debug.Log($"PlayerAnimationManagerが正常に登録されました: {playerAnimationManager.name}");
         }
         else
         {
             Debug.LogError("PlayerオブジェクトにPlayerAnimationManagerコンポーネントが見つかりません");
         }
 
-        // PlayerAirCheckerを登録（Playerオブジェクトから取得）
-        var playerAirChecker = player.GetComponent<PlayerAirChecker>();
-        if (playerAirChecker != null)
+        // Playerにattachされているコンポーネントの登録
+        if (player != null)
         {
-            builder.RegisterInstance(playerAirChecker);
-            Debug.Log($"PlayerAirCheckerが正常に登録されました: {playerAirChecker.name}");
-        }
-        else
-        {
-            Debug.LogError("PlayerオブジェクトにPlayerAirCheckerコンポーネントが見つかりません");
+            // PlayerAirCheckerを登録（Playerオブジェクトから取得）
+            var playerAirChecker = player.GetComponent<PlayerAirChecker>();
+            if (playerAirChecker != null)
+            {
+                builder.RegisterInstance(playerAirChecker);
+                if (enableDebugLog) Debug.Log($"PlayerAirCheckerが正常に登録されました: {playerAirChecker.name}");
+            }
+            else
+            {
+                Debug.LogError("PlayerオブジェクトにPlayerAirCheckerコンポーネントが見つかりません");
+            }
+             
         }
         #endregion
 
@@ -135,7 +142,7 @@ public class GameLifetimeScope : LifetimeScope
                     resolver.Inject(heavyObject);
                 }
             });
-            Debug.Log($"{heavyObjects.Length}個のHeavyObjectを登録 & 注入予約");
+            if (enableDebugLog) Debug.Log($"{heavyObjects.Length}個のHeavyObjectを登録 & 注入予約");
         }
 
         // DoorKey
@@ -152,7 +159,7 @@ public class GameLifetimeScope : LifetimeScope
                     resolver.Inject(doorKey);
                 }
             });
-            Debug.Log($"{doorKeys.Length}個のDoorKeyを登録 & 注入予約");
+            if (enableDebugLog) Debug.Log($"{doorKeys.Length}個のDoorKeyを登録 & 注入予約");
         }
 
         // FallingCeilingScript
@@ -169,7 +176,7 @@ public class GameLifetimeScope : LifetimeScope
                     resolver.Inject(fallingCeiling);
                 }
             });
-            Debug.Log($"{fallingCeilingScripts.Length}個のFallingCeilingScriptを登録 & 注入予約");
+            if (enableDebugLog) Debug.Log($"{fallingCeilingScripts.Length}個のFallingCeilingScriptを登録 & 注入予約");
         }
 
         // Controller
@@ -183,14 +190,32 @@ public class GameLifetimeScope : LifetimeScope
             {
                 resolver.Inject(controller);
             });
-            Debug.Log("Controllerに注入予約しました");
+            if (enableDebugLog) Debug.Log("Controllerに注入予約しました");
         }
         else
         {
             Debug.LogError("PlayerオブジェクトにControllerコンポーネントが見つかりません");
         }
+
+        // PlayerFallAction
+        var playerFallAction = player.GetComponent<PlayerFallAction>(); 
+        if (playerFallAction != null)
+        {
+            // 1. インスタンスを登録
+            builder.RegisterInstance(playerFallAction);
+            // 2. 構築後にDIを実行
+            builder.RegisterBuildCallback(resolver =>
+            {
+                resolver.Inject(playerFallAction);
+            });
+            if (enableDebugLog) Debug.Log("PlayerFallActionに注入予約しました");
+        }
+        else
+        {
+            Debug.LogError("PlayerオブジェクトにPlayerFallActionコンポーネントが見つかりません");
+        }   
         
-        Debug.Log("GameLifetimeScope 登録完了");
+        if (enableDebugLog) Debug.Log("GameLifetimeScope 登録完了");
     }
 
 }
