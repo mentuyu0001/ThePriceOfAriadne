@@ -287,6 +287,27 @@ public class GameLifetimeScope : LifetimeScope
             if (enableDebugLog) Debug.Log($"{doorKeys.Length}個のDoorKeyを登録 & 注入予約");
         }
 
+        // LockedDoor
+        var lockedDoors = Object.FindObjectsByType<LockedDoor>(FindObjectsSortMode.None);
+        if (lockedDoors.Length > 0)
+        {
+            // 1. リストを登録
+            builder.RegisterInstance<IReadOnlyList<LockedDoor>>(lockedDoors);
+            // 2. 構築後にDIを実行
+            builder.RegisterBuildCallback(resolver =>
+            {
+                foreach (var lockedDoor in lockedDoors)
+                {   
+                    resolver.Inject(lockedDoor);
+                }
+            });
+            if (enableDebugLog) Debug.Log($"{lockedDoors.Length}個のLockedDoorを登録 & 注入予約");
+        }
+        else
+        {
+            Debug.LogWarning("LockedDoorコンポーネントが見つかりません");
+        }   
+
         // FallingCeilingScript
         var fallingCeilingScripts = Object.FindObjectsByType<FallingCeilingScript>(FindObjectsSortMode.None);
         if (fallingCeilingScripts.Length > 0)
