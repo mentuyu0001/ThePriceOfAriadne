@@ -1,4 +1,5 @@
 using UnityEngine;
+using VContainer;
 
 /// <summary>
 /// 鍵のかかったドアのスクリプト
@@ -10,10 +11,10 @@ public class LockedDoor : MonoBehaviour
     [SerializeField] int doorID;
 
     // プレイヤーの参照
-    [SerializeField] private GameObject player;
+    [Inject] private GameObject player;
 
     // プレイヤーステータスを参照
-    [SerializeField] private PlayerStatus playerStatus;
+    [Inject] private PlayerStatus playerStatus;
 
     // プレイヤーの名前
     private string playerName;

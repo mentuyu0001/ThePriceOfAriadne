@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using VContainer;
 
 /// <summary>
 /// Enteキーで発生するイベントを呼び出すスクリプト
@@ -11,9 +12,9 @@ public class EnterKeyActionTrigger : MonoBehaviour
     // マップに落ちているパーツオブジェクトのタグ
     [SerializeField] private string partsTag = "Parts";
     // PlartsManagerの参照
-    [SerializeField] private PartsManager partsManager;
+    [Inject] private PartsManager partsManager;
     // プレイヤーの参照
-    [SerializeField] private GameObject player;
+    [Inject] private GameObject player;
     // 錆びたレバーのタグ
     [SerializeField] private string leverTag = "RustyLever";
     // ストップボタンのタグ
@@ -23,7 +24,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
     // 燃え盛る炎のタグ
     [SerializeField] private string burningFireTag = "BurningFire";
     // AnimationManagerの参照
-    [SerializeField] private PlayerAnimationManager playerAnimationManager;
+    [Inject] private PlayerAnimationManager playerAnimationManager;
 
     // 接触しているコライダー
     private Collider2D touchingCollision = null;
@@ -47,6 +48,32 @@ public class EnterKeyActionTrigger : MonoBehaviour
     // Unityの初期化処理
     private void Start()
     {
+        if (partsManager != null)
+        {
+            Debug.Log($"✅ PartsManager注入成功: {partsManager.name}");
+        }
+        else
+        {
+            Debug.LogError("❌ PartsManager注入失敗 - nullです");
+        }
+
+        if (player != null)
+        {
+            Debug.Log($"✅ Player注入成功: {player.name}");
+        }
+        else
+        {
+            Debug.LogError("❌ Player注入失敗 - nullです");
+        }
+
+        if (playerAnimationManager != null)
+        {
+            Debug.Log($"✅ PlayerAnimationManager注入成功: {playerAnimationManager.name}");
+        }
+        else
+        {
+            Debug.LogError("❌ PlayerAnimationManager注入失敗 - nullです");
+        }
         // 起動時に周囲のオブジェクトを確認
         CheckSurroundingObjects();
         // コントローラーのコンポーネントを取得

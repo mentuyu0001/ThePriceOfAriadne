@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using VContainer;
 
 public class ThrowKnifeController : MonoBehaviour
 {
@@ -7,14 +8,14 @@ public class ThrowKnifeController : MonoBehaviour
     /// ナイフの発射に伴う変数管理と発射向き設定、速度設定を行うスクリプト
     /// </summary>
 
-    [SerializeField] private GameObject knifePrefab; // ナイフのPrefabをInspectorから設定
+    [Inject] private IKnifeFactory knifeFactory; // ファクトリーを注入
     [SerializeField] private float spawnOffsetX = 1.5f; // プレイヤーからどれだけX軸方向に離れてナイフを出すか
     [SerializeField] private float throwForce = 10.0f;
 
     [SerializeField] private int throwCoolTime = 1000; // 次のナイフが投げれるまでのクールタイム(1000ms)
 
-    [SerializeField] private PlayerRunTimeStatus runTimeStatus;
-    [SerializeField] private PlayerStatus playerStatus;
+    [Inject] private PlayerRunTimeStatus runTimeStatus;
+    [Inject] private PlayerStatus playerStatus;
 
     public async UniTaskVoid ThrowKnife()
     {
@@ -37,37 +38,54 @@ public class ThrowKnifeController : MonoBehaviour
                 transform.position.z                               // Z座標もプレイヤーと同じ
             );
 
-            // 計算した座標でナイフを生成（回転はQuaternion.identityで無回転がシンプル）
-            GameObject knife = Instantiate(knifePrefab, spawnPosition, Quaternion.identity);
-            // ナイフの投げる力の設定
-            Vector2 forceVector;
-
-            // プレイヤーが左向きなら、ナイフの見た目も左向きにする
-            if (direction < 0)
+            if (knifeFactory != null)
             {
-                // 元のスケールを取得
-                Vector3 originalScale = knife.transform.localScale;
+                // ファクトリーからナイフインスタンスを生成
+                var knifeInstance = knifeFactory.CreateKnife(spawnPosition, Quaternion.identity);
+                var knifeComponent = knifeInstance.GetComponent<Knife>();
+                
+                if (knifeComponent != null)
+                {
+                    Debug.Log($"ナイフを投げました: {knifeInstance.name}");
+                    // ナイフの投げる力の設定
+                    Vector2 forceVector;
 
-                knife.transform.localScale = new Vector3(
-                originalScale.x * -1, 
-                originalScale.y, 
-                originalScale.z
-                );
+                    // プレイヤーが左向きなら、ナイフの見た目も左向きにする
+                    if (direction < 0)
+                    {
+                        // 元のスケールを取得
+                        Vector3 originalScale = knifeInstance.transform.localScale;
 
-                // 左向きの場合：Xにマイナスの力
-                forceVector = new Vector2(-throwForce, 0f);
-            } else {
-                // 左向きの場合：Xにマイナスの力
-                forceVector = new Vector2(throwForce, 0f);
+                        knifeInstance.transform.localScale = new Vector3(
+                        originalScale.x * -1, 
+                        originalScale.y, 
+                        originalScale.z
+                        );
+
+                        // 左向きの場合：Xにマイナスの力
+                        forceVector = new Vector2(-throwForce, 0f);
+                    } else {
+                        // 左向きの場合：Xにマイナスの力
+                        forceVector = new Vector2(throwForce, 0f);
+                    }
+
+                    // ナイフのRigidbodyを取得し、力を加える
+                    Rigidbody2D knifeRb = knifeInstance.GetComponent<Rigidbody2D>();
+                    knifeRb.AddForce(forceVector, ForceMode2D.Impulse);
+
+                    // 1秒まってから次のナイフが投げれるようにする
+                    await UniTask.Delay(throwCoolTime);
+                    runTimeStatus.CanThrowKnife = true;
+                }
             }
-
-            // ナイフのRigidbodyを取得し、力を加える
-            Rigidbody2D knifeRb = knife.GetComponent<Rigidbody2D>();
-            knifeRb.AddForce(forceVector, ForceMode2D.Impulse);
-
-            // 1秒まってから次のナイフが投げれるようにする
-            await UniTask.Delay(throwCoolTime);
-            runTimeStatus.CanThrowKnife = true;
+            else
+            {
+                Debug.LogError("KnifeFactoryが注入されていません");
+            }
+        }
+        else
+        {
+            Debug.LogError("KnifePrefabが注入されていません");
         }
     }
 }

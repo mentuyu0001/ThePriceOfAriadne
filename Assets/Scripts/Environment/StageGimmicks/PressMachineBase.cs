@@ -5,6 +5,7 @@ using System;
 using Cysharp.Threading.Tasks.Triggers;
 using DG.Tweening;
 using NUnit.Framework.Constraints;
+using VContainer;
 
 
 /// <summary>
@@ -18,9 +19,9 @@ public class PressMachineBase : StoppableGimick
     // Plateの落下位置の判定用オブジェクト
     [SerializeField] private GameObject pressArea;
     //GameOverManagerを参照
-    [SerializeField] private GameOverManager gameOverManager;
+    [Inject] private GameOverManager gameOverManager;
     //Playerオブジェクトの参照
-    [SerializeField] private GameObject player;
+    [Inject] private GameObject player;
     //Playerオブジェクトのオブジェクト名
     private string playerName;
     // Plateの開始位置（ローカル座標）

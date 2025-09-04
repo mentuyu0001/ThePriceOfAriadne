@@ -1,16 +1,17 @@
 using UnityEngine;
+using VContainer;
 
 /// <summary>
 /// 鍵のかかったドアを開ける鍵のスクリプト
 /// </summary>
-
 public class DoorKey : MonoBehaviour
 {
     // 鍵のID，これと同じIDのドアならば開けられる
     [SerializeField] int keyID;
 
     // プレイヤーの参照
-    [SerializeField] private GameObject player;
+    [Inject]
+    private GameObject player;
     
     // プレイヤーの名前
     private string playerName;
@@ -25,7 +26,7 @@ public class DoorKey : MonoBehaviour
         }
         else
         {
-            Debug.LogError("DoorKey: Player GameObject is not assigned.");
+            Debug.LogError("VContainerでプレイヤーの注入に失敗しました");
         }
     }
 

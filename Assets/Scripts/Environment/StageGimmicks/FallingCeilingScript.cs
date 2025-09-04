@@ -1,14 +1,19 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using VContainer;
 
 public class FallingCeilingScript : MonoBehaviour
 {
     // プレイヤーの参照
-    [SerializeField] private GameObject player;
+    [Inject] 
+    private GameObject player;
     // Groundの参照
-    [SerializeField] private GameObject ground;
+    [Inject] 
+    private GameObject ground;
     // GameOverManagerの参照
-    [SerializeField] private GameOverManager gameOverManager;
+    [Inject] 
+    private GameOverManager gameOverManager;
+    
     // 天井が落ちる速さ
     [SerializeField] private float fallingSpeed = 1f;
     // 子オブジェクトの参照
@@ -26,10 +31,11 @@ public class FallingCeilingScript : MonoBehaviour
         if (player != null)
         {
             playerName = player.name;
+            Debug.Log($"VContainerでプレイヤーが正常に取得されました: {player.name}");
         }
         else
         {
-            Debug.LogError("FallingCeilingScript: Player GameObject is not assigned.");
+            Debug.LogError("VContainerでプレイヤーの注入に失敗しました");
             return;
         }
 
@@ -37,10 +43,22 @@ public class FallingCeilingScript : MonoBehaviour
         if (ground != null)
         {
             groundName = ground.name;
+            Debug.Log($"VContainerでGroundが正常に取得されました: {ground.name}");
         }
         else
         {
-            Debug.LogError("FallingCeilingScript: Ground GameObject is not assigned.");
+            Debug.LogError("VContainerでGroundの注入に失敗しました");
+            return;
+        }
+
+        // GameOverManagerの確認
+        if (gameOverManager != null)
+        {
+            Debug.Log("VContainerでGameOverManagerが正常に取得されました");
+        }
+        else
+        {
+            Debug.LogError("VContainerでGameOverManagerの注入に失敗しました");
             return;
         }
 

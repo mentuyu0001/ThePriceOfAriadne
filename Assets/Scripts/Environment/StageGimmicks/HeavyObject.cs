@@ -1,14 +1,15 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using VContainer;
 
 /// <summary>
 /// プレイヤーが重いものを押すためのスクリプト
 /// </summary>
 public class HeavyObject : MonoBehaviour
 {
-    [SerializeField]
+    [Inject]
     private GameObject player;
-    [SerializeField]
+    [Inject]
     private PlayerStatus playerStatus;
 
     [SerializeField, Range(0.1f, 10f)]
@@ -35,13 +36,26 @@ public class HeavyObject : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         
-        // 初期状態ではX方向とY方向を固定
-        //rb.constraints = RigidbodyConstraints2D.FreezePosition;
-        
+        // VContainerで注入されたplayerの確認
         if (player != null)
         {
             playerRb = player.GetComponent<Rigidbody2D>();
             previousPlayerPosition = player.transform.position;
+            Debug.Log($"VContainerでプレイヤーが正常に注入されました: {player.name}");
+        }
+        else
+        {
+            Debug.LogError("VContainerでプレイヤーの注入に失敗しました");
+        }
+
+        // VContainerで注入されたplayerStatusの確認
+        if (playerStatus != null)
+        {
+            Debug.Log($"VContainerでPlayerStatusが正常に注入されました");
+        }
+        else
+        {
+            Debug.LogError("VContainerでPlayerStatusの注入に失敗しました");
         }
 
         // オブジェクトの横の長さを取得してdistanceThresholdを設定
@@ -153,7 +167,7 @@ public class HeavyObject : MonoBehaviour
 
                     if (distance > distanceThreshold)
                     {
-                        //Debug.Log("プレイヤーが離れすぎています - 動きを制限します");
+                        Debug.Log("プレイヤーが離れすぎています - 動きを制限します");
                         
                         canPushAgain = false;
                         

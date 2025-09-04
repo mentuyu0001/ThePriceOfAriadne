@@ -12,6 +12,7 @@ TagManager:
   - PlayerDetection
   - BurningFire
   - Knife
+  - Ground
   layers:
   - Default
   - TransparentFX

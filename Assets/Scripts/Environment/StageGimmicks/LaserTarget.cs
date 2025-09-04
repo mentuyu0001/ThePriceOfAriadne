@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using VContainer;
 
 /// <summary>
 /// レーザーのターゲットを上下に動かすスクリプト

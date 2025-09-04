@@ -1,5 +1,6 @@
 using Parts.Types;
 using UnityEngine;
+using VContainer; 
 
 /// <summary>
 /// プレイヤーが装備しているパーツとマップに落ちているパーツを交換するスクリプト
@@ -8,7 +9,7 @@ using UnityEngine;
 public class PartsManager : MonoBehaviour
 {
     // PlayerCustomizerの参照
-    [SerializeField] private PlayerCustomizer playerCustomizer;
+    [Inject] private PlayerCustomizer playerCustomizer;
 
     // プレイヤーが装備しているパーツをマップに落ちているパーツと交換するメソッド
     public void ExchangeParts(MapParts mapParts)

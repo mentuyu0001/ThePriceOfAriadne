@@ -1,5 +1,6 @@
 using Unity.Transforms;
 using UnityEngine;
+using VContainer;
 
 /// <summary>
 /// プレス機のプレート部分がプレイヤーと衝突したか判定するスクリプト
@@ -7,7 +8,7 @@ using UnityEngine;
 public class PressMachinePlate : MonoBehaviour
 {
     //Playerオブジェクトの参照
-    [SerializeField] private GameObject player;
+    [Inject] private GameObject player;
     //Playerオブジェクトのオブジェクト名
     private string playerName;
 

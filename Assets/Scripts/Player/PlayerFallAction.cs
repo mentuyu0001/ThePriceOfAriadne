@@ -1,9 +1,21 @@
 using UnityEngine;
-
+using VContainer;
 public class PlayerFallAction : FallingEntity
 {
-    [SerializeField] private GameOverManager gameOverManager;
-
+    [Inject] private GameOverManager gameOverManager;
+    
+    private void Start()
+    {
+        // デバッグ用：依存性注入の確認
+        if (gameOverManager != null)
+        {
+            Debug.Log($"✅ PlayerFallAction: GameOverManager注入成功 - {gameOverManager.name}");
+        }
+        else
+        {
+            Debug.LogError("❌ PlayerFallAction: GameOverManager注入失敗 - nullです");
+        }
+    }
     protected override void FallAction()
     {
         gameOverManager.GameOver();

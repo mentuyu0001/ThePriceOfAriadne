@@ -1,6 +1,7 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using VContainer;
 
 public class PlayerAirChecker : MonoBehaviour
 {
@@ -15,14 +16,40 @@ public class PlayerAirChecker : MonoBehaviour
     [SerializeField] private LayerMask groundLayer; // 地面のレイヤーを指定
     [SerializeField] private Vector2 sizeModifier = new Vector2(1.0f, 0.1f); // レイを飛ばす際のコライダーサイズ 例：幅は90%、高さは20%
     [SerializeField] private float groundCheckBuffer = 0f; // コライダーの底辺から伸ばすレイの長さ
-    [SerializeField] private PlayerRunTimeStatus runTimeStatus; // 二段ジャンプのプロパティを取得
-    [SerializeField] private PlayerStatus playerStatus; // 二段ジャンプできるかどうかを取得する
+    [Inject] private PlayerRunTimeStatus runTimeStatus; // 二段ジャンプのプロパティを取得
+    [Inject] private PlayerStatus playerStatus; // 二段ジャンプできるかどうかを取得する
 
-    [SerializeField] private PlayerAnimationManager playerAnimationManager; // プレイヤーアニメーションマネージャーの取得
+    [Inject] private PlayerAnimationManager playerAnimationManager; // プレイヤーアニメーションマネージャーの取得
 
     private CancellationToken cancellationTokenOnDestroy; // キャンセルトークンを保存する変数
 
     private void Start() {
+        Debug.Log("=== PlayerAirChecker 依存性注入確認 ===");
+        // [Inject]による注入の確認
+        if (runTimeStatus != null)
+        {
+            Debug.Log($"✅ PlayerRunTimeStatus注入成功: {runTimeStatus.name} (Type: {runTimeStatus.GetType()})");
+        }
+        else
+        {
+            Debug.LogError("❌ PlayerRunTimeStatus注入失敗 - nullです");
+        }
+        if (playerStatus != null)
+        {
+            Debug.Log($"✅ PlayerStatus注入成功: {playerStatus.name} (Type: {playerStatus.GetType()})");
+        }
+        else
+        {
+            Debug.LogError("❌ PlayerStatus注入失敗 - nullです");
+        }
+        if (playerAnimationManager != null)
+        {
+            Debug.Log($"✅ PlayerAnimationManager注入成功: {playerAnimationManager.name} (Type: {playerAnimationManager.GetType()})");
+        }
+        else
+        {            
+            Debug.LogError("❌ PlayerAnimationManager注入失敗 - nullです");
+        }          
         // オブジェクトが生きている間に確実に一度呼び出し、トークンをキャッシュする
         this.cancellationTokenOnDestroy = this.GetCancellationTokenOnDestroy();
 

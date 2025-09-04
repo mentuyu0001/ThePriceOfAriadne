@@ -1,10 +1,11 @@
 using UnityEngine;
+using VContainer;
  /// <summary>
  /// 燃え盛る炎を通れない警告するゾーン（常に通り抜けられない）
  /// </summary>
 public class BurningFireCheckZone : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
+    [Inject] private GameObject player;
     [SerializeField] private GameObject warningUI; // 警告表示用のUI（オプション）
     [SerializeField] private Collider2D fireFieldCollider; // 炎フィールドの物理コライダー
     [SerializeField] private Collider2D fireFieldColliderOpposite; // 反対側の炎フィールドの物理コライダー

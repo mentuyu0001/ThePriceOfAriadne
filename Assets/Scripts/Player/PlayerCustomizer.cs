@@ -1,5 +1,6 @@
 using UnityEngine;
 using Parts.Types;
+using VContainer;
 
 /// <summary>
 /// プレイヤーが装備しているパーツと能力を設定するスクリプト
@@ -8,17 +9,17 @@ using Parts.Types;
 public class PlayerCustomizer : MonoBehaviour
 {
     // シングルトンの取得
-    [SerializeField] private PlayerParts playerParts;
-    [SerializeField] private PlayerStatus playerStatus;
+    [Inject] private PlayerParts playerParts;
+    [Inject] private PlayerStatus playerStatus;
 
     // Controllerの取得
-    [SerializeField] private Controller controller;
+    [Inject] private Controller controller;
 
     // データファイルの取得
-    [SerializeField] private PlayerStatusData statusData;
+    [Inject] private PlayerStatusData statusData;
 
     // RunTimeStatusの取得
-    [SerializeField] private PlayerRunTimeStatus runTimeStatus;
+    [Inject] private PlayerRunTimeStatus runTimeStatus;
 
     private void Awake() {
         ChangePlayerStatus();
