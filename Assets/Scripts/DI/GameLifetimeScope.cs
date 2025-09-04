@@ -14,7 +14,7 @@ public class GameLifetimeScope : LifetimeScope
     {
         if (enableDebugLog) Debug.Log("GameLifetimeScope 登録開始");
 
-        // Player, Ground, GameOverManager, PlayerStatusの登録（ここは変更なし）
+        
         #region Singleton_Objects
         // プレイヤーを自動検索（名前付きで登録）
         var player = GameObject.FindGameObjectWithTag("Player");
@@ -64,6 +64,24 @@ public class GameLifetimeScope : LifetimeScope
         else
         {
             Debug.LogError("アドレス 'KnifePrefab' のアセットが見つかりません。");
+        }
+
+        // WaterPrefabを自動検索（ファクトリーとして登録）
+        Debug.Log("WaterPrefab読み込み開始...");
+        var waterHandle = Addressables.LoadAssetAsync<GameObject>("WaterPrefab");
+        var waterPrefabGo = waterHandle.WaitForCompletion();
+        
+        if (waterPrefabGo != null)
+        {
+            Debug.Log($"読み込んだWaterオブジェクト名: {waterPrefabGo.name}");
+            
+            // WaterFactoryとして登録（GameObjectとしては登録しない）
+            builder.Register<IWaterFactory>(container => new WaterFactory(waterPrefabGo), Lifetime.Singleton);
+            Debug.Log($"Water Factory の登録に成功しました: {waterPrefabGo.name}");
+        }
+        else
+        {
+            Debug.LogError("アドレス 'WaterPrefab' のアセットが見つかりません。");
         }
 
         // GameOverManagerを自動検索
@@ -297,6 +315,24 @@ public class GameLifetimeScope : LifetimeScope
         }
         
         if (enableDebugLog) Debug.Log("GameLifetimeScope 登録完了");
+
+        // ShootWaterController
+        var shootWaterController = player.GetComponent<ShootWaterController>();
+        if (shootWaterController != null)
+        {
+            // 1. インスタンスを登録
+            builder.RegisterInstance(shootWaterController);
+            // 2. 構築後にDIを実行
+            builder.RegisterBuildCallback(resolver =>
+            {
+                resolver.Inject(shootWaterController);
+            });
+            if (enableDebugLog) Debug.Log("ShootWaterControllerに注入予約しました");
+        }
+        else
+        {
+            Debug.LogError("PlayerオブジェクトにShootWaterControllerコンポーネントが見つかりません");
+        }
     }
 
 }

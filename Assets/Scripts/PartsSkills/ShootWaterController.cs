@@ -1,18 +1,20 @@
 using UnityEngine;
 using System.Collections;
+using VContainer;
 
 /// <summary>
 /// 水を前方に表示するクラス
 /// </summary>
 public class ShootWaterController : MonoBehaviour
 {   
-    [SerializeField] private GameObject waterPrefab; // 水のプレハブ
+    [Inject] private GameObject player; // プレイヤーオブジェクト
+    [Inject] private PlayerStatus playerStatus; // プレイヤーのステータス
+    [Inject] private IWaterFactory waterFactory;
+
     [SerializeField] private float displayDistance = 1.5f; // 前方に表示する距離
     [SerializeField] private float displayDuration = 1.0f; // 表示時間（秒）
     
-    [SerializeField] private GameObject player; // プレイヤーオブジェクト
-    [SerializeField] private PlayerStatus playerStatus;
-    [SerializeField] private Rigidbody2D playerRigidbody; // プレイヤーのRigidbody2D
+    private Rigidbody2D playerRigidbody; // プレイヤーのRigidbody2D
     
     private RigidbodyConstraints2D originalConstraints; // 元のconstraints値を保存する変数
 
@@ -66,8 +68,8 @@ public class ShootWaterController : MonoBehaviour
                 1.0f // Z座標を1に固定
             );
 
-            // 水のプレハブを生成（プレイヤーの前方に配置）
-            GameObject water = Instantiate(waterPrefab, waterPosition, transform.rotation);
+            // ファクトリーから水インスタンスを生成
+            GameObject water = waterFactory.CreateWater(waterPosition);
             
             // プレイヤーの移動を制限
             RestrictPlayerMovement();

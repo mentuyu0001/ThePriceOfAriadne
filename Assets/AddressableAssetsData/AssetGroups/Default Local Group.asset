@@ -20,6 +20,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 86547fa07cbb743a685fe16b07a0e63e
+    m_Address: WaterPrefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8c06f7a30ab3189438ddbe21c4c01c21
     m_Address: PartsSkills
     m_ReadOnly: 0
