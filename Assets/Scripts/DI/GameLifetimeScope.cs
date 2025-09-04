@@ -40,6 +40,24 @@ public class GameLifetimeScope : LifetimeScope
             Debug.LogError("Groundコンポーネントが見つかりません");
         }
 
+        // PlayerStatusDataを自動検索（Addressableから）
+        Debug.Log("PlayerStatusData読み込み開始...");
+        var statusDataHandle = Addressables.LoadAssetAsync<PlayerStatusData>("PlayerStatus");
+        var statusData = statusDataHandle.WaitForCompletion();
+        
+        if (statusData != null)
+        {
+            Debug.Log($"読み込んだPlayerStatusData名: {statusData.name}");
+            
+            // PlayerStatusDataを登録
+            builder.RegisterInstance(statusData);
+            Debug.Log($"PlayerStatusData の登録に成功しました: {statusData.name}");
+        }
+        else
+        {
+            Debug.LogError("アドレス 'PlayerStatus' のPlayerStatusDataアセットが見つかりません。");
+        }
+
         // KnifePrefabを自動検索（ファクトリーとして登録）
         Debug.Log("KnifePrefab読み込み開始...");
         var handle = Addressables.LoadAssetAsync<GameObject>("KnifePrefab");

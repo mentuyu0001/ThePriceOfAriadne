@@ -16,7 +16,7 @@ public class PlayerCustomizer : MonoBehaviour
     [Inject] private Controller controller;
 
     // データファイルの取得
-    [SerializeField] private PlayerStatusData statusData;
+    [Inject] private PlayerStatusData statusData;
 
     // RunTimeStatusの取得
     [Inject] private PlayerRunTimeStatus runTimeStatus;
