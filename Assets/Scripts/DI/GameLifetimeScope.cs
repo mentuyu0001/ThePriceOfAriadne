@@ -395,6 +395,24 @@ public class GameLifetimeScope : LifetimeScope
         {
             Debug.LogError("TrackingCameraコンポーネントが見つかりません");
         }
+
+        // WaterTank
+        var waterTank = Object.FindAnyObjectByType<WaterTank>();
+        if (waterTank != null)
+        {
+            // 1. インスタンスを登録
+            builder.RegisterInstance(waterTank);
+            // 2. 構築後にDIを実行
+            builder.RegisterBuildCallback(resolver =>
+            {
+                resolver.Inject(waterTank);
+            });
+            if (enableDebugLog) Debug.Log("WaterTankに注入予約しました");   
+        }
+        else
+        {
+            Debug.LogError("WaterTankコンポーネントが見つかりません");
+        }
     }
 
 }

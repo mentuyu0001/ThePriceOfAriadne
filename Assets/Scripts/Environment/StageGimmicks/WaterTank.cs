@@ -1,10 +1,11 @@
 using UnityEngine;
+using VContainer;
 /// <summary>
 /// 水をチャージするためのクラス
 /// </summary>
 public class WaterTank : MonoBehaviour
 {
-    [SerializeField] private PlayerStatus playerStatus; // プレイヤーのステータスを参照する
+    [Inject] private PlayerStatus playerStatus; // プレイヤーのステータスを参照する
 
     public void ChargeWater()
     {
