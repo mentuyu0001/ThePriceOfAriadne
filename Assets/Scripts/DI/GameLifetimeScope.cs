@@ -369,6 +369,58 @@ public class GameLifetimeScope : LifetimeScope
             Debug.LogWarning("PressMachineBaseコンポーネントが見つかりません");
         }
 
+        // Laser
+        var lasers = Object.FindObjectsByType<Laser>(FindObjectsSortMode.None);
+        if (lasers.Length > 0)
+        {
+            // 1. リストを登録
+            builder.RegisterInstance<IReadOnlyList<Laser>>(lasers);
+            
+            // 2. LaserFactoryを登録
+            builder.Register<ILaserFactory>(container => 
+                new LaserFactory(lasers), Lifetime.Singleton);
+            
+            // 3. 構築後にDIを実行
+            builder.RegisterBuildCallback(resolver =>
+            {
+                foreach (var laser in lasers)
+                {
+                    resolver.Inject(laser);
+                }
+            });
+            if (enableDebugLog) Debug.Log($"{lasers.Length}個のLaserを登録 & 注入予約");
+        }
+        else
+        {
+            Debug.LogWarning("Laserコンポーネントが見つかりません");
+        }
+
+        // LaserTarget
+        var laserTargets = Object.FindObjectsByType<LaserTarget>(FindObjectsSortMode.None);
+        if (laserTargets.Length > 0)
+        {
+            // 1. リストを登録
+            builder.RegisterInstance<IReadOnlyList<LaserTarget>>(laserTargets);
+            
+            // 2. LaserTargetファクトリーを登録
+            builder.Register<ILaserTargetFactory>(container => 
+                new LaserTargetFactory(laserTargets), Lifetime.Singleton);
+            
+            // 3. 構築後にDIを実行
+            builder.RegisterBuildCallback(resolver =>
+            {
+                foreach (var laserTarget in laserTargets)
+                {
+                    resolver.Inject(laserTarget);
+                }
+            });
+            if (enableDebugLog) Debug.Log($"{laserTargets.Length}個のLaserTargetを登録 & 注入予約");
+        }
+        else
+        {
+            Debug.LogWarning("LaserTargetコンポーネントが見つかりません");
+        }
+
         // Controller
         var controller = player.GetComponent<Controller>();
         if (controller != null)

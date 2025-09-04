@@ -1,11 +1,15 @@
 using UnityEngine;
+using VContainer;
+/// <summary>
+/// レーザーのスクリプト
+/// </summary>      
 
 public class Laser : StoppableGimick
 {
     [SerializeField] private Transform laserStand; // レーザーの台座
     [SerializeField] private GameObject laserBeam; // レーザー本体
-    [SerializeField] private GameOverManager gameOverManager; // GameOverManagerの参照
-    [SerializeField] private GameObject player; // プレイヤーオブジェクト
+    [Inject] private GameOverManager gameOverManager; // GameOverManagerの参照
+    [Inject] private GameObject player; // プレイヤーオブジェクト
     [SerializeField] private LaserTarget target; // GameObject → LaserTargetに変更
 
     private bool isActive = true;
