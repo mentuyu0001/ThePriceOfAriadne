@@ -18,7 +18,6 @@ public class ItemManager : MonoBehaviour
             case 1: // 少女の研究報告書
                 InventoryData.Instance.SetPlayerReportObtained(true);
                 Debug.Log("Collected item: 少女の研究報告書");
-                Debug.Log("PlayerReportObtained: " + InventoryData.Instance.PlayerReportObtained);
                 break;
             case 2: // 泥棒の研究報告書
                 InventoryData.Instance.SetTheifReportObtained(true);

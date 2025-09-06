@@ -58,6 +58,23 @@ public class GameLifetimeScope : LifetimeScope
             Debug.LogError("アドレス 'PlayerStatus' のPlayerStatusDataアセットが見つかりません。");
         }
 
+        // ItemDataを自動検索（Addressableから)
+        Debug.Log("ItemData読み込み開始...");
+        var ItemDataHandle = Addressables.LoadAssetAsync<ItemData>("ItemData");
+        var ItemData = ItemDataHandle.WaitForCompletion();
+        if (ItemData != null)
+        {
+            Debug.Log($"読み込んだItemData名: {ItemData.name}");
+
+            // ItemDataを登録
+            builder.RegisterInstance(ItemData);
+            Debug.Log($"ItemData の登録に成功しました: {ItemData.name}");
+        }
+        else
+        {
+            Debug.LogError("アドレス 'PlayerParts' のItemDataアセットが見つかりません。");
+        }
+
         // KnifePrefabを自動検索（ファクトリーとして登録）
         Debug.Log("KnifePrefab読み込み開始...");
         var handle = Addressables.LoadAssetAsync<GameObject>("KnifePrefab");

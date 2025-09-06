@@ -12,19 +12,123 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47354db7baa064570b872ce9a190ce8c, type: 3}
   m_Name: ItemData
   m_EditorClassIdentifier: 
-  playerReportID: 0
-  playerReportName: 
-  playerReportDescriptionPlayerTone: 
-  playerReportDescriptionTheifTone: 
-  playerReportDescriptionMuscleTone: 
-  playerReportDescriptionFireTone: 
-  playerReportDescriptionAssassinTone: 
-  playerReportText: 
+  playerReportID: 1
+  playerReportName: "\u5C11\u5973\u306E\u7814\u7A76\u5831\u544A\u66F8"
+  playerReportDescriptions:
+    playerTone: 
+    theifTone: 
+    muscleTone: 
+    fireTone: 
+    assassinTone: 
+    allQuartersTone: 
+    ownThreeQuartersTone: 
+    ownFullTone: 
+  playerReportText: "\u5C11\u5973\u306E\u7814\u7A76\u5831\u544A\u66F8\u306E\u8A73\u7D30"
   theifReportID: 0
   theifReportName: 
-  theifReportDescriptionPlayerTone: 
-  theifReportDescriptionTheifTone: 
-  theifReportDescriptionMuscleTone: 
-  theifReportDescriptionFireTone: 
-  theifReportDescriptionAssassinTone: 
+  theifReportDescriptions:
+    playerTone: 
+    theifTone: 
+    muscleTone: 
+    fireTone: 
+    assassinTone: 
+    allQuartersTone: 
+    ownThreeQuartersTone: 
+    ownFullTone: 
   theifReportText: 
+  muscleReportID: 0
+  muscleReportName: 
+  muscleReportDescriptions:
+    playerTone: 
+    theifTone: 
+    muscleTone: 
+    fireTone: 
+    assassinTone: 
+    allQuartersTone: 
+    ownThreeQuartersTone: 
+    ownFullTone: 
+  muscleReportText: 
+  fireReportID: 0
+  fireReportName: 
+  fireReportDescriptions:
+    playerTone: 
+    theifTone: 
+    muscleTone: 
+    fireTone: 
+    assassinTone: 
+    allQuartersTone: 
+    ownThreeQuartersTone: 
+    ownFullTone: 
+  fireReportText: 
+  assassinReportID: 0
+  assassinReportName: 
+  assassinReportDescriptions:
+    playerTone: 
+    theifTone: 
+    muscleTone: 
+    fireTone: 
+    assassinTone: 
+    allQuartersTone: 
+    ownThreeQuartersTone: 
+    ownFullTone: 
+  assassinReportText: 
+  playerDiaryID: 0
+  playerDiaryName: 
+  playerDiaryDescriptions:
+    playerTone: 
+    theifTone: 
+    muscleTone: 
+    fireTone: 
+    assassinTone: 
+    allQuartersTone: 
+    ownThreeQuartersTone: 
+    ownFullTone: 
+  playerDiaryText: 
+  theifDiaryID: 0
+  theifDiaryName: 
+  theifDiaryDescriptions:
+    playerTone: 
+    theifTone: 
+    muscleTone: 
+    fireTone: 
+    assassinTone: 
+    allQuartersTone: 
+    ownThreeQuartersTone: 
+    ownFullTone: 
+  theifDiaryText: 
+  muscleDiaryID: 0
+  muscleDiaryName: 
+  muscleDiaryDescriptions:
+    playerTone: 
+    theifTone: 
+    muscleTone: 
+    fireTone: 
+    assassinTone: 
+    allQuartersTone: 
+    ownThreeQuartersTone: 
+    ownFullTone: 
+  muscleDiaryText: 
+  fireDiaryID: 0
+  fireDiaryName: 
+  fireDiaryDescriptions:
+    playerTone: 
+    theifTone: 
+    muscleTone: 
+    fireTone: 
+    assassinTone: 
+    allQuartersTone: 
+    ownThreeQuartersTone: 
+    ownFullTone: 
+  fireDiaryText: 
+  assassinDiaryID: 0
+  assassinDiaryName: 
+  assassinDiaryDescriptions:
+    playerTone: 
+    theifTone: 
+    muscleTone: 
+    fireTone: 
+    assassinTone: 
+    allQuartersTone: 
+    ownThreeQuartersTone: 
+    ownFullTone: 
+  assassinDiaryText: 

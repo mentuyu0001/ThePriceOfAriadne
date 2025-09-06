@@ -1,138 +1,99 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 /// <summary>
 /// アイテムの情報を保持するスクリプタブルオブジェクト
 /// </summary>
-
 [CreateAssetMenu(fileName = "ItemData", menuName = "ScriptableObject/Item/ItemData")]
 public class ItemData : ScriptableObject
 {
-    // 少女の研究報告書
-    [Header("少女の研究報告書")]
-    [SerializeField] public int playerReportID; // アイテムのID
-    [SerializeField] public string playerReportName; // アイテムの名前
-    [SerializeField] public ItemDescriptions playerReportDescriptions; // アイテムを説明するセリフ（各キャラクターの口調パターンを用意）
-    [SerializeField] public string playerReportText; // アイテムの中身のテキスト
-    
-    // 泥棒の研究報告書
-    [Header("泥棒の研究報告書")]
-    [SerializeField] public int theifReportID; // アイテムのID
-    [SerializeField] public string theifReportName; // アイテムの名前
-    [SerializeField] public ItemDescriptions theifReportDescriptions; // アイテムを説明するセリフ（各キャラクターの口調パターンを用意）
-    [SerializeField] public string theifReportText; // アイテムの中身のテキスト
+    [Header("アイテム一覧")]
+    [SerializeField] private List<Item> items = new List<Item>();
 
-    // マッチョの研究報告書
-    [Header("マッチョの研究報告書")]
-    [SerializeField] public int muscleReportID; // アイテムのID
-    [SerializeField] public string muscleReportName; // アイテムの名前              
-    [SerializeField] public ItemDescriptions muscleReportDescriptions; // アイテムを説明するセリフ（各キャラクターの口調パターンを用意）
-    [SerializeField] public string muscleReportText; // アイテムの中身のテキスト
+    // アイテムIDに基づいてアイテム情報を取得するメソッド
+    public Item GetItemByID(int itemID)
+    {
+        return items.Find(item => item.id == itemID);
+    }
 
-    // 消防士の研究報告書
-    [Header("消防士の研究報告書")]
-    [SerializeField] public int fireReportID; // アイテムのID
-    [SerializeField] public string fireReportName; // アイテムの名前
-    [SerializeField] public ItemDescriptions fireReportDescriptions; // アイテムを説明するセリフ（各キャラクターの口調パターンを用意）
-    [SerializeField] public string fireReportText; // アイテムの中身のテキスト
+    // アイテムIDに基づいてアイテム名を取得するメソッド
+    public string GetItemNameByID(int itemID)
+    {
+        var item = GetItemByID(itemID);
+        return item != null ? item.name : "Unknown Item";
+    }
 
-    // アサシンの研究報告書
-    [Header("アサシンの研究報告書")]
-    [SerializeField] public int assassinReportID; // アイテムのID
-    [SerializeField] public string assassinReportName; // アイテムの名前
-    [SerializeField] public ItemDescriptions assassinReportDescriptions; // アイテムを説明するセリフ（各キャラクターの口調パターンを用意）
-    [SerializeField] public string assassinReportText; // アイテムの中身のテキスト
+    // アイテムIDに基づいてアイテムテキストを取得するメソッド
+    public string GetItemTextByID(int itemID)
+    {
+        var item = GetItemByID(itemID);
+        return item != null ? item.text : "Unknown Item Text";
+    }
 
-    // 少女の日記
-    [Header("少女の日記")]
-    [SerializeField] public int playerDiaryID; // アイテムのID
-    [SerializeField] public string playerDiaryName; // アイテムの名前
-    [SerializeField] public ItemDescriptions playerDiaryDescriptions; // アイテムを説明するセリフ（各キャラクターの口調パターンを用意）
-    [SerializeField] public string playerDiaryText; // アイテムの中身のテキスト
-    
-    // 泥棒の日記
-    [Header("泥棒の日記")]
-    [SerializeField] public int theifDiaryID; // アイテムのID
-    [SerializeField] public string theifDiaryName; // アイテムの名前
-    [SerializeField] public ItemDescriptions theifDiaryDescriptions; // アイテムを説明するセリフ（各キャラクターの口調パターンを用意）
-    [SerializeField] public string theifDiaryText; // アイテムの中身のテキスト
-    
-    // マッチョの日記
-    [Header("マッチョの日記")]
-    [SerializeField] public int muscleDiaryID; // アイテムのID
-    [SerializeField] public string muscleDiaryName; // アイテムの名前
-    [SerializeField] public ItemDescriptions muscleDiaryDescriptions; // アイテムを説明するセリフ（各キャラクターの口調パターンを用意）
-    [SerializeField] public string muscleDiaryText; // アイテムの中身のテキスト
-    
-    // 消防士の日記
-    [Header("消防士の日記")]
-    [SerializeField] public int fireDiaryID; // アイテムのID
-    [SerializeField] public string fireDiaryName; // アイテムの名前
-    [SerializeField] public ItemDescriptions fireDiaryDescriptions; // アイテムを説明するセリフ（各キャラクターの口調パターンを用意）
-    [SerializeField] public string fireDiaryText; // アイテムの中身のテキスト
-    
-    // アサシンの日記
-    [Header("アサシンの日記")]
-    [SerializeField] public int assassinDiaryID; // アイテムのID
-    [SerializeField] public string assassinDiaryName; // アイテムの名前
-    [SerializeField] public ItemDescriptions assassinDiaryDescriptions; // アイテムを説明するセリフ（各キャラクターの口調パターンを用意）
-    [SerializeField] public string assassinDiaryText; // アイテムの中身のテキスト
+    // アイテムIDに基づいて説明文を取得するメソッド
+    public ItemDescriptions GetItemDescriptionsByID(int itemID)
+    {
+        var item = GetItemByID(itemID);
+        return item?.descriptions;
+    }
 
-    // --- プロパティ ---   
-    public int PlayerReportID => playerReportID;
-    public string PlayerReportName => playerReportName;
-    public ItemDescriptions PlayerReportDescriptions => playerReportDescriptions;
-    public string PlayerReportText => playerReportText;
+    // すべてのアイテムを取得するメソッド
+    public List<Item> GetAllItems()
+    {
+        return new List<Item>(items);
+    }
+
+    // アイテムを追加するメソッド（エディタ用）
+    public void AddItem(Item item)
+    {
+        if (items.Find(x => x.id == item.id) == null)
+        {
+            items.Add(item);
+        }
+        else
+        {
+            Debug.LogWarning($"ID {item.id} のアイテムは既に存在します。");
+        }
+    }
+}
+
+[Serializable]
+public class Item
+{
+    [Header("基本情報")]
+    public int id;                          // アイテムのID
+    public string name;                     // アイテムの名前
+    [TextArea(3, 5)]
+    public string text;                     // アイテムの中身のテキスト
     
-    public int TheifReportID => theifReportID;
-    public string TheifReportName => theifReportName;
-    public ItemDescriptions TheifReportDescriptions => theifReportDescriptions;
-    public string TheifReportText => theifReportText;
-    
-    public int MuscleReportID => muscleReportID;
-    public string MuscleReportName => muscleReportName;
-    public ItemDescriptions MuscleReportDescriptions => muscleReportDescriptions;
-    public string MuscleReportText => muscleReportText;
-    
-    public int FireReportID => fireReportID;
-    public string FireReportName => fireReportName;
-    public ItemDescriptions FireReportDescriptions => fireReportDescriptions;
-    public string FireReportText => fireReportText;
-    
-    public int AssassinReportID => assassinReportID;
-    public string AssassinReportName => assassinReportName;
-    public ItemDescriptions AssassinReportDescriptions => assassinReportDescriptions;
-    public string AssassinReportText => assassinReportText;
-    
-    public int PlayerDiaryID => playerDiaryID;
-    public string PlayerDiaryName => playerDiaryName;
-    public ItemDescriptions PlayerDiaryDescriptions => playerDiaryDescriptions;
-    public string PlayerDiaryText => playerDiaryText;
-    
-    public int TheifDiaryID => theifDiaryID;
-    public string TheifDiaryName => theifDiaryName;
-    public ItemDescriptions TheifDiaryDescriptions => theifDiaryDescriptions;
-    public string TheifDiaryText => theifDiaryText;
-    
-    public int MuscleDiaryID => muscleDiaryID;
-    public string MuscleDiaryName => muscleDiaryName;
-    public ItemDescriptions MuscleDiaryDescriptions => muscleDiaryDescriptions;
-    public string MuscleDiaryText => muscleDiaryText;
-    
-    public int FireDiaryID => fireDiaryID;
-    public string FireDiaryName => fireDiaryName;
-    public ItemDescriptions FireDiaryDescriptions => fireDiaryDescriptions;
-    public string FireDiaryText => fireDiaryText;
-    
-    public int AssassinDiaryID => assassinDiaryID;
-    public string AssassinDiaryName => assassinDiaryName;
-    public ItemDescriptions AssassinDiaryDescriptions => assassinDiaryDescriptions;
-    public string AssassinDiaryText => assassinDiaryText;
+    [Header("説明文")]
+    public ItemDescriptions descriptions;   // アイテムを説明するセリフ
+
+    [Header("カテゴリ")]
+    public ItemType itemType;              // アイテムの種類
+
+    public Item(int id, string name, string text, ItemType itemType)
+    {
+        this.id = id;
+        this.name = name;
+        this.text = text;
+        this.itemType = itemType;
+        this.descriptions = new ItemDescriptions();
+    }
+}
+
+[Serializable]
+public enum ItemType
+{
+    ResearchReport,  // 研究報告書
+    Diary           // 日記
 }
 
 [Serializable]
 public class ItemDescriptions
 {
+    [Header("キャラクター別口調")]
     [Tooltip("プレイヤー口調での説明")]
     public string playerTone;
 
@@ -142,15 +103,19 @@ public class ItemDescriptions
     [Tooltip("マッチョ口調での説明")]
     public string muscleTone;
 
-    [Tooltip("消防士視点での説明")]
+    [Tooltip("消防士口調での説明")]
     public string fireTone;
 
     [Tooltip("アサシン口調での説明")]
     public string assassinTone;
+
+    [Header("パーツ占有率別")]
     [Tooltip("各パーツ占有率25%のときの説明")]
     public string allQuartersTone;
+
     [Tooltip("自身のパーツ占有率75%のときの説明")]
     public string ownThreeQuartersTone;
+
     [Tooltip("自身のパーツ占有率100%のときの説明")]
     public string ownFullTone;
 }
