@@ -220,12 +220,18 @@ public class GameLifetimeScope : LifetimeScope
         var playerAnimationManager = Object.FindAnyObjectByType<PlayerAnimationManager>();
         if (playerAnimationManager != null)
         {
+            // 1. インスタンスを登録
             builder.RegisterInstance(playerAnimationManager);
+            // 2. 構築後にDIを実行
+            builder.RegisterBuildCallback(resolver =>
+            {
+                resolver.Inject(playerAnimationManager);
+            });
             if (enableDebugLog) Debug.Log($"PlayerAnimationManagerが正常に登録されました: {playerAnimationManager.name}");
         }
         else
         {
-            Debug.LogError("PlayerオブジェクトにPlayerAnimationManagerコンポーネントが見つかりません");
+            Debug.LogError("PlayerAnimationManagerコンポーネントが見つかりません");
         }
 
         // PlayerCustomizerを登録
@@ -302,6 +308,25 @@ public class GameLifetimeScope : LifetimeScope
             else
             {
                 Debug.LogError("PlayerオブジェクトにPlayerAirCheckerコンポーネントが見つかりません");
+            }
+
+            // PlayerAnimatorを登録（Playerオブジェクトから取得）
+            var playerAnimator = player.GetComponent<Animator>();
+            if (playerAnimator != null)
+            {
+                // 1. インスタンスを登録
+                builder.RegisterInstance(playerAnimator);
+                if (enableDebugLog) Debug.Log($"PlayerAnimatorが正常に登録されました: {playerAnimator.name}");
+                // 2. 構築後にDIを実行
+                builder.RegisterBuildCallback(resolver =>
+                {
+                    resolver.Inject(playerAnimator);
+                });
+                if (enableDebugLog) Debug.Log("PlayerAnimatorに注入予約しました");
+            }
+            else
+            {
+                Debug.LogError("PlayerオブジェクトにAnimatorコンポーネントが見つかりません");
             }
 
         }

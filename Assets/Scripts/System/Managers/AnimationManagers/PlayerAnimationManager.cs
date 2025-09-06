@@ -1,4 +1,5 @@
 using UnityEngine;
+using VContainer;
 
 public class PlayerAnimationManager : MonoBehaviour
 {
@@ -6,7 +7,7 @@ public class PlayerAnimationManager : MonoBehaviour
     /// プレイヤーアニメーションのtrue/falseを設定するマネージャー
     /// </summary>
 
-    [SerializeField] private Animator playerAnimator;
+    [Inject] private Animator playerAnimator;
 
     // 歩くアニメーション
     public void AniWalkTrue()
