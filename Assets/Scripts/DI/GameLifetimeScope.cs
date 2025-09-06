@@ -270,6 +270,24 @@ public class GameLifetimeScope : LifetimeScope
             Debug.LogError("ItemManagerコンポーネントが見つかりません");
         }
 
+        // GanmeDataManagerを登録
+        var gameDataManager = Object.FindAnyObjectByType<GameDataManager>();
+        if (gameDataManager != null)
+        {
+            // 1. インスタンスを登録
+            builder.RegisterInstance(gameDataManager);
+            // 2. 構築後にDIを実行
+            builder.RegisterBuildCallback(resolver =>
+            {
+                resolver.Inject(gameDataManager);
+            });
+            if (enableDebugLog) Debug.Log("GameDataManagerに注入予約しました");
+        }
+        else
+        {
+            Debug.LogError("GameDataManagerコンポーネントが見つかりません");
+        }
+
         // Playerにattachされているコンポーネントの登録
         if (player != null)
         {
