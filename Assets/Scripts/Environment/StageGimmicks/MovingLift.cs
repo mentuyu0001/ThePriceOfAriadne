@@ -12,7 +12,7 @@ public class MovingLift : StoppableGimick
     private Vector2 posStart;
     // RigidBody2Dコンポーネント
     private Rigidbody2D rigidBody2D;
-    // リフトを上下に動かすアニメーション
+    // リフトのアニメーション
     private Tween liftAnimation;
     // アニメーションの1周期にかかる時間
     [SerializeField] private float duration;
@@ -38,6 +38,9 @@ public class MovingLift : StoppableGimick
         {
             // スタート時の座標を取得
             posStart = rigidBody2D.transform.position;
+            // 初期位相に合わせてリフトのスタート位置を動かす
+            posStart.y += deltaY * Mathf.Sin(initialPhaseDeg / 180 * Mathf.PI);
+            rigidBody2D.transform.position = posStart;
         }
 
         // DOTweenのアニメーションが自動再生されないように設定
@@ -49,7 +52,7 @@ public class MovingLift : StoppableGimick
         {
             // リフトを上下に単振動させるアニメーション
             // Rigidbody2Dを使って動かすことで、当たり判定を維持しながら動かせる
-            Vector2 posCurrent = posStart;
+            Vector2 posCurrent = posStart - new Vector2(0, deltaY * Mathf.Sin(initialPhaseDeg / 180 * Mathf.PI));
             posCurrent.y = posCurrent.y + deltaY * Mathf.Sin(value + initialPhaseDeg / 180 * Mathf.PI);
             rigidBody2D.MovePosition(posCurrent);
         })
@@ -65,14 +68,10 @@ public class MovingLift : StoppableGimick
         }
     }
 
-    public override bool IsRunning => liftAnimation.IsActive();
+    public override bool IsRunning => liftAnimation.IsPlaying();
 
     public override void StartGimick()
     {
-        // 初期位相に合わせてリフトのスタート位置を動かす
-        Vector2 movedPos = posStart;
-        movedPos.y += Mathf.Sin(initialPhaseDeg / 180 * Mathf.PI);
-        rigidBody2D.DOMove(movedPos, 1.5f);
         // アニメーションを開始
         liftAnimation.Restart();
     }
@@ -80,8 +79,8 @@ public class MovingLift : StoppableGimick
     public override void StopGimick()
     {
         // アニメーションを停止
-        liftAnimation.Kill();
+        liftAnimation.Pause();
         // リフトをスタート時の位置に戻す
-        rigidBody2D.DOMove(posStart, 2.0f);
+        rigidBody2D.DOMove(posStart, duration/4).Play();
     }
 }
