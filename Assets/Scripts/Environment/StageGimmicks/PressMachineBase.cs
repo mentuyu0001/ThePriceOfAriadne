@@ -48,6 +48,8 @@ public class PressMachineBase : StoppableGimick
     // ゲームスタート時に停止させておくか判定するbool型変数
     // trueならゲームスタート時は動く状態
     [SerializeField] private bool isMovingAtStart;
+    // アニメーションが動作中か判定する変数
+    // プレス機が動いているならtrue
 
     void Start()
     {
@@ -147,13 +149,13 @@ public class PressMachineBase : StoppableGimick
     public override void StopGimick()
     {
         // アニメーションを停止
-        MoveSequence.Kill();
+        MoveSequence.Pause();
         // Plateをスタート位置へ移動
         Vector2 posNow = plate.transform.localPosition;
         plateRigidBody.DOLocalPath(
             path: new Vector2[] { posNow, posStart },
             duration: 1.0f
-        );
+        ).Play();
         Debug.Log("Stopped PressMachine!");
     }
 
@@ -209,7 +211,7 @@ public class PressMachineBase : StoppableGimick
 
 
     // StoppableGimickに追加した抽象メソッドを実装
-    public override bool IsRunning => MoveSequence.IsActive(); // ギミックが動作中かどうかを示すプロパティ
+    public override bool IsRunning => MoveSequence.IsPlaying(); // ギミックが動作中かどうかを示すプロパティ
     public override void StartGimick()
     {
         // ギミックを再起動するために、シーケンスをリセットして再スタート
