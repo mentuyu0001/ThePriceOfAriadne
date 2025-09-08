@@ -14,6 +14,7 @@ using VContainer;
 
 public class PressMachineBase : StoppableGimick
 {
+    [Header("ゲームオブジェクト")]
     // Plateオブジェクト
     [SerializeField] private GameObject plate;
     // Plateの落下位置の判定用オブジェクト
@@ -24,12 +25,14 @@ public class PressMachineBase : StoppableGimick
     [Inject] private GameObject player;
     //Playerオブジェクトのオブジェクト名
     private string playerName;
+    [Header("Plateの座標（ローカル座標）")]
     // Plateの開始位置（ローカル座標）
     [SerializeField] private Vector2 posStart;
     // // Plateのスタンバイ位置（ローカル座標）
     // [SerializeField] private Vector2 posReady;
     // Plateの落下位置（ローカル座標）
     [SerializeField] private Vector2 posPressed;
+    [Space]
     //プレス機のクールタイム
     [SerializeField] private float coolTime;
     // PlateオブジェクトのRigidBody2D

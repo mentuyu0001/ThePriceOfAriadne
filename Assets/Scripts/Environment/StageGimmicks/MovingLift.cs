@@ -21,6 +21,7 @@ public class MovingLift : StoppableGimick
     // ゲーム開始時に動かすかどうかを判定する変数
     // trueならゲーム開始時に動かす、falseならゲーム開始時は止めておく
     [SerializeField] private bool isMovingAtStart;
+    [Header("単振動の初期位相（度）")]
     // 初期位相（単位は度数）
     [SerializeField] private float initialPhaseDeg;
 
