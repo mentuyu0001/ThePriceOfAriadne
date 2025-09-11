@@ -12,7 +12,8 @@ public class ShootWaterController : MonoBehaviour
     [Inject] private IWaterFactory waterFactory;
 
     [SerializeField] private float displayDistance = 1.5f; // 前方に表示する距離
-    [SerializeField] private float displayDuration = 1.0f; // 表示時間（秒）
+    [SerializeField] private float waterWait = 0.5f; // 水の発射待機時間
+    [SerializeField] private float waterDuration = 1.0f; // 表示時間（秒）
     
     private Rigidbody2D playerRigidbody; // プレイヤーのRigidbody2D
     
@@ -50,36 +51,44 @@ public class ShootWaterController : MonoBehaviour
         // CanShootWaterがtrueの場合のみ水を表示
         if (playerStatus != null && playerStatus.CanShootWater)
         {
-            // プレイヤーの向きに応じて水の発生位置のX座標のプラスマイナスを変更する
-            float direction = 1f; // まず右向き(1)で初期化
-            playerDirectionRight = true;
-            
-            // Y軸の回転が180度に近いかどうかで左向きかを判定する
-            if (Mathf.Approximately(transform.eulerAngles.y, 180f))
-            {
-                direction = -1f; // 左向き(-1)にする
-                playerDirectionRight = false;
-            }
-
-            // 水の生成座標を計算
-            Vector3 waterPosition = new Vector3(
-                transform.position.x + (displayDistance * direction),
-                transform.position.y,
-                1.0f // Z座標を1に固定
-            );
-
-            // ファクトリーから水インスタンスを生成
-            GameObject water = waterFactory.CreateWater(waterPosition);
-            
-            // プレイヤーの移動を制限
-            RestrictPlayerMovement();
-
-            // 指定時間後に水オブジェクトを破棄し、プレイヤーの移動を再開
-            StartCoroutine(DestroyWaterAndAllowMovement(water, displayDuration));
-
-            // 水を発射したら再度発射できないようにする
-            playerStatus.CanShootWater = false;
+            StartCoroutine(ShootWaterCoroutine());
         }
+    }
+
+    private IEnumerator ShootWaterCoroutine()
+    {
+        // 水を発射したら再度発射できないようにする
+        playerStatus.CanShootWater = false;
+        
+        // プレイヤーの移動を制限
+        RestrictPlayerMovement();
+        
+        // waterWait秒待機
+        yield return new WaitForSeconds(waterWait);
+        
+        // プレイヤーの向きに応じて水の発生位置のX座標のプラスマイナスを変更する
+        float direction = 1f; // まず右向き(1)で初期化
+        playerDirectionRight = true;
+        
+        // Y軸の回転が180度に近いかどうかで左向きかを判定する
+        if (Mathf.Approximately(transform.eulerAngles.y, 180f))
+        {
+            direction = -1f; // 左向き(-1)にする
+            playerDirectionRight = false;
+        }
+
+        // 水の生成座標を計算
+        Vector3 waterPosition = new Vector3(
+            transform.position.x + (displayDistance * direction),
+            transform.position.y,
+            1.0f // Z座標を1に固定
+        );
+
+        // ファクトリーから水インスタンスを生成
+        GameObject water = waterFactory.CreateWater(waterPosition);
+
+        // 指定時間後に水オブジェクトを破棄し、プレイヤーの移動を再開
+        StartCoroutine(DestroyWaterAndAllowMovement(water, waterDuration));
     }
 
     // プレイヤーの移動を制限する

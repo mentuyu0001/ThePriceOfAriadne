@@ -2736,6 +2736,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8829725367227509910, guid: 9cb206c82ac534a638a9cf6c00ec5bb3, type: 3}
+      propertyPath: waterWait
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8829725367227509910, guid: 9cb206c82ac534a638a9cf6c00ec5bb3, type: 3}
+      propertyPath: waterDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8829725367227509910, guid: 9cb206c82ac534a638a9cf6c00ec5bb3, type: 3}
+      propertyPath: playerDirectionRight
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

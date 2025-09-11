@@ -25,6 +25,16 @@ public class EnterKeyActionTrigger : MonoBehaviour
     [SerializeField] private string burningFireTag = "BurningFire";
     // AnimationManagerの参照
     [Inject] private PlayerAnimationManager playerAnimationManager;
+    // PlayerRunTimeStatusの参照
+    [Inject] private PlayerRunTimeStatus playerRunTimeStatus;
+
+    // アニメーション待機時間の設定（SerializeField）
+    [Header("アニメーション待機時間設定")]
+    [SerializeField] private float interactAnimationDuration = 1.25f;  // Interactアニメーションの時間
+    [SerializeField] private float leverAnimationDuration = 1.5f;      // Leverアニメーションの時間
+    [SerializeField] private float buttonAnimationDuration = 1.0f;     // Buttonアニメーションの時間
+    [SerializeField] private float shootWaterAnimationDuration = 2.0f; // ShootWaterアニメーションの時間
+    [SerializeField] private float knifeAnimationDuration = 0.5f;      // Knifeアニメーションの時間
 
     // 接触しているコライダー
     private Collider2D touchingCollision = null;
@@ -95,26 +105,15 @@ public class EnterKeyActionTrigger : MonoBehaviour
     // オブジェクトに干渉する or ナイフを投げるメソッドを実行
     public void OnEnterKeyAction()
     {
-        // 現在時刻を取得
-        float currentTime = Time.time;
-
-        // 1. 実行中チェック
+        // 実行中チェックのみ
         if (isInteracting)
         {
             if (showDebugLogs) Debug.Log("インタラクション実行中のため無視");
             return;
         }
 
-        // 2. クールダウンチェック
-        if (currentTime - lastInteractionTime < interactionCooldown)
-        {
-            if (showDebugLogs) Debug.Log("クールダウン中のため無視");
-            return;
-        }
-
         // フラグをセットして実行開始
         isInteracting = true;
-        lastInteractionTime = currentTime;
 
         try
         {
@@ -122,7 +121,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
             bool interacted = false;
 
             // 地面と接地しているかどうかを確認
-            bool isGrounded =  airChecker.IsGround;
+            bool isGrounded = airChecker.IsGround;
 
             // 何かと接触かつ地面にいる場合、そのオブジェクトとインタラクションを試みる
             if (touchingCollision != null && isGrounded)
@@ -132,9 +131,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
                     var component = touchingCollision.gameObject.GetComponent<MapParts>();
                     if (component != null)
                     {
-                        // インタラクトアニメーションを実行
-                        IntractAnimation();
-                        partsManager.ExchangeParts(component);
+                        HandlePartsInteraction(component).Forget();
                         interacted = true;
                         if (showDebugLogs) Debug.Log("パーツとインタラクトしました");
                     }
@@ -144,9 +141,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
                     var component = touchingCollision.gameObject.GetComponent<RustyLever>();
                     if (component != null)
                     {
-                        // インタラクトアニメーションを実行
-                        IntractAnimation();
-                        component.RotateLever();
+                        HandleLeverInteraction(component).Forget();
                         interacted = true;
                         if (showDebugLogs) Debug.Log("レバーとインタラクトしました");
                     }
@@ -156,9 +151,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
                     var component = touchingCollision.gameObject.GetComponent<StopButton>();
                     if (component != null)
                     {
-                        // インタラクトアニメーションを実行
-                        IntractAnimation();
-                        component.PressButton();
+                        HandleButtonInteraction(component).Forget();
                         interacted = true;
                         if (showDebugLogs) Debug.Log("ストップボタンとインタラクトしました");
                     }
@@ -168,9 +161,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
                     var component = touchingCollision.gameObject.GetComponent<WaterTank>();
                     if (component != null)
                     {
-                        // インタラクトアニメーションを実行
-                        IntractAnimation();
-                        component.ChargeWater();
+                        HandleWaterTankInteraction(component).Forget();
                         interacted = true;
                         if (showDebugLogs) Debug.Log("水タンクとインタラクトしました");
                     }
@@ -180,9 +171,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
                     var component = touchingCollision.gameObject.GetComponent<BurningFireCheckZone>();
                     if (component != null)
                     {
-                        // インタラクトアニメーションを実行
-                        IntractAnimation();
-                        component.FireExtinguished();
+                        HandleFireInteraction(component).Forget();
                         interacted = true;
                         if (showDebugLogs) Debug.Log("燃え盛る炎とインタラクトしました");
                     }
@@ -192,24 +181,14 @@ public class EnterKeyActionTrigger : MonoBehaviour
             // インタラクションがなかった場合、ナイフを投げる
             if (!interacted)
             {
-                // アニメーションの準備
-                //PrepareForAnimation();
-
-                // ナイフを投げるアニメーションを開始
-                //playerAnimationManager.AniThrowKnifeTrue();
-
-                // アニメーション完了を監視する非同期処理を開始
-                //WaitForAnimationCompletion().Forget();
-
+                HandleKnifeThrow().Forget();
                 if (showDebugLogs) Debug.Log("インタラクションなし: ナイフを投げます");
-                // プレイヤーのThrowKnifeメソッドを呼び出す
-                throwKnife.ThrowKnife();
             }
         }
         finally
         {
-            // 処理完了後、フラグをリセット
-            isInteracting = false;
+            // 非同期処理の場合はここではリセットしない
+            // 各個別のハンドラー内でリセットする
         }
     }
 
@@ -285,65 +264,164 @@ public class EnterKeyActionTrigger : MonoBehaviour
             keepPositionFixed = true;
         }
     }
-
-    // インタラクトアニメーションを実行するメソッド
-    private void IntractAnimation()
+    private void FixedUpdate()
     {
-        // アニメーション開始の準備
-        PrepareForAnimation();
-
-        // インタラクトのアニメーションを開始
-        playerAnimationManager.AniInteractTrue();
-
-        // アニメーション完了を監視する非同期処理を開始
-        WaitForAnimationCompletion().Forget();
+        // キネマティックモードでも念のため位置を固定
+        if (keepPositionFixed && player != null)
+        {
+            player.transform.position = fixedPosition;
+        }
     }
 
-    // アニメーションの完了を待つ非同期メソッド
-    private async UniTask WaitForAnimationCompletion()
+    // パーツインタラクション処理
+    private async UniTaskVoid HandlePartsInteraction(MapParts component)
     {
-        // プレイヤーのAnimatorコンポーネントを取得
-        Animator animator = player.GetComponent<Animator>();
+        try
+        {
+            PrepareForAnimation();
+            playerAnimationManager.AniInteractTrue();
+            partsManager.ExchangeParts(component);
+            await WaitForAnimationCompletion(interactAnimationDuration);
+            ResteControllerInput();
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"パーツインタラクション処理中にエラー: {e.Message}");
+            ResteControllerInput();
+        }
+        finally
+        {
+            isInteracting = false;
+        }
+    }
 
-        // 実際のアニメーション完了を検出する方法（アニメーション長に依存しない）
-        if (animator != null)
+    // レバーインタラクション処理
+    private async UniTaskVoid HandleLeverInteraction(RustyLever component)
+    {
+        try
         {
-            int layerIndex = 0;
-            float checkInterval = 0.05f;
-            float maxWaitTime = 3.0f;  // 最大待機時間（安全対策）
-            float elapsedTime = 0f;
-            
-            while (elapsedTime < maxWaitTime)
+            PrepareForAnimation();
+            playerAnimationManager.AniLeverTrue();
+            component.RotateLever();
+            await WaitForAnimationCompletion(leverAnimationDuration);
+            ResteControllerInput();
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"レバーインタラクション処理中にエラー: {e.Message}");
+            ResteControllerInput();
+        }
+        finally
+        {
+            isInteracting = false;
+        }
+    }
+
+    // ボタンインタラクション処理
+    private async UniTaskVoid HandleButtonInteraction(StopButton component)
+    {
+        try
+        {
+            PrepareForAnimation();
+            playerAnimationManager.AniButtonTrue();
+            component.PressButton();
+            await WaitForAnimationCompletion(buttonAnimationDuration);
+            ResteControllerInput();
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"ボタンインタラクション処理中にエラー: {e.Message}");
+            ResteControllerInput();
+        }
+        finally
+        {
+            isInteracting = false;
+        }
+    }
+
+    // 水タンクインタラクション処理
+    private async UniTaskVoid HandleWaterTankInteraction(WaterTank component)
+    {
+        try
+        {
+            PrepareForAnimation();
+            playerAnimationManager.AniInteractTrue();
+            component.ChargeWater();
+            await WaitForAnimationCompletion(interactAnimationDuration);
+            ResteControllerInput();
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"水タンクインタラクション処理中にエラー: {e.Message}");
+            ResteControllerInput();
+        }
+        finally
+        {
+            isInteracting = false;
+        }
+    }
+
+    // 消火インタラクション処理
+    private async UniTaskVoid HandleFireInteraction(BurningFireCheckZone component)
+    {
+        try
+        {
+            PrepareForAnimation();
+            playerAnimationManager.AniShootWaterTrue();
+            component.FireExtinguished();
+            await WaitForAnimationCompletion(shootWaterAnimationDuration);
+            ResteControllerInput();
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"火災インタラクション処理中にエラー: {e.Message}");
+            ResteControllerInput();
+        }
+        finally
+        {
+            isInteracting = false;
+        }
+    }
+
+    // ナイフ投げ処理
+    private async UniTaskVoid HandleKnifeThrow()
+    {
+        try
+        {
+            if (!playerRunTimeStatus.CanThrowKnife)
             {
-                AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(layerIndex);
-                
-                // インタラクトアニメーションが完了したかチェック
-                // "Interact"の部分は実際のアニメーション名に置き換えてください
-                if ((stateInfo.IsName("Interact") || stateInfo.IsName("Base Layer.Interact")) && 
-                    stateInfo.normalizedTime >= 0.95f)
-                {
-                    break;  // アニメーション完了
-                }
-                
-                await UniTask.Delay(System.TimeSpan.FromSeconds(checkInterval));
-                elapsedTime += checkInterval;
-            }
+                if (showDebugLogs) Debug.Log("ナイフを投げるパーツが装備されていません");
+                isInteracting = false;
+                return;
+            }   
+            controller.isInputEnabled = false;
+            throwKnife.ThrowKnife();
+            playerAnimationManager.AniKnifeTrue();
+            // 設定可能な待機時間を使用
+            await WaitForAnimationCompletion(knifeAnimationDuration);
+            controller.isInputEnabled = true;
+
+            if (showDebugLogs) Debug.Log("インタラクションなし: ナイフを投げました");
         }
-        else
+        catch (System.Exception e)
         {
-            // アニメーターがない場合はフォールバックとして固定時間待機
-            await UniTask.Delay(1250); 
+            Debug.LogError($"ナイフ投げ処理中にエラー: {e.Message}");
+            controller.isInputEnabled = true;
         }
-        
-        // アニメーション完了後の処理
-        // アニメーションフラグをオフ
-        playerAnimationManager.AniInteractFalse();
-        
+        finally
+        {
+            isInteracting = false;
+        }
+    }
+
+    // コントロールの入力を有効化するメソッド
+    private void ResteControllerInput()
+    {
         // 入力を再度有効化する前に、Controllerの移動入力状態をリセット
         if (controller != null)
         {
             // Controllerの入力状態をリセット（重要）
-            controller.ResetMoveInput();  // この関数をControllerクラスに追加する必要があります
+            controller.ResetMoveInput();
             
             // その後、入力を再度有効化
             controller.isInputEnabled = true;
@@ -366,13 +444,90 @@ public class EnterKeyActionTrigger : MonoBehaviour
             playerRigidbody.WakeUp();
         }
     }
-    
-    private void FixedUpdate()
+
+    // アニメーションの完了を待つ非同期メソッド（時間指定版）
+    private async UniTask WaitForAnimationCompletion(float duration, CancellationToken cancellationToken = default)
     {
-        // キネマティックモードでも念のため位置を固定
-        if (keepPositionFixed && player != null)
+        if (showDebugLogs) Debug.Log($"アニメーション待機開始: {duration}秒間入力を無効化");
+        
+        // 指定された時間だけ待機
+        await UniTask.Delay(System.TimeSpan.FromSeconds(duration), cancellationToken: cancellationToken);
+        
+        if (showDebugLogs) Debug.Log($"アニメーション待機完了: {duration}秒経過、入力を再有効化");
+    }
+
+    // 元のメソッドも残しておく（必要に応じて使用）
+    private async UniTask WaitForAnimationCompletionByName(string animationName, CancellationToken cancellationToken = default)
+    {
+        // プレイヤーのAnimatorコンポーネントを取得
+        Animator animator = player.GetComponent<Animator>();
+
+        if (animator != null)
         {
-            player.transform.position = fixedPosition;
+            int layerIndex = 0;
+            float checkInterval = 0.05f;
+            float maxWaitTime = 3.0f;  // 最大待機時間（安全対策）
+            float elapsedTime = 0f;
+            
+            while (elapsedTime < maxWaitTime)
+            {
+                AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(layerIndex);
+                
+                // 各アニメーション名の可能性をチェック
+                bool isTargetAnimation = false;
+                
+                // 基本的なアニメーション名のパターンをチェック
+                if (stateInfo.IsName(animationName) || 
+                    stateInfo.IsName($"Base Layer.{animationName}"))
+                {
+                    isTargetAnimation = true;
+                }
+                
+                // Interactアニメーションの場合は既存の条件も含める
+                if (animationName == "Interact" && stateInfo.IsName("Base Layer.Interact"))
+                {
+                    isTargetAnimation = true;
+                }
+                
+                // アニメーションが完了したかチェック
+                if (isTargetAnimation && stateInfo.normalizedTime >= 0.95f)
+                {
+                    if (showDebugLogs) Debug.Log($"アニメーション '{animationName}' が完了しました (normalizedTime: {stateInfo.normalizedTime})");
+                    break;  // アニメーション完了
+                }
+                
+                await UniTask.Delay(System.TimeSpan.FromSeconds(checkInterval), cancellationToken: cancellationToken);
+                elapsedTime += checkInterval;
+            }
+            
+            if (elapsedTime >= maxWaitTime && showDebugLogs)
+            {
+                Debug.LogWarning($"アニメーション '{animationName}' の待機がタイムアウトしました");
+            }
+        }
+        else
+        {
+            // アニメーターがない場合はフォールバックとして固定時間待機
+            await UniTask.Delay(1250, cancellationToken: cancellationToken); 
+        }
+    }
+
+    // デバッグ用：現在のアニメーション状態を確認するメソッド
+    private void DebugCurrentAnimation()
+    {
+        if (showDebugLogs && player != null)
+        {
+            Animator animator = player.GetComponent<Animator>();
+            if (animator != null)
+            {
+                AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+                AnimatorClipInfo[] clipInfo = animator.GetCurrentAnimatorClipInfo(0);
+                
+                if (clipInfo.Length > 0)
+                {
+                    Debug.Log($"現在のアニメーション: {clipInfo[0].clip.name}, normalizedTime: {stateInfo.normalizedTime}");
+                }
+            }
         }
     }
 }
