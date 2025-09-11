@@ -11,7 +11,7 @@ public class ThrowKnifeController : MonoBehaviour
     [Inject] private IKnifeFactory knifeFactory; // ファクトリーを注入
     [SerializeField] private float spawnOffsetX = 1.5f; // プレイヤーからどれだけX軸方向に離れてナイフを出すか
     [SerializeField] private float throwForce = 10.0f;
-
+    [SerializeField] private float waitKnife = 0.5f; // ナイフオブジェクトを表示するまでの待機時間(秒)
     [SerializeField] private int throwCoolTime = 1000; // 次のナイフが投げれるまでのクールタイム(1000ms)
 
     [Inject] private PlayerRunTimeStatus runTimeStatus;
@@ -22,6 +22,9 @@ public class ThrowKnifeController : MonoBehaviour
         if (playerStatus.CanThrowKnife && runTimeStatus.CanThrowKnife)
         {
             runTimeStatus.CanThrowKnife = false; // ナイフを投げたら連続で投げれないようにfalseにする
+
+            // waitKnife秒待機
+            await UniTask.Delay((int)(waitKnife * 1000));
 
             // プレイヤーの向きに応じてナイフの発生位置のX座標のプラスマイナスを変更する
             float direction = 1f; // まず右向き(1)で初期化
@@ -65,7 +68,7 @@ public class ThrowKnifeController : MonoBehaviour
                         // 左向きの場合：Xにマイナスの力
                         forceVector = new Vector2(-throwForce, 0f);
                     } else {
-                        // 左向きの場合：Xにマイナスの力
+                        // 右向きの場合：Xにプラスの力
                         forceVector = new Vector2(throwForce, 0f);
                     }
 

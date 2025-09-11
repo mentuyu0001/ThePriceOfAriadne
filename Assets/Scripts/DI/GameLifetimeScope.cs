@@ -407,6 +407,27 @@ public class GameLifetimeScope : LifetimeScope
             Debug.LogWarning("LockedDoorコンポーネントが見つかりません");
         }
 
+        // RustyLever
+        var rustyLevers = Object.FindObjectsByType<RustyLever>(FindObjectsSortMode.None);
+        if (rustyLevers.Length > 0)
+        {
+            // 1. リストを登録
+            builder.RegisterInstance<IReadOnlyList<RustyLever>>(rustyLevers);
+            // 2. 構築後にDIを実行
+            builder.RegisterBuildCallback(resolver =>
+            {
+                foreach (var rustyLever in rustyLevers)
+                {
+                    resolver.Inject(rustyLever);
+                }
+            });
+            if (enableDebugLog) Debug.Log($"{rustyLevers.Length}個のRustyLeverを登録 & 注入予約");
+        }
+        else
+        {
+            Debug.LogWarning("RustyLeverコンポーネントが見つかりません");
+        }
+
         // FallingCeilingScript
         var fallingCeilingScripts = Object.FindObjectsByType<FallingCeilingScript>(FindObjectsSortMode.None);
         if (fallingCeilingScripts.Length > 0)

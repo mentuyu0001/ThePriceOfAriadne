@@ -81,12 +81,15 @@ public class PlayerAirChecker : MonoBehaviour
             RaycastHit2D hit = GetGroundHitInfo();
             isGround = hit.collider != null;
 
-            if (!wasGround && isGround) {
-                if (playerStatus.CanDoubleJump) {
+            if (!wasGround && isGround)
+            {
+                if (playerStatus.CanDoubleJump)
+                {
                     runTimeStatus.CanDoubleJump = true;
                 }
 
                 playerAnimationManager.AniJumpFalse(); // ジャンプアニイメーションの停止
+                playerAnimationManager.AniDoubleJumpFalse(); // 二段ジャンプアニメーションの停止
             }
 
             wasGround = isGround; // 変更を同期させる

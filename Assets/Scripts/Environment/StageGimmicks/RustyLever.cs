@@ -1,4 +1,6 @@
 using UnityEngine;
+using VContainer;
+using System.Collections;
 
 /// <summary>
 /// 錆びたレバーを操作するためのスクリプト
@@ -7,11 +9,12 @@ public class RustyLever : MonoBehaviour
 {
     [SerializeField]
     private GameObject pivot; // RotationPivotオブジェクトをアサイン
-    [SerializeField]
+    [Inject]
     private GameObject player; // Playerオブジェクトをアサイン
 
-    [SerializeField]
-    private PlayerStatus playerStatus; // PlayerStatusをアサイン    
+    [Inject]
+    private PlayerStatus playerStatus; // PlayerStatusをアサイン
+    [SerializeField] private float reverWait = 0.5f; // レバーを動かすまでの待機時間(秒)   
     private bool isLeverRotated = false; // レバーが傾いているかどうか
     private Quaternion initialRotation; // 初期Rotationを保存
 
@@ -52,9 +55,8 @@ public class RustyLever : MonoBehaviour
             {
                 if (!isLeverRotated)
                 {
-                    // レバーを傾ける処理
-                    pivot.transform.Rotate(Vector3.forward, 45f);
-                    isLeverRotated = true;
+                    // レバーを傾ける処理（待機時間付き）
+                    StartCoroutine(RotateLeverCoroutine());
                 }
                 else
                 {
@@ -66,20 +68,39 @@ public class RustyLever : MonoBehaviour
             {
                 Debug.LogError("Leverオブジェクトがアサインされていません！");
             }
-
         }
         else
         {
-
             Debug.Log("レバーを動かすには重いものを押す能力が必要です。");
             return;
         }
     }
 
+    private IEnumerator RotateLeverCoroutine()
+    {
+        // reverWait秒待機
+        yield return new WaitForSeconds(reverWait);
+
+        // プレイヤーの向きに応じて回転角度を決定
+        float direction = -1f; // まず右向き(1)で初期化
+        // プレイヤーのY軸の回転が180度に近いかどうかで左向きかを判定する
+        if (Mathf.Approximately(player.transform.eulerAngles.y, 180f))
+        {
+            direction = 1f; // 左向き(-1)にする
+        }
+        
+        // プレイヤーの向きに応じて回転角度を決定
+        float rotationAngle = 45f * direction; 
+
+        // レバーを傾ける
+        pivot.transform.Rotate(Vector3.forward, rotationAngle);
+        isLeverRotated = true;
+    }
+
     private void ResetLeverRotation()
     {
         // レバーを初期状態に戻す
-        pivot.transform.localRotation = Quaternion.identity;
+        pivot.transform.localRotation = initialRotation;
         isLeverRotated = false;
     }
 }

@@ -291,7 +291,7 @@ public class Controller : MonoBehaviour
                     // ジャンプアニメーションの開始
                     if (playerAnimationManager != null)
                     {
-                        playerAnimationManager.AniJumpTrue();
+                        playerAnimationManager.AniDoubleJumpTrue();
                     }
                 }
                 else if (runTimeStatus == null)

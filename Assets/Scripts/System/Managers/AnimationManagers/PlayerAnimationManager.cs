@@ -31,14 +31,57 @@ public class PlayerAnimationManager : MonoBehaviour
         playerAnimator.SetBool("JumpBool", false);
     }
 
-    // レバーをおろしたりするなど、インタラクト的処理時のアニメーション
-    public void AniInteractTrue()
+    // Pushアニメーション
+    public void AniPushTrue()
     {
-        playerAnimator.SetBool("InteractBool", true);
+        playerAnimator.SetBool("PushBool", true);
+    }
+    public void AniPushFalse()
+    {
+        playerAnimator.SetBool("PushBool", false);
     }
 
-    public void AniInteractFalse()
+    // ダブルジャンプアニメーション
+
+    public void AniDoubleJumpTrue()
     {
-        playerAnimator.SetBool("InteractBool", false);
+        playerAnimator.SetBool("DoubleJumpBool", true);
     }
+    public void AniDoubleJumpFalse()
+    {
+        playerAnimator.SetBool("DoubleJumpBool", false);
+    }
+
+    // インタラクト的処理時のアニメーション
+    public void AniInteractTrue()
+    {
+        playerAnimator.SetBool("InteractTrigger", true);
+    }
+
+    // レバーのアニメーション
+    public void AniLeverTrue()
+    {
+        playerAnimator.SetBool("LeverTrigger", true);
+    }
+
+    // ナイフのアニメーション
+    public void AniKnifeTrue()
+    {
+        playerAnimator.SetBool("ThrowKnifeTrigger", true);
+    }
+
+    // 消火のアニメーション
+    public void AniShootWaterTrue()
+    {
+        playerAnimator.SetBool("ShootWaterTrigger", true);
+    }
+
+    // ボタンのアニメーション
+    public void AniButtonTrue()
+    {
+        playerAnimator.SetBool("ButtonTrigger", true);
+    }
+
+
+
 }
