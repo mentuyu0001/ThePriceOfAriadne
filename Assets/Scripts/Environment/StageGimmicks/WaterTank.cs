@@ -6,6 +6,7 @@ using VContainer;
 public class WaterTank : MonoBehaviour
 {
     [Inject] private PlayerStatus playerStatus; // プレイヤーのステータスを参照する
+    [Inject] private PlayerRunTimeStatus playerRunTimeStatus; // プレイヤーのランタイムステータスを参照する
 
     public void ChargeWater()
     {
@@ -13,10 +14,10 @@ public class WaterTank : MonoBehaviour
         if (playerStatus != null && playerStatus.CanChargeWater)
         {
             Debug.Log("水をチャージしました！");
-            
+
             // 水をチャージできる状態なら発射できるようにする
-            playerStatus.CanShootWater = true;
-            
+            playerRunTimeStatus.CanShootWater = true;
+
             // オプション：効果音やエフェクトの再生
             PlayChargeEffect();
         }

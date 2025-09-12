@@ -11,13 +11,14 @@ public class HeavyObject : MonoBehaviour
     private GameObject player;
     [Inject]
     private PlayerStatus playerStatus;
-
+    [Inject]
+    private PlayerAnimationManager playerAnimationManager;
     [SerializeField, Range(0.1f, 10f)]
-    private float maxSpeed = 5f; // 最大速度を制限
+    private float maxSpeed = 2f; // 最大速度を制限
 
     private float distanceThreshold; // 離れすぎないようにする距離
 
-    private float distanceThresholdPlus = 0.6f; // プレイヤーが離れすぎたときの距離閾値
+    private float distanceThresholdPlus = 0.55f; // プレイヤーが離れすぎたときの距離閾値
     private bool isPushing = false;
     private Rigidbody2D rb;
     private Rigidbody2D playerRb;
@@ -104,6 +105,9 @@ public class HeavyObject : MonoBehaviour
         if (isPushing) return;
         
         isPushing = true;
+
+        // アニメーションを開始
+        playerAnimationManager.AniPushTrue();
         
         // 既存のループをキャンセル
         moveCts?.Cancel();
@@ -118,22 +122,19 @@ public class HeavyObject : MonoBehaviour
         if (!isPushing) return;
         
         isPushing = false;
+
+        // アニメーションを停止
+        playerAnimationManager.AniPushFalse();
         
         // ループをキャンセル
         moveCts?.Cancel();
         moveCts = null;
-        
         Debug.Log("StopPushing: 押し操作停止");
-        
-        // 物理状態を確実にリセット
-        if (rb != null)
-        {
-            rb.linearVelocity = Vector2.zero;
-        }
     }
     
     private void OnCollisionExit2D(Collision2D collision)
     {
+        rb.linearVelocity = Vector2.zero;
         if (player != null && collision.gameObject == player)
         {
             StopPushing();

@@ -174,9 +174,17 @@ public class EnterKeyActionTrigger : MonoBehaviour
                     var component = touchingCollision.gameObject.GetComponent<BurningFireCheckZone>();
                     if (component != null)
                     {
-                        HandleFireInteraction(component).Forget();
-                        interacted = true;
-                        if (showDebugLogs) Debug.Log("燃え盛る炎とインタラクトしました");
+                        // プレイヤーの向きとCheckZoneの方向をチェック
+                        if (IsPlayerFacingCorrectDirection(component))
+                        {
+                            HandleFireInteraction(component).Forget();
+                            interacted = true;
+                            if (showDebugLogs) Debug.Log("燃え盛る炎とインタラクトしました");
+                        }
+                        else
+                        {
+                            if (showDebugLogs) Debug.Log("炎の方向を向いていないため消火できません");
+                        }
                     }
                 }
             }
@@ -354,6 +362,12 @@ public class EnterKeyActionTrigger : MonoBehaviour
     {
         try
         {
+            if (!playerStatus.CanChargeWater)
+            {
+                if (showDebugLogs) Debug.Log("水をチャージできない");
+                isInteracting = false;
+                return;
+            }
             PrepareForAnimation();
             playerAnimationManager.AniInteractTrue();
             component.ChargeWater();
@@ -376,9 +390,15 @@ public class EnterKeyActionTrigger : MonoBehaviour
     {
         try
         {
+            if (!playerRunTimeStatus.CanShootWater)
+            {
+                if (showDebugLogs) Debug.Log("水を発射できない");
+                isInteracting = false;
+                return;
+            }
             PrepareForAnimation();
             playerAnimationManager.AniShootWaterTrue();
-            component.FireExtinguished();
+            component.FireExtinguishedAsync();
             await WaitForAnimationCompletion(shootWaterAnimationDuration);
             ResteControllerInput();
         }
@@ -466,60 +486,51 @@ public class EnterKeyActionTrigger : MonoBehaviour
         if (showDebugLogs) Debug.Log($"アニメーション待機完了: {duration}秒経過、入力を再有効化");
     }
 
-    // 元のメソッドも残しておく（必要に応じて使用）
-    private async UniTask WaitForAnimationCompletionByName(string animationName, CancellationToken cancellationToken = default)
+    // プレイヤーが正しい方向を向いているかチェックするメソッド
+    private bool IsPlayerFacingCorrectDirection(BurningFireCheckZone checkZone)
     {
-        // プレイヤーのAnimatorコンポーネントを取得
-        Animator animator = player.GetComponent<Animator>();
+        // プレイヤーの向きを判定
+        bool playerFacingRight = GetPlayerDirection();
+        
+        // CheckZoneの方向を取得
+        bool checkZoneIsRight = checkZone.isRightCheckZone;
+        
+        // プレイヤーの向きとCheckZoneの方向が一致している場合のみtrue
+        bool canExtinguish = playerFacingRight != checkZoneIsRight;
+        
+        if (showDebugLogs)
+        {
+            Debug.Log($"プレイヤーの向き: {(playerFacingRight ? "右" : "左")}, " +
+                     $"CheckZone方向: {(checkZoneIsRight ? "右" : "左")}, " +
+                     $"消火可能: {canExtinguish}");
+        }
+        
+        return canExtinguish;
+    }
+    
+    // プレイヤーの向きを取得するメソッド
+    private bool GetPlayerDirection()
+    {
+        if (player == null) return true; // デフォルトは右向き
 
-        if (animator != null)
+        /*
+        // 方法1: localScale.xで判定（スプライト反転の場合）
+        if (player.transform.localScale.x < 0)
         {
-            int layerIndex = 0;
-            float checkInterval = 0.05f;
-            float maxWaitTime = 3.0f;  // 最大待機時間（安全対策）
-            float elapsedTime = 0f;
-            
-            while (elapsedTime < maxWaitTime)
-            {
-                AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(layerIndex);
-                
-                // 各アニメーション名の可能性をチェック
-                bool isTargetAnimation = false;
-                
-                // 基本的なアニメーション名のパターンをチェック
-                if (stateInfo.IsName(animationName) || 
-                    stateInfo.IsName($"Base Layer.{animationName}"))
-                {
-                    isTargetAnimation = true;
-                }
-                
-                // Interactアニメーションの場合は既存の条件も含める
-                if (animationName == "Interact" && stateInfo.IsName("Base Layer.Interact"))
-                {
-                    isTargetAnimation = true;
-                }
-                
-                // アニメーションが完了したかチェック
-                if (isTargetAnimation && stateInfo.normalizedTime >= 0.95f)
-                {
-                    if (showDebugLogs) Debug.Log($"アニメーション '{animationName}' が完了しました (normalizedTime: {stateInfo.normalizedTime})");
-                    break;  // アニメーション完了
-                }
-                
-                await UniTask.Delay(System.TimeSpan.FromSeconds(checkInterval), cancellationToken: cancellationToken);
-                elapsedTime += checkInterval;
-            }
-            
-            if (elapsedTime >= maxWaitTime && showDebugLogs)
-            {
-                Debug.LogWarning($"アニメーション '{animationName}' の待機がタイムアウトしました");
-            }
+            return false; // 左向き
         }
-        else
+        */
+        
+        
+        // 方法2: Y軸回転で判定（回転による向き変更の場合）
+        float yRotation = player.transform.eulerAngles.y;
+        if (yRotation > 90f && yRotation < 270f)
         {
-            // アニメーターがない場合はフォールバックとして固定時間待機
-            await UniTask.Delay(1250, cancellationToken: cancellationToken); 
+            return false; // 左向き
         }
+        
+        
+        return true; // 右向き
     }
 
     // デバッグ用：現在のアニメーション状態を確認するメソッド
