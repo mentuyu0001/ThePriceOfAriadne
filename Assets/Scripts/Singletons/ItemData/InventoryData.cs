@@ -103,7 +103,7 @@ public class InventoryData : MonoBehaviour
     // すべてのアイテムをリセットするメソッド
     public void ResetAllItems()
     {
-        playerReportObtained = false;
+        playerReportObtained = true;
         theifReportObtained = false;
         muscleReportObtained = false;
         fireReportObtained = false;
