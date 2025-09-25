@@ -7,7 +7,7 @@ public class StopButton : MonoBehaviour
     [SerializeField] private Material runMaterial;
 
     private SpriteRenderer _spriteRenderer;
-    private bool isStop = true;
+    [SerializeField] private bool isStop;
 
     private void Awake()
     {

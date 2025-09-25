@@ -2405,6 +2405,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1813734898}
     m_Modifications:
     - target: {fileID: 3105427258562938057, guid: 57f123408f508479cab3f61af8768208, type: 3}
+      propertyPath: isStop
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3105427258562938057, guid: 57f123408f508479cab3f61af8768208, type: 3}
       propertyPath: 'stoppableGimicks.Array.data[0]'
       value: 
       objectReference: {fileID: 5072717615544859496}
