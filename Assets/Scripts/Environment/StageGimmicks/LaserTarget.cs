@@ -23,7 +23,8 @@ public class LaserTarget : MonoBehaviour
     [SerializeField] private bool startFromTop = true;
     
     [Header("位置調整")]
-    [SerializeField] private float targetHeight = 1.0f;
+    [SerializeField] private float targetHeight = 10.0f;
+
     
     // ゲームスタート時に停止させておくか判定するbool型変数
     // trueならゲームスタート時は動く状態
@@ -94,13 +95,6 @@ public class LaserTarget : MonoBehaviour
     // 初期化処理
     private void Initialize()
     {
-        // Targetの高さを取得（スプライトの場合）
-        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
-        if (renderer != null)
-        {
-            targetHeight = renderer.bounds.size.y;
-        }
-        
         // 上下の位置を計算
         topPosition = laserStand.position.y - (targetHeight / 2);
         bottomPosition = underStand.position.y + (targetHeight / 2);
@@ -166,7 +160,8 @@ public class LaserTarget : MonoBehaviour
     // 物理衝突を検出する（Rigidbodyを使用している場合）
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // 衝突したオブジェクトがナイフタグを持っているか確認
+        Debug.Log("LaserTarget: OnCollisionEnter2Dが呼び出されました");
+        // 衝.突したオブジェクトがナイフタグを持っているか確認
         if (collision.gameObject.CompareTag(knifeTag))
         {
             // Laserギミックを停止
