@@ -6,13 +6,18 @@ public class SaveSlotUI : MonoBehaviour
     // セーブデータを読み込む変数が必要！！！
     private bool saveData = false;
 
+    [Header("セーブデータ番号")]
+    [SerializeField] private int saveDataNum;
+
     [Header("データがある場合に表示するUI")]
     [SerializeField] private GameObject dataGroup;
 
     [Header("データがない場合に表示するUI")]
     [SerializeField] private GameObject noDataGroup;
 
-    private void Start() {
+
+    private void Awake()
+    {
         UpdateSlotUI();
     }
 
@@ -31,5 +36,10 @@ public class SaveSlotUI : MonoBehaviour
             dataGroup.SetActive(false);
             noDataGroup.SetActive(true);
         }
+    }
+
+    public void LoadFile()
+    {
+        Debug.Log("ファイル" + saveDataNum + "を読み込んだ");
     }
 }
