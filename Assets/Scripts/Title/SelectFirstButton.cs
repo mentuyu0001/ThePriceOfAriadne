@@ -3,13 +3,40 @@ using UnityEngine.EventSystems;
 
 public class SelectFirstButton : MonoBehaviour
 {
+    /// <summary>
+    /// UIの初期位置を決めるスクリプト
+    /// </summary>
+
     // 最初に選択状態にしたいボタンをセット
     [SerializeField] private GameObject firstSelectedButton;
 
-    // このUIが表示されたときに呼ばれる関数
+    // 最後に選択されていたボタンを記憶する
+    private GameObject lastSelectedObject;
+
+    // このUIが表示された時に呼ばれる関数
     void OnEnable()
     {
-        // EventSystemに最初に選択するオブジェクトをEventSystemに教える
-        EventSystem.current.SetSelectedGameObject(firstSelectedButton);
+        // 最後に選択したボタンが記憶されていれば、それを選択する
+        if (lastSelectedObject != null)
+        {
+            EventSystem.current.SetSelectedGameObject(lastSelectedObject);
+        }
+        // 記憶されていなければ、デフォルトのボタンを選択する
+        else
+        {
+            EventSystem.current.SetSelectedGameObject(firstSelectedButton);
+        }
+    }
+
+    // このUIが非表示された時に呼ばれる関数
+    void OnDisable()
+    {
+        lastSelectedObject = EventSystem.current.currentSelectedGameObject;
+    }
+
+    // 記憶している選択対象UIをリセットする関数
+    public void ResetLastSelected()
+    {
+        lastSelectedObject = null;
     }
 }

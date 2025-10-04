@@ -39,7 +39,6 @@ public abstract class Button : MonoBehaviour, ISelectHandler, IPointerEnterHandl
 
         TriggerSelectionSounds();
         TriggerSelectionEffects();
-        Debug.Log("キーボード");
     }
 
     // マウスで選択された場合
@@ -53,7 +52,6 @@ public abstract class Button : MonoBehaviour, ISelectHandler, IPointerEnterHandl
         isPointer = true;
         TriggerSelectionSounds();
         TriggerSelectionEffects();
-        Debug.Log("マウス");
     }
 
     // マウスカーソルがこのUI要素の範囲から「出た」瞬間に呼ばれる
