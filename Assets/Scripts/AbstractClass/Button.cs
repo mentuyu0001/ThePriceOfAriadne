@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// UIボタンの抽象クラス
 /// </summary>
-public abstract class Button : MonoBehaviour, ISelectHandler, IPointerEnterHandler 
+public abstract class Button : MonoBehaviour, ISelectHandler, IPointerEnterHandler
 {
     /// <summary>
     /// UIが選択されるたびに「カチカチ」と音を流したりする際の親オブジェクト
