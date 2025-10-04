@@ -31,7 +31,11 @@ public class SelectFirstButton : MonoBehaviour
     // このUIが非表示された時に呼ばれる関数
     void OnDisable()
     {
-        lastSelectedObject = EventSystem.current.currentSelectedGameObject;
+        // EventSystem.currentがnull（既に破壊されている）でないことを確認する
+        if (EventSystem.current != null)
+        {
+            lastSelectedObject = EventSystem.current.currentSelectedGameObject;
+        }
     }
 
     // 記憶している選択対象UIをリセットする関数
