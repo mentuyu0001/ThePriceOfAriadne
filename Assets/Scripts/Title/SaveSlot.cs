@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI; // Textを使うため
 
-public class SaveSlotUI : MonoBehaviour
+public class SaveSlot : Button
 {
     // セーブデータを読み込む変数が必要！！！
     private bool saveData = false;
@@ -38,7 +38,7 @@ public class SaveSlotUI : MonoBehaviour
         }
     }
 
-    public void LoadFile()
+    public override void OnClick()
     {
         Debug.Log("ファイル" + saveDataNum + "を読み込んだ");
     }

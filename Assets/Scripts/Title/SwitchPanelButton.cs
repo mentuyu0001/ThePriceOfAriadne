@@ -1,10 +1,16 @@
 using UnityEngine;
 
-public class SwitchPanelButton : MonoBehaviour
+public class SwitchPanelButton : Button
 {
+    /// <summary>
+    /// 使用するUIパネルを切り替えるスクリプト
+    /// </summary>
+    
     [SerializeField] private GameObject currentPanel; // 今いるパネルを参照するための変数
     [SerializeField] private GameObject returnPanel;   // 遷移するパネルを参照するための変数
-    public void ChangePanel()
+    
+    // 画面遷移の関数
+    public override void OnClick()
     {
         currentPanel.SetActive(false);
         returnPanel.SetActive(true);
