@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 695350482940687951}
   - component: {fileID: 4247044666958039330}
   - component: {fileID: 6183494649607916132}
-  - component: {fileID: 8242228361804777777}
   - component: {fileID: 5439892710797211960}
+  - component: {fileID: 5605797204263411181}
   m_Layer: 5
   m_Name: TitleItemSlot
   m_TagString: Untagged
@@ -74,19 +74,6 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
---- !u!114 &8242228361804777777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3184763087512871872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec6a262cfe6ffa340b9fc568251c7bf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemNum: 1
 --- !u!114 &5439892710797211960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,7 +87,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -131,7 +118,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8242228361804777777}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ItemSlotUI, Assembly-CSharp
         m_MethodName: LoadItem
         m_Mode: 1
@@ -143,3 +130,16 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5605797204263411181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3184763087512871872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9eac19647f7b43a999bc106da7906c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemID: 1

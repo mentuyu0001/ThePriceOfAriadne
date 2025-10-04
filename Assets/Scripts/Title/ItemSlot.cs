@@ -15,7 +15,7 @@ public class ItemSlot : Button
     public bool IsObtained => inventoryData.GetItemObtained(itemID);
 
     // クリックされたらアイテムの詳細を表示する
-    protected override void OnClick()
+    public override void OnClick()
     {
         if (IsObtained)
         {
