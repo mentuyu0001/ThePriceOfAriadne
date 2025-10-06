@@ -8,7 +8,6 @@ using Cysharp.Threading.Tasks;
 public class BurningFireCheckZone : MonoBehaviour
 {
     [Inject] private GameObject player;
-    [SerializeField] private GameObject warningUI; // 警告表示用のUI（オプション）
     [SerializeField] private Collider2D fireFieldCollider; // 炎フィールドの物理コライダー
     [SerializeField] private Collider2D fireFieldColliderOpposite; // 反対側の炎フィールドの物理コライダー
     [SerializeField] private GameObject burnibgFire; // 炎オブジェクト（消火後に非表示にするため）
@@ -37,12 +36,6 @@ public class BurningFireCheckZone : MonoBehaviour
             // 常に通過できない
             Debug.Log("この炎は消火しないと通れない！");
 
-            // 警告UIを表示（オプション）
-            if (warningUI != null)
-            {
-                warningUI.SetActive(true);
-            }
-
             // 炎フィールドの物理コライダーを常に有効化
             if (fireFieldCollider != null)
             {
@@ -61,10 +54,7 @@ public class BurningFireCheckZone : MonoBehaviour
         if (player != null && collision.gameObject == player)
         {
             // 警告UIを非表示に（オプション）
-            if (warningUI != null)
-            {
-                warningUI.SetActive(false);
-            }
+            Debug.Log("炎ゾーンから退出");
         }
     }
 
