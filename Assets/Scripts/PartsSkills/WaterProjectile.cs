@@ -21,6 +21,7 @@ public class WaterProjectile : MonoBehaviour
         {
             // 炎を消火（非アクティブ化）
             targetFire.SetActive(false);
+            Debug.Log("Fire extinguished!");
             
             // 効果音やエフェクトを再生（オプション）
             PlaySplashEffect(collision.transform.position);
@@ -34,10 +35,15 @@ public class WaterProjectile : MonoBehaviour
     // 水滴エフェクトを再生
     private void PlaySplashEffect(Vector3 position)
     {
-        // エフェクトが設定されている場合は再生
+        Debug.Log("PlaySplashEffect called at: " + position);
         if (splashEffect != null)
         {
+            Debug.Log("Instantiate splashEffect!"); // 追加
             Instantiate(splashEffect, position, Quaternion.identity);
+        }
+        else
+        {
+            Debug.LogWarning("splashEffect is not assigned!"); // 追加
         }
     }
 }

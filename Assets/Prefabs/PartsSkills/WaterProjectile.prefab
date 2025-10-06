@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 2
-  splashEffect: {fileID: 0}
+  splashEffect: {fileID: 6094376021939536826, guid: cb9c5021a7add483ab3e0d0b0bab2de1, type: 3}
   targetFire: {fileID: 0}
 --- !u!61 &7299174739202922387
 BoxCollider2D:

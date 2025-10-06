@@ -441,7 +441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 356f4e32259594e318e53d24579ace57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotType: 3
+  slotType: 1
   charaType: 5
 --- !u!61 &275332655
 BoxCollider2D:
@@ -2439,7 +2439,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8829725367227509910, guid: 9cb206c82ac534a638a9cf6c00ec5bb3, type: 3}
       propertyPath: waterDuration
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8829725367227509910, guid: 9cb206c82ac534a638a9cf6c00ec5bb3, type: 3}
       propertyPath: playerDirectionRight
