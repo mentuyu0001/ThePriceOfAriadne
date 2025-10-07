@@ -5,6 +5,7 @@ public interface IWaterFactory
     GameObject CreateWater();
     GameObject CreateWater(Vector3 position);
     GameObject CreateWater(Vector3 position, Quaternion rotation);
+    GameObject CreateWaterEffect(Vector3 position, Quaternion rotation);
 }
 
 public class WaterFactory : IWaterFactory
@@ -27,6 +28,11 @@ public class WaterFactory : IWaterFactory
     }
 
     public GameObject CreateWater(Vector3 position, Quaternion rotation)
+    {
+        return Object.Instantiate(waterPrefab, position, rotation);
+    }
+
+    public GameObject CreateWaterEffect(Vector3 position, Quaternion rotation)
     {
         return Object.Instantiate(waterPrefab, position, rotation);
     }

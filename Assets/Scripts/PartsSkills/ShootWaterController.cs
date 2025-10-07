@@ -14,7 +14,6 @@ public class ShootWaterController : MonoBehaviour
     [SerializeField] private float displayDistance = 1.5f; // 前方に表示する距離
     [SerializeField] public float waterWait = 0.5f; // 水の発射待機時間
     [SerializeField] public float waterDuration = 1.0f; // 表示時間（秒）
-    [SerializeField] private GameObject waterEffect; // WaterEffectオブジェクトをInspectorでセット
     
     private Rigidbody2D playerRigidbody; // プレイヤーのRigidbody2D
     
@@ -94,19 +93,14 @@ public class ShootWaterController : MonoBehaviour
         }
 
         GameObject water = null;
-        if (waterEffect != null)
+        if (waterFactory != null)
         {
-            water = Instantiate(waterEffect, waterPosition, rotation);
-
-            // 必要なら長さ（X方向）を調整
-            // 例：2倍にしたい場合
-            //water.transform.localScale = new Vector3(2f, 1f, 1f);
-
+            water = waterFactory.CreateWaterEffect(waterPosition, rotation);
             Debug.Log("WaterEffect生成: " + waterPosition);
         }
         else
         {
-            Debug.LogWarning("waterEffectがInspectorでセットされていません");
+            Debug.LogWarning("waterFactoryがInjectされていません");
         }
 
         // 指定時間後に水オブジェクトを破棄し、プレイヤーの移動を再開

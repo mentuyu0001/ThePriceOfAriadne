@@ -20,11 +20,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 86547fa07cbb743a685fe16b07a0e63e
-    m_Address: WaterPrefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8c06f7a30ab3189438ddbe21c4c01c21
     m_Address: PartsSkills
     m_ReadOnly: 0
@@ -47,6 +42,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b152c4d1520a548938208542a041522b
     m_Address: Prefabs
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bd4f4c66e3c2540ac9d859bf9ca9812e
+    m_Address: WaterPrefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
