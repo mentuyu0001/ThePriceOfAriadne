@@ -7,18 +7,28 @@ using VContainer;
 /// </summary>
 public class HeavyObject : MonoBehaviour
 {
-    [Inject]
-    private GameObject player;
-    [Inject]
-    private PlayerStatus playerStatus;
-    [Inject]
-    private PlayerAnimationManager playerAnimationManager;
+    [Inject] private GameObject player;
+    [Inject] private PlayerStatus playerStatus;
+    [Inject] private PlayerAnimationManager playerAnimationManager;
+    [Inject] private GameTextDisplay textDisplay;
+    [Inject] private PlayerPartsRatio partsRatio;
+    [Inject] private ObjectTextData objectTextData;
+    
+    [SerializeField] private int heavyObjectID = 3; // HeavyObjectのID
+    
     [SerializeField, Range(0.1f, 10f)]
     private float maxSpeed = 2f; // 最大速度を制限
 
     private float distanceThreshold; // 離れすぎないようにする距離
 
     private float distanceThresholdPlus = 0.55f; // プレイヤーが離れすぎたときの距離閾値
+    
+    [Header("テキスト表示設定")]
+    [SerializeField] private float delayBetweenTexts = 2f; // 複数テキスト間の待機時間
+    
+    [Header("デバッグ")]
+    [SerializeField] private bool showDebugLogs = false;
+    
     private bool isPushing = false;
     private Rigidbody2D rb;
     private Rigidbody2D playerRb;
@@ -26,6 +36,7 @@ public class HeavyObject : MonoBehaviour
 
     // 既存のフィールド
     private bool canPushAgain = true; // 新しいフラグを追加
+    private bool hasShownText = false; // テキストを表示済みかどうか
 
     // 非同期操作をキャンセルするためのトークン
     private System.Threading.CancellationTokenSource moveCts;
@@ -42,7 +53,7 @@ public class HeavyObject : MonoBehaviour
         {
             playerRb = player.GetComponent<Rigidbody2D>();
             previousPlayerPosition = player.transform.position;
-            Debug.Log($"VContainerでプレイヤーが正常に注入されました: {player.name}");
+            if (showDebugLogs) Debug.Log($"VContainerでプレイヤーが正常に注入されました: {player.name}");
         }
         else
         {
@@ -52,7 +63,7 @@ public class HeavyObject : MonoBehaviour
         // VContainerで注入されたplayerStatusの確認
         if (playerStatus != null)
         {
-            Debug.Log($"VContainerでPlayerStatusが正常に注入されました");
+            if (showDebugLogs) Debug.Log($"VContainerでPlayerStatusが正常に注入されました");
         }
         else
         {
@@ -64,13 +75,28 @@ public class HeavyObject : MonoBehaviour
         if (spriteRenderer != null)
         {
             distanceThreshold = spriteRenderer.bounds.size.x / 2f + distanceThresholdPlus;
-            Debug.Log($"distanceThresholdが設定されました: {distanceThreshold}");
+            if (showDebugLogs) Debug.Log($"distanceThresholdが設定されました: {distanceThreshold}");
         }
         else
         {
             Debug.LogWarning("SpriteRendererが見つかりませんでした。distanceThresholdをデフォルト値に設定します。");
         }
     }
+    
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (player != null && collision.gameObject == player && playerStatus != null)
+        {
+            // 押せない場合はテキストを表示
+            if (!playerStatus.CanPushHeavyObject && !hasShownText)
+            {
+                if (showDebugLogs) Debug.Log("重いものを押せない！");
+                ShowHeavyObjectWarningText();
+                hasShownText = true;
+            }
+        }
+    }
+    
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (player != null && collision.gameObject == player && playerStatus != null)
@@ -113,7 +139,7 @@ public class HeavyObject : MonoBehaviour
         moveCts?.Cancel();
         moveCts = new System.Threading.CancellationTokenSource();
         
-        Debug.Log("PushObject: 押し操作開始");
+        if (showDebugLogs) Debug.Log("PushObject: 押し操作開始");
         MoveLoop(moveCts.Token).Forget();
     }
 
@@ -129,7 +155,7 @@ public class HeavyObject : MonoBehaviour
         // ループをキャンセル
         moveCts?.Cancel();
         moveCts = null;
-        Debug.Log("StopPushing: 押し操作停止");
+        if (showDebugLogs) Debug.Log("StopPushing: 押し操作停止");
     }
     
     private void OnCollisionExit2D(Collision2D collision)
@@ -138,13 +164,34 @@ public class HeavyObject : MonoBehaviour
         if (player != null && collision.gameObject == player)
         {
             StopPushing();
+            
+            // コリジョンから離れたらテキストを非表示＆フラグをリセット
+            hasShownText = false;
+            
+            if (textDisplay != null && textDisplay.IsDisplaying)
+            {
+                textDisplay.HideText();
+            }
         }
     }
+    
+    private void ShowHeavyObjectWarningText()
+    {
+        // 拡張メソッドを使用してテキストを表示
+        textDisplay.ShowTextByPartsRatio(
+            partsRatio,
+            objectTextData,
+            heavyObjectID,
+            delayBetweenTexts,
+            showDebugLogs
+        );
+    }
+    
     private async UniTaskVoid MoveLoop(System.Threading.CancellationToken cancellationToken)
     {
         if (isLoopRunning)
         {
-            Debug.LogWarning("MoveLoop: すでに実行中のループがあります");
+            if (showDebugLogs) Debug.LogWarning("MoveLoop: すでに実行中のループがあります");
             return;
         }
         
@@ -152,7 +199,7 @@ public class HeavyObject : MonoBehaviour
         Vector2 lastValidXPosition = rb.position;
         bool isDistanceExceeded = false;
         
-        Debug.Log("MoveLoop: ループ開始");
+        if (showDebugLogs) Debug.Log("MoveLoop: ループ開始");
         
         try
         {
@@ -162,13 +209,10 @@ public class HeavyObject : MonoBehaviour
                 {
                     // プレイヤーとの距離を計算
                     float distance = Vector2.Distance(rb.position, playerRb.position);
-                    
-                    // デバッグ情報
-                   //Debug.Log($"距離: {distance}, 閾値: {distanceThreshold}, isPushing: {isPushing}");
 
                     if (distance > distanceThreshold)
                     {
-                        Debug.Log("プレイヤーが離れすぎています - 動きを制限します");
+                        if (showDebugLogs) Debug.Log("プレイヤーが離れすぎています - 動きを制限します");
                         
                         canPushAgain = false;
                         
@@ -207,12 +251,12 @@ public class HeavyObject : MonoBehaviour
         }
         catch (System.OperationCanceledException)
         {
-            Debug.Log("MoveLoop: キャンセルされました");
+            if (showDebugLogs) Debug.Log("MoveLoop: キャンセルされました");
         }
         finally
         {
             isLoopRunning = false;
-            Debug.Log("MoveLoop: ループ終了");
+            if (showDebugLogs) Debug.Log("MoveLoop: ループ終了");
         }
     }
     
