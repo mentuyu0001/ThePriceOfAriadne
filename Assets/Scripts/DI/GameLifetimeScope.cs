@@ -75,6 +75,23 @@ public class GameLifetimeScope : LifetimeScope
             Debug.LogError("アドレス 'PlayerParts' のItemDataアセットが見つかりません。");
         }
 
+        // ObjectTextDataを自動検索（Addressableから)
+        Debug.Log("ObjectTextData読み込み開始...");
+        var objectTextDataHandle = Addressables.LoadAssetAsync<ObjectTextData>("ObjectTextData");
+        var objectTextData = objectTextDataHandle.WaitForCompletion();
+        if (objectTextData != null)
+        {
+            Debug.Log($"読み込んだObjectTextData名: {objectTextData.name}");
+
+            // ObjectTextDataを登録
+            builder.RegisterInstance(objectTextData);
+            Debug.Log($"ObjectTextData の登録に成功しました: {objectTextData.name}");
+        }
+        else
+        {
+            Debug.LogError("アドレス 'ObjectTextData' のObjectTextDataアセットが見つかりません。");
+        }
+
         // KnifePrefabを自動検索（ファクトリーとして登録）
         Debug.Log("KnifePrefab読み込み開始...");
         var handle = Addressables.LoadAssetAsync<GameObject>("KnifePrefab");
@@ -365,6 +382,25 @@ public class GameLifetimeScope : LifetimeScope
         {
             Debug.LogError("GameTextDisplayコンポーネントが見つかりません");
         }
+
+        // PlayerPartsRatioの登録
+        var partsRatio = Object.FindAnyObjectByType<PlayerPartsRatio>();
+        if (partsRatio != null)
+        {
+            // 1. インスタンスを登録
+            builder.RegisterInstance(partsRatio);
+            // 2. 構築後にDIを実行
+            builder.RegisterBuildCallback(resolver =>
+            {
+                resolver.Inject(partsRatio);
+            });
+            if (enableDebugLog) Debug.Log("PlayerPartsRatioに注入予約しました");
+        }
+        else
+        {
+            Debug.LogError("PlayerPartsRatioコンポーネントが見つかりません");
+        }
+
         #endregion
 
         // HeavyObject

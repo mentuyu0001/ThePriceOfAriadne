@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 9f3e0fd51f803473c98f16443288c11a
   m_SerializeEntries:
+  - m_GUID: 0363149ac8e714ed69f385c0b18b6c1a
+    m_Address: ObjectTextData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0ecc99d951c204588b754f86710420b6
     m_Address: WaterPrefab
     m_ReadOnly: 0
