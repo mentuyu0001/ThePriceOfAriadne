@@ -348,6 +348,23 @@ public class GameLifetimeScope : LifetimeScope
             }
 
         }
+        // GameTextDisplayの登録
+        var textDisplay = Object.FindAnyObjectByType<GameTextDisplay>();
+        if (textDisplay != null)
+        {
+            // 1. インスタンスを登録
+            builder.RegisterInstance(textDisplay);
+            // 2. 構築後にDIを実行
+            builder.RegisterBuildCallback(resolver =>
+            {
+                resolver.Inject(textDisplay);
+            });
+            if (enableDebugLog) Debug.Log("GameTextDisplayに注入予約しました");
+        }
+        else
+        {
+            Debug.LogError("GameTextDisplayコンポーネントが見つかりません");
+        }
         #endregion
 
         // HeavyObject

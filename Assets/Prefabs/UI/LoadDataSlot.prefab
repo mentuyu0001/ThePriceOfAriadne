@@ -12,13 +12,14 @@ GameObject:
   - component: {fileID: 4430518990496003896}
   - component: {fileID: 2000562346284602601}
   - component: {fileID: 2206589488150666926}
+  - component: {fileID: 7312283972503374060}
   m_Layer: 5
   m_Name: LoadDataSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4597170438716275385
 RectTransform:
   m_ObjectHideFlags: 0
@@ -120,6 +121,18 @@ MonoBehaviour:
   saveDataNum: 0
   dataGroup: {fileID: 5688571906819730601}
   noDataGroup: {fileID: 7239263777445761466}
+--- !u!225 &7312283972503374060
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2761839346031790338}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &5688571906819730601
 GameObject:
   m_ObjectHideFlags: 0

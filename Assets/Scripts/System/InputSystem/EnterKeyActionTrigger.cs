@@ -20,6 +20,8 @@ public class EnterKeyActionTrigger : MonoBehaviour
     [Inject] private PlayerAnimationManager playerAnimationManager;
     // PlayerRunTimeStatusの参照
     [Inject] private PlayerRunTimeStatus playerRunTimeStatus;
+    // テキスト表示システムの参照
+    [Inject] private GameTextDisplay textDisplay;
      // マップに落ちているパーツオブジェクトのタグ
     [SerializeField] private string partsTag = "Parts";
     // 錆びたレバーのタグ
@@ -38,6 +40,16 @@ public class EnterKeyActionTrigger : MonoBehaviour
     [SerializeField] private float buttonAnimationDuration = 1.0f;     // Buttonアニメーションの時間
     [SerializeField] private float shootWaterAnimationDuration = 2.0f; // ShootWaterアニメーションの時間
     [SerializeField] private float knifeAnimationDuration = 0.5f;      // Knifeアニメーションの時間
+
+    // 表示するテキストメッセージ
+    [Header("表示テキスト設定")]
+    [SerializeField] private string partsGetMessage = "パーツを入手しました!";
+    [SerializeField] private string leverUseMessage = "レバーを動かした!";
+    [SerializeField] private string buttonUseMessage = "ボタンを押した!";
+    [SerializeField] private string waterChargeMessage = "水を補給しました!";
+    [SerializeField] private string fireExtinguishMessage = "火を消した!";
+    [SerializeField] private string noWaterTankMessage = "水タンクが装備されていません";
+    [SerializeField] private string noWaterMessage = "水がありません";
 
     // 接触しているコライダー
     private Collider2D touchingCollision = null;
@@ -108,6 +120,14 @@ public class EnterKeyActionTrigger : MonoBehaviour
     // オブジェクトに干渉する or ナイフを投げるメソッドを実行
     public void OnEnterKeyAction()
     {
+        // テキスト表示中でEnterキー待ち状態の場合は何もしない
+        // (GameTextDisplayがEnterキーを処理する)
+        if (textDisplay != null && textDisplay.IsDisplaying)
+        {
+            if (showDebugLogs) Debug.Log("テキスト表示中のため、オブジェクトインタラクションはスキップ");
+            return;
+        }
+
         // 実行中チェックのみ
         if (isInteracting)
         {
@@ -247,6 +267,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
         if (touchingCollision == collision)
         {
             touchingCollision = null;
+            textDisplay.HideText();
         }
     }
 
@@ -296,11 +317,18 @@ public class EnterKeyActionTrigger : MonoBehaviour
     {
         try
         {
+            Debug.Log("=== パーツインタラクション開始 ===");
+            
             PrepareForAnimation();
             playerAnimationManager.AniInteractTrue();
             partsManager.ExchangeParts(component);
+            
+            Debug.Log("アニメーション待機中...");
             await WaitForAnimationCompletion(interactAnimationDuration);
+            Debug.Log("アニメーション完了");
+
             ResteControllerInput();
+            await textDisplay.ShowText(partsGetMessage);
         }
         catch (System.Exception e)
         {
@@ -323,6 +351,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
             component.RotateLever();
             await WaitForAnimationCompletion(leverAnimationDuration);
             ResteControllerInput();
+            await textDisplay.ShowText(leverUseMessage);
         }
         catch (System.Exception e)
         {
@@ -345,6 +374,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
             component.PressButton();
             await WaitForAnimationCompletion(buttonAnimationDuration);
             ResteControllerInput();
+            await textDisplay.ShowText(buttonUseMessage);
         }
         catch (System.Exception e)
         {
@@ -364,15 +394,21 @@ public class EnterKeyActionTrigger : MonoBehaviour
         {
             if (!playerStatus.CanChargeWater)
             {
-                if (showDebugLogs) Debug.Log("水をチャージできない");
+                if (textDisplay != null)
+                {
+                    await textDisplay.ShowText(noWaterTankMessage);
+                }
+                
                 isInteracting = false;
                 return;
             }
+            
             PrepareForAnimation();
             playerAnimationManager.AniInteractTrue();
             component.ChargeWater();
             await WaitForAnimationCompletion(interactAnimationDuration);
             ResteControllerInput();
+            await textDisplay.ShowText(waterChargeMessage);
         }
         catch (System.Exception e)
         {
@@ -392,15 +428,21 @@ public class EnterKeyActionTrigger : MonoBehaviour
         {
             if (!playerRunTimeStatus.CanShootWater)
             {
-                if (showDebugLogs) Debug.Log("水を発射できない");
+                if (textDisplay != null)
+                {
+                    await textDisplay.ShowText(noWaterMessage);
+                }
+                
                 isInteracting = false;
                 return;
             }
+            
             PrepareForAnimation();
             playerAnimationManager.AniShootWaterTrue();
             component.FireExtinguishedAsync();
             await WaitForAnimationCompletion(shootWaterAnimationDuration);
             ResteControllerInput();
+            await textDisplay.ShowText(fireExtinguishMessage);
         }
         catch (System.Exception e)
         {
