@@ -42,7 +42,7 @@ public class SaveSlot : Button
 
     public override void OnClick()
     {
-        Debug.Log("ファイル" + saveDataNum + "を読み込んだ");
+        Debug.Log("ファイル" + saveDataNum + "の確認画面");
         confirmation.ShowConfirmationDialog(saveDataNum);
     }
 }

@@ -6,8 +6,11 @@ public class ItemReset : Button
     /// コレクトアイテムの進捗をリセットする
     /// </summary>
 
+    // 確認画面の取得
+    [SerializeField] private ItemResetConfirmation resetConfirm;
+
     public override void OnClick()
     {
-        Debug.Log("アイテムをリセットした"); // 本当は確認画面をここに挟む
+        resetConfirm.ShowConfirmationDialog();
     }
 }
