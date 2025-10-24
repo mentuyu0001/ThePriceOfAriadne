@@ -553,9 +553,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: CollectibleItem
       objectReference: {fileID: 0}
+    - target: {fileID: 2079520431039721697, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 4076350072892404869, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
       propertyPath: itemID
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4098165119675267606, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
       propertyPath: m_LocalPosition.x

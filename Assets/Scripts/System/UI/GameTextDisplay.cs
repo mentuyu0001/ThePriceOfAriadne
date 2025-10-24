@@ -375,7 +375,7 @@ public static class GameTextDisplayExtensions
         PlayerPartsRatio partsRatio,
         ObjectTextData objectTextData,
         int objectID,
-        float delayBetweenTexts = 2f,
+        float delayBetweenTexts = 1.5f,
         bool showDebugLogs = false)
     {
         if (textDisplay == null || partsRatio == null || objectTextData == null)
