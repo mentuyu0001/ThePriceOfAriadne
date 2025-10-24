@@ -85,11 +85,22 @@ public class CollectibleItem : MonoBehaviour
             // 全て25%のとき
             if (dominantParts.Count == 4)
             {
-                textList.Add(descriptions.allQuartersTone);
+                if (gameTextDisplay != null)
+                {
+                    await ShowTextsSequentiallyFromTextList(
+                        gameTextDisplay,
+                        new List<string> { descriptions.allQuartersTone },
+                        2f
+                    );
+                }
+                CollectItem();
+                Destroy(gameObject);
+                return;
             }
             // 50%:50%のとき
             else if (dominantParts.Count == 2)
             {
+                Debug.Log($"テキストリスト：{dominantParts.Count}");
                 foreach (var chara in dominantParts.Distinct())
                 {
                     switch (chara)
@@ -115,11 +126,22 @@ public class CollectibleItem : MonoBehaviour
             // 100%かつアイテム所有者と一致
             else if (Mathf.Approximately(maxRatio, 100f) && dominantParts.Count == 1 && dominantParts[0].ToString() == item.ownerType.ToString())
             {
-                textList.Add(descriptions.ownFullTone);
+                if (gameTextDisplay != null)
+                {
+                    await ShowTextsSequentiallyFromTextList(
+                        gameTextDisplay,
+                        new List<string> { descriptions.ownFullTone },
+                        2f
+                    );
+                }
+                CollectItem();
+                Destroy(gameObject);
+                return;
             }
             // 通常パターン
             else
             {
+                Debug.Log($"テキストリスト：{dominantParts.Count}");
                 var maxPartsChara = partsRatio.GetDominantParts();
                 switch (maxPartsChara)
                 {
@@ -211,4 +233,25 @@ public class CollectibleItem : MonoBehaviour
         }
     }
 
+    private async UniTask ShowTextsSequentiallyFromTextList(
+        GameTextDisplay textDisplay,
+        List<string> textList,
+        float delayBetweenTexts = 2f,
+        bool showDebugLogs = false
+    )
+    {
+        for (int i = 0; i < textList.Count; i++)
+        {
+            if (showDebugLogs) Debug.Log($"表示するテキスト ({i + 1}/{textList.Count}):\n{textList[i]}");
+            await textDisplay.ShowText(textList[i]);
+            await UniTask.WaitUntil(() => !textDisplay.IsFading);
+            await UniTask.Delay(System.TimeSpan.FromSeconds(textDisplayDuration));
+            textDisplay.HideText();
+            if (i < textList.Count - 1)
+            {
+                await UniTask.WaitUntil(() => !textDisplay.IsFading);
+                await UniTask.Delay(System.TimeSpan.FromSeconds(delayBetweenTexts));
+            }
+        }
+    }
 }
