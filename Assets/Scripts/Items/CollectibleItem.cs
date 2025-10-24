@@ -1,16 +1,7 @@
 using UnityEngine;
 using VContainer;
 using Cysharp.Threading.Tasks;
-
-
-public enum PartsOwnerType
-{
-    Player,
-    Thief,
-    Muscle,
-    Fire,
-    Assassin
-}
+using Parts.Types;
 
 public class CollectibleItem : MonoBehaviour
 {
@@ -72,8 +63,8 @@ public class CollectibleItem : MonoBehaviour
             }
 
             // 最大占有率のキャラを取得
-            var maxPartsChara = (PartsOwnerType)partsRatio.GetDominantParts();
-            float maxRatio = partsRatio.GetPartsRatio((PartsOwnerType)maxPartsChara);
+            var maxPartsChara = partsRatio.GetDominantParts(); // PartsChara型
+            float maxRatio = partsRatio.GetPartsRatio(maxPartsChara);
 
             string description = "";
 
@@ -87,19 +78,19 @@ public class CollectibleItem : MonoBehaviour
                 // 最大占有率キャラの口調
                 switch (maxPartsChara)
                 {
-                    case PartsOwnerType.Player:
+                    case PartsChara.Normal:
                         description = descriptions.playerTone;
                         break;
-                    case PartsOwnerType.Thief:
+                    case PartsChara.Thief:
                         description = descriptions.theifTone;
                         break;
-                    case PartsOwnerType.Muscle:
+                    case PartsChara.Muscle:
                         description = descriptions.muscleTone;
                         break;
-                    case PartsOwnerType.Fire:
+                    case PartsChara.Fire:
                         description = descriptions.fireTone;
                         break;
-                    case PartsOwnerType.Assassin:
+                    case PartsChara.Assassin:
                         description = descriptions.assassinTone;
                         break;
                     default:

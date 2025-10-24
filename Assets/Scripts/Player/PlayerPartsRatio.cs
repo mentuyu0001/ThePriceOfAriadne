@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using VContainer;
+using Parts.Types; // 追加
 
 /// <summary>
 /// プレイヤーのパーツ占有率を管理するクラス
@@ -10,7 +11,7 @@ public class PlayerPartsRatio : MonoBehaviour
 {
     [Inject] private PlayerParts playerParts;
     
-    private Dictionary<PartsOwnerType, float> partsRatios = new Dictionary<PartsOwnerType, float>();
+    private Dictionary<PartsChara, float> partsRatios = new Dictionary<PartsChara, float>();
 
     private void Start()
     {
@@ -21,12 +22,12 @@ public class PlayerPartsRatio : MonoBehaviour
     {
         partsRatios.Clear();
 
-        List<PartsOwnerType> allParts = new List<PartsOwnerType>
+        List<PartsChara> allParts = new List<PartsChara>
         {
-            (PartsOwnerType)playerParts.LeftArm,
-            (PartsOwnerType)playerParts.RightArm,
-            (PartsOwnerType)playerParts.LeftLeg,
-            (PartsOwnerType)playerParts.RightLeg
+            playerParts.LeftArm,
+            playerParts.RightArm,
+            playerParts.LeftLeg,
+            playerParts.RightLeg
         };
 
         var partsCounts = allParts.GroupBy(p => p)
@@ -41,20 +42,20 @@ public class PlayerPartsRatio : MonoBehaviour
         LogPartsRatio();
     }
 
-    public float GetPartsRatio(PartsOwnerType ownerType)
+    public float GetPartsRatio(PartsChara chara)
     {
-        return partsRatios.ContainsKey(ownerType) ? partsRatios[ownerType] : 0f;
+        return partsRatios.ContainsKey(chara) ? partsRatios[chara] : 0f;
     }
 
-    public PartsOwnerType GetDominantParts()
+    public PartsChara GetDominantParts()
     {
-        if (partsRatios.Count == 0) return PartsOwnerType.Player;
+        if (partsRatios.Count == 0) return PartsChara.Normal;
         return partsRatios.OrderByDescending(x => x.Value).First().Key;
     }
 
-    public PartsRatioState GetPartsRatioState(PartsOwnerType ownerType)
+    public PartsRatioState GetPartsRatioState(PartsChara chara)
     {
-        float ratio = GetPartsRatio(ownerType);
+        float ratio = GetPartsRatio(chara);
 
         if (ratio >= 100f)
             return PartsRatioState.Full;
@@ -68,16 +69,16 @@ public class PlayerPartsRatio : MonoBehaviour
             return PartsRatioState.None;
     }
 
-    public List<PartsOwnerType> GetPartsAboveRatio(float threshold)
+    public List<PartsChara> GetPartsAboveRatio(float threshold)
     {
         return partsRatios.Where(x => x.Value >= threshold)
                           .Select(x => x.Key)
                           .ToList();
     }
 
-    public Dictionary<PartsOwnerType, float> GetAllRatios()
+    public Dictionary<PartsChara, float> GetAllRatios()
     {
-        return new Dictionary<PartsOwnerType, float>(partsRatios);
+        return new Dictionary<PartsChara, float>(partsRatios);
     }
 
     public bool HasFullRatioParts()
@@ -85,7 +86,7 @@ public class PlayerPartsRatio : MonoBehaviour
         return partsRatios.Any(x => x.Value >= 100f);
     }
 
-    public PartsOwnerType GetFullRatioParts()
+    public PartsChara GetFullRatioParts()
     {
         var fullParts = partsRatios.FirstOrDefault(x => x.Value >= 100f);
         return fullParts.Key;
@@ -104,11 +105,11 @@ public class PlayerPartsRatio : MonoBehaviour
     public bool IsAllQuarters()
     {
         return
-            Mathf.Approximately(GetPartsRatio(PartsOwnerType.Player), 25f) &&
-            Mathf.Approximately(GetPartsRatio(PartsOwnerType.Thief), 25f) &&
-            Mathf.Approximately(GetPartsRatio(PartsOwnerType.Muscle), 25f) &&
-            Mathf.Approximately(GetPartsRatio(PartsOwnerType.Fire), 25f) &&
-            Mathf.Approximately(GetPartsRatio(PartsOwnerType.Assassin), 25f);
+            Mathf.Approximately(GetPartsRatio(PartsChara.Normal), 25f) &&
+            Mathf.Approximately(GetPartsRatio(PartsChara.Thief), 25f) &&
+            Mathf.Approximately(GetPartsRatio(PartsChara.Muscle), 25f) &&
+            Mathf.Approximately(GetPartsRatio(PartsChara.Fire), 25f) &&
+            Mathf.Approximately(GetPartsRatio(PartsChara.Assassin), 25f);
     }
 }
 

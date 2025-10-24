@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
+using Parts.Types; // 追加
 
 /// <summary>
 /// ゲーム中にテキストを表示するシステム
@@ -418,8 +419,8 @@ public static class GameTextDisplayExtensions
         
         // 最大占有率のパーツを全て取得（同率の場合は複数）
         var dominantParts = allRatios.Where(x => x.Value == maxRatio)
-                                      .Select(x => x.Key)
-                                      .ToList();
+                                     .Select(x => (PartsChara)x.Key)
+                                     .ToList();
         
         if (showDebugLogs)
         {
@@ -430,7 +431,7 @@ public static class GameTextDisplayExtensions
         var textList = new List<string>();
         foreach (var parts in dominantParts)
         {
-            // partsはPartsOwnerType型
+            // partsはPartsChara型
             string text = objectTextData.GetTextByIDAndCharacter(objectID, parts);
 
             if (showDebugLogs)

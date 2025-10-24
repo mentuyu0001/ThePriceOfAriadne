@@ -51,7 +51,7 @@ public class ItemData : ScriptableObject
     {
         return partsType switch
         {
-            "Player" => descriptions.playerTone ?? "",
+            "Normal" => descriptions.playerTone ?? "",
             "Thief" => descriptions.theifTone ?? "",
             "Muscle" => descriptions.muscleTone ?? "",
             "FireFighter" => descriptions.fireTone ?? "",
@@ -72,7 +72,7 @@ public class Item
     
     [Header("所有者情報")]
     [Tooltip("このアイテムの元の所有者")]
-    public ItemOwnerType ownerType = ItemOwnerType.Player;     // アイテムの所有者
+    public ItemOwnerType ownerType = ItemOwnerType.Normal;     // アイテムの所有者
     
     [Header("説明文")]
     public ItemDescriptions descriptions;   // アイテムを説明するセリフ
@@ -80,7 +80,7 @@ public class Item
     [Header("カテゴリ")]
     public ItemType itemType;              // アイテムの種類
 
-    public Item(int id, string name, string text, ItemType itemType, ItemOwnerType ownerType = ItemOwnerType.Player)
+    public Item(int id, string name, string text, ItemType itemType, ItemOwnerType ownerType = ItemOwnerType.Normal)
     {
         this.id = id;
         this.name = name;
@@ -101,7 +101,7 @@ public enum ItemType
 [Serializable]
 public enum ItemOwnerType
 {
-    Player,         // プレイヤー
+    Normal,         // プレイヤー
     Thief,          // 泥棒
     Muscle,         // マッチョ
     Fire,           // 消防士
