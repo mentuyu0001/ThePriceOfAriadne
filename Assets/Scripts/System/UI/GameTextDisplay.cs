@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
+using Parts.Types; // 追加
 
 /// <summary>
 /// ゲーム中にテキストを表示するシステム
@@ -365,20 +366,16 @@ public class GameTextDisplay : MonoBehaviour
     }
 }
 
-/// <summary>
 /// GameTextDisplayの拡張メソッド
-/// </summary>
 public static class GameTextDisplayExtensions
 {
-    /// <summary>
     /// パーツ占有率に基づいてテキストを表示
-    /// </summary>
     public static async UniTaskVoid ShowTextByPartsRatio(
         this GameTextDisplay textDisplay,
         PlayerPartsRatio partsRatio,
         ObjectTextData objectTextData,
         int objectID,
-        float delayBetweenTexts = 2f,
+        float delayBetweenTexts = 1.5f,
         bool showDebugLogs = false)
     {
         if (textDisplay == null || partsRatio == null || objectTextData == null)
@@ -422,8 +419,8 @@ public static class GameTextDisplayExtensions
         
         // 最大占有率のパーツを全て取得（同率の場合は複数）
         var dominantParts = allRatios.Where(x => x.Value == maxRatio)
-                                      .Select(x => x.Key)
-                                      .ToList();
+                                     .Select(x => (PartsChara)x.Key)
+                                     .ToList();
         
         if (showDebugLogs)
         {
@@ -434,13 +431,14 @@ public static class GameTextDisplayExtensions
         var textList = new List<string>();
         foreach (var parts in dominantParts)
         {
+            // partsはPartsChara型
             string text = objectTextData.GetTextByIDAndCharacter(objectID, parts);
-            
+
             if (showDebugLogs)
             {
                 Debug.Log($"{parts}のテキスト: \"{text}\"");
             }
-            
+
             if (!string.IsNullOrEmpty(text))
             {
                 textList.Add(text);
@@ -457,9 +455,7 @@ public static class GameTextDisplayExtensions
         await ShowTextsSequentially(textDisplay, textList, delayBetweenTexts, showDebugLogs);
     }
     
-    /// <summary>
-    /// 複数のテキストを順次表示
-    /// </summary>
+    // 複数のテキストを順次表示
     private static async UniTask ShowTextsSequentially(
         GameTextDisplay textDisplay,
         List<string> textList,

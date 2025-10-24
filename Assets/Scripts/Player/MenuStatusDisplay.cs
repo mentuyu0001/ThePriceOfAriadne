@@ -74,7 +74,7 @@ public class MenuStatusDisplay : MonoBehaviour
                     ImageLeftArm.color = Color.green;
                     break;
                 // 泥棒パーツ
-                case PartsChara.Theif:
+                case PartsChara.Thief:
                     ImageLeftArm.color = new Color(0.8f, 0.0f, 1.0f);
                     break;
                 // 軍人パーツ
@@ -107,7 +107,7 @@ public class MenuStatusDisplay : MonoBehaviour
                     ImageLeftLeg.color = Color.green;
                     break;
                 // 泥棒パーツ
-                case PartsChara.Theif:
+                case PartsChara.Thief:
                     ImageLeftLeg.color = new Color(0.8f, 0.0f, 1.0f);
                     break;
                 // 軍人パーツ
@@ -140,7 +140,7 @@ public class MenuStatusDisplay : MonoBehaviour
                     ImageRightArm.color = Color.green;
                     break;
                 // 泥棒パーツ
-                case PartsChara.Theif:
+                case PartsChara.Thief:
                     ImageRightArm.color = new Color(0.8f, 0.0f, 1.0f);
                     break;
                 // 軍人パーツ
@@ -173,7 +173,7 @@ public class MenuStatusDisplay : MonoBehaviour
                     ImageRightLeg.color = Color.green;
                     break;
                 // 泥棒パーツ
-                case PartsChara.Theif:
+                case PartsChara.Thief:
                     ImageRightLeg.color = new Color(0.8f, 0.0f, 1.0f);
                     break;
                 // 軍人パーツ

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// アイテムの情報を保持するスクリプタブルオブジェクト
@@ -38,23 +39,25 @@ public class ItemData : ScriptableObject
         return item?.descriptions;
     }
 
-    // すべてのアイテムを取得するメソッド
-    public List<Item> GetAllItems()
+    // パーツタイプとアイテム所有者が一致するかチェック
+    private bool IsOwnerMatch(string partsType, ItemOwnerType ownerType)
     {
-        return new List<Item>(items);
+        return partsType == ownerType.ToString() ||
+               (partsType == "FireFighter" && ownerType == ItemOwnerType.Fire);
     }
 
-    // アイテムを追加するメソッド（エディタ用）
-    public void AddItem(Item item)
+    // パーツタイプに応じた口調の説明文を取得
+    private string GetToneByPartsType(string partsType, ItemDescriptions descriptions)
     {
-        if (items.Find(x => x.id == item.id) == null)
+        return partsType switch
         {
-            items.Add(item);
-        }
-        else
-        {
-            Debug.LogWarning($"ID {item.id} のアイテムは既に存在します。");
-        }
+            "Normal" => descriptions.playerTone ?? "",
+            "Thief" => descriptions.theifTone ?? "",
+            "Muscle" => descriptions.muscleTone ?? "",
+            "FireFighter" => descriptions.fireTone ?? "",
+            "Assassin" => descriptions.assassinTone ?? "",
+            _ => descriptions.playerTone ?? "説明文がありません"
+        };
     }
 }
 
@@ -67,18 +70,23 @@ public class Item
     [TextArea(3, 5)]
     public string text;                     // アイテムの中身のテキスト
     
+    [Header("所有者情報")]
+    [Tooltip("このアイテムの元の所有者")]
+    public ItemOwnerType ownerType = ItemOwnerType.Normal;     // アイテムの所有者
+    
     [Header("説明文")]
     public ItemDescriptions descriptions;   // アイテムを説明するセリフ
 
     [Header("カテゴリ")]
     public ItemType itemType;              // アイテムの種類
 
-    public Item(int id, string name, string text, ItemType itemType)
+    public Item(int id, string name, string text, ItemType itemType, ItemOwnerType ownerType = ItemOwnerType.Normal)
     {
         this.id = id;
         this.name = name;
         this.text = text;
         this.itemType = itemType;
+        this.ownerType = ownerType;
         this.descriptions = new ItemDescriptions();
     }
 }
@@ -88,6 +96,16 @@ public enum ItemType
 {
     ResearchReport,  // 研究報告書
     Diary           // 日記
+}
+
+[Serializable]
+public enum ItemOwnerType
+{
+    Normal,         // プレイヤー
+    Thief,          // 泥棒
+    Muscle,         // マッチョ
+    Fire,           // 消防士
+    Assassin        // アサシン
 }
 
 [Serializable]
@@ -112,9 +130,6 @@ public class ItemDescriptions
     [Header("パーツ占有率別")]
     [Tooltip("各パーツ占有率25%のときの説明")]
     public string allQuartersTone;
-
-    [Tooltip("自身のパーツ占有率75%のときの説明")]
-    public string ownThreeQuartersTone;
 
     [Tooltip("自身のパーツ占有率100%のときの説明")]
     public string ownFullTone;

@@ -17,7 +17,7 @@ namespace Parts.Types
     public enum PartsChara {
         None,
         Normal,
-        Theif,
+        Thief,
         Muscle,
         Assassin,
         Fire,

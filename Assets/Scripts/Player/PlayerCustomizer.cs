@@ -53,7 +53,7 @@ public class PlayerCustomizer : MonoBehaviour
             case PartsChara.Normal:
                 break;
 
-            case PartsChara.Theif:
+            case PartsChara.Thief:
                 playerStatus.CanUnlock = statusData.ThiefCanUnlock;
                 break;
 
@@ -80,7 +80,7 @@ public class PlayerCustomizer : MonoBehaviour
             case PartsChara.Normal:
                 break;
 
-            case PartsChara.Theif:
+            case PartsChara.Thief:
                 playerStatus.CanUnlock = statusData.ThiefCanUnlock;
                 break;
 
@@ -108,7 +108,7 @@ public class PlayerCustomizer : MonoBehaviour
             case PartsChara.Normal:
                 break;
 
-            case PartsChara.Theif:
+            case PartsChara.Thief:
                 playerStatus.Friction = statusData.TheifFriction;
                 playerStatus.AirResistance = statusData.TheifAirResistance;
                 playerStatus.MoveSpeed = statusData.ThiefMoveSpeed;
@@ -137,7 +137,7 @@ public class PlayerCustomizer : MonoBehaviour
             case PartsChara.Normal:
                 break;
 
-            case PartsChara.Theif:
+            case PartsChara.Thief:
                 playerStatus.Friction = statusData.TheifFriction;
                 playerStatus.AirResistance = statusData.TheifAirResistance;
                 playerStatus.MoveSpeed = statusData.ThiefMoveSpeed;

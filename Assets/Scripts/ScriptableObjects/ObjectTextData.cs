@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Parts.Types;
 
 /// <summary>
 /// オブジェクトインタラクション時のテキスト情報を保持するスクリプタブルオブジェクト
@@ -17,19 +18,19 @@ public class ObjectTextData : ScriptableObject
         return objectTexts.Find(obj => obj.id == objectID);
     }
 
-    // オブジェクトIDとキャラクタータイプに基づいてテキストを取得するメソッド
-    public string GetTextByIDAndCharacter(int objectID, Parts.Types.PartsChara chara)
+    // PartsChara型で統一
+    public string GetTextByIDAndCharacter(int objectID, PartsChara chara)
     {
         var objectText = GetObjectTextByID(objectID);
         if (objectText == null) return "Unknown Object";
 
         return chara switch
         {
-            Parts.Types.PartsChara.Normal => objectText.characterDialogues.playerTone,
-            Parts.Types.PartsChara.Theif => objectText.characterDialogues.thiefTone,
-            Parts.Types.PartsChara.Muscle => objectText.characterDialogues.soldierTone,
-            Parts.Types.PartsChara.Fire => objectText.characterDialogues.firefighterTone,
-            Parts.Types.PartsChara.Assassin => objectText.characterDialogues.assassinTone,
+            PartsChara.Normal => objectText.characterDialogues.playerTone,
+            PartsChara.Thief => objectText.characterDialogues.thiefTone,
+            PartsChara.Muscle => objectText.characterDialogues.soldierTone,
+            PartsChara.Fire => objectText.characterDialogues.firefighterTone,
+            PartsChara.Assassin => objectText.characterDialogues.assassinTone,
             _ => "Unknown Character"
         };
     }
