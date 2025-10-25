@@ -444,10 +444,25 @@ public static class GameTextDisplayExtensions
                 textList.Add(text);
             }
         }
-        
+
         if (textList.Count == 0)
         {
             Debug.LogWarning("表示するテキストが空です");
+            return;
+        }
+        
+        if(textList.Count == 4)
+        {
+            // 全て25%のときは特別なテキストを表示
+            string allQuartersText = objectTextData.GetChimeraToneByID(objectID);
+
+            if (showDebugLogs) Debug.Log("全て25%のため特別テキストを表示");
+            await ShowTextsSequentially(
+                textDisplay,
+                new List<string> { allQuartersText },
+                delayBetweenTexts,
+                showDebugLogs
+            );
             return;
         }
         

@@ -51,6 +51,23 @@ public class EnterKeyActionTrigger : MonoBehaviour
     [SerializeField] private string noWaterTankMessage = "水タンクが装備されていません";
     [SerializeField] private string noWaterMessage = "水がありません";
 
+    // PlayerPartsRatioの参照
+    [Inject] private PlayerPartsRatio partsRatio;
+
+    // テキスト表示間のディレイ秒数
+    [SerializeField] private float delayBetweenTexts = 2f; 
+
+    // ObjectTextDataの参照
+    [Inject] private ObjectTextData objectTextData;
+    [Header("オブジェクトID設定")]
+    [SerializeField] private int partsID = 0;    // パーツ取得時のID
+    [SerializeField] private int leverID = 1;    // レバー使用時のID
+    [SerializeField] private int buttonID = 5;   // ボタン使用時のID
+    [SerializeField] private int waterTankID = 6; // 水タンク使用時のID
+    [SerializeField] private int canselWaterTankID = 7; // 水タンクが使用不可時のID
+    [SerializeField] private int fireExtinguishID = 8; // 火消し時のID
+
+
     // 接触しているコライダー
     private Collider2D touchingCollision = null;
     // デバッグ用
@@ -374,7 +391,14 @@ public class EnterKeyActionTrigger : MonoBehaviour
             component.PressButton();
             await WaitForAnimationCompletion(buttonAnimationDuration);
             ResteControllerInput();
-            await textDisplay.ShowText(buttonUseMessage);
+            //await textDisplay.ShowText(buttonUseMessage);
+            textDisplay.ShowTextByPartsRatio(
+                partsRatio,
+                objectTextData,
+                buttonID,
+                delayBetweenTexts,
+                showDebugLogs
+            );
         }
         catch (System.Exception e)
         {
@@ -396,7 +420,13 @@ public class EnterKeyActionTrigger : MonoBehaviour
             {
                 if (textDisplay != null)
                 {
-                    await textDisplay.ShowText(noWaterTankMessage);
+                    textDisplay.ShowTextByPartsRatio(
+                        partsRatio,
+                        objectTextData,
+                        canselWaterTankID,
+                        delayBetweenTexts,
+                        showDebugLogs
+                    );
                 }
                 
                 isInteracting = false;
@@ -408,7 +438,14 @@ public class EnterKeyActionTrigger : MonoBehaviour
             component.ChargeWater();
             await WaitForAnimationCompletion(interactAnimationDuration);
             ResteControllerInput();
-            await textDisplay.ShowText(waterChargeMessage);
+            //await textDisplay.ShowText(waterChargeMessage);
+            textDisplay.ShowTextByPartsRatio(
+                partsRatio,
+                objectTextData,
+                waterTankID,
+                delayBetweenTexts,
+                showDebugLogs
+            );
         }
         catch (System.Exception e)
         {
@@ -442,7 +479,14 @@ public class EnterKeyActionTrigger : MonoBehaviour
             component.FireExtinguishedAsync();
             await WaitForAnimationCompletion(shootWaterAnimationDuration);
             ResteControllerInput();
-            await textDisplay.ShowText(fireExtinguishMessage);
+            //await textDisplay.ShowText(fireExtinguishMessage);
+            textDisplay.ShowTextByPartsRatio(
+                partsRatio,
+                objectTextData,
+                fireExtinguishID,
+                delayBetweenTexts,
+                showDebugLogs
+            );
         }
         catch (System.Exception e)
         {

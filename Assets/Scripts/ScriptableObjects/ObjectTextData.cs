@@ -34,6 +34,13 @@ public class ObjectTextData : ScriptableObject
             _ => "Unknown Character"
         };
     }
+    // キメラ口調のテキストを取得するメソッド
+    public string GetChimeraToneByID(int objectID)
+    {
+        var objectText = GetObjectTextByID(objectID);
+        if (objectText == null) return "Unknown Object";
+        return objectText.characterDialogues.allQuartersTone;
+    }   
 
     // すべてのオブジェクトテキストを取得するメソッド
     public List<ObjectText> GetAllObjectTexts()
@@ -110,9 +117,13 @@ public class CharacterDialogues
     [TextArea(2, 4)]
     [Tooltip("50%～75%の時のセリフ")]
     public string firefighterTone;
-    
+
     [Header("アサシン口調")]
     [TextArea(2, 4)]
     [Tooltip("50%～75%の時のセリフ")]
     public string assassinTone;
+    [Header("キメラ口調")]
+    [TextArea(2, 4)]
+    [Tooltip("All25%の時のセリフ")]
+    public string allQuartersTone;
 }
