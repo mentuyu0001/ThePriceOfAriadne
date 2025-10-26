@@ -21,6 +21,9 @@ public class PlayerCustomizer : MonoBehaviour
     // RunTimeStatusの取得
     [Inject] private PlayerRunTimeStatus runTimeStatus;
 
+    // PlayerVisualCustomizerの取得
+    [SerializeField] private PlayerVisualCustomizer visualCustomizer;
+
     private void Awake() {
         ChangePlayerStatus();
         controller.SetStatus();
@@ -206,6 +209,9 @@ public class PlayerCustomizer : MonoBehaviour
 
         // 変更した能力をコントローラーに反映させる
         controller.SetStatus();
+
+        // 見た目を変更する
+        visualCustomizer.ChangeVisual(slot, befChara, chara);
 
         Debug.Log("交換後のプレイヤーパーツの種類: LeftArm -> " + playerParts.LeftArm
          + ", RightArm -> " + playerParts.RightArm + ", LeftLeg -> "

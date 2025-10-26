@@ -147,6 +147,7 @@ MonoBehaviour:
     m_Bits: 8
   sizeModifier: {x: 1, y: 0.1}
   groundCheckBuffer: 0
+  playerVisualCustomizer: {fileID: 0}
   isInputEnabled: 1
 --- !u!114 &2580708355860867723
 MonoBehaviour:

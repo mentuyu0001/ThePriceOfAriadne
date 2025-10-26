@@ -87,6 +87,16 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: A_UpperLegLMaterial
+    second: {fileID: 2100000, guid: ef32cb240586848019548489c6a914a1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: A_UpperLegRMaterial
+    second: {fileID: 2100000, guid: 8796198fa11a84bf5982f2cbba4c563d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: ChestBackMaterial
     second: {fileID: 2100000, guid: 5d7ca09cf526742a886bfa8cf618aba1, type: 2}
   - first:
@@ -182,6 +192,16 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: F_UpperLegLMaterial
+    second: {fileID: 2100000, guid: 928d04e584e8f480aa920547f1bc94f8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: F_UpperLegRMaterial
+    second: {fileID: 2100000, guid: da652a48960dc4113a61745e44655bd3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: HairMaterial
     second: {fileID: 2100000, guid: d5396f2ac386d4f52b5b3402b38dc9bb, type: 2}
   - first:
@@ -272,6 +292,16 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: M_UpperLegLMaterial
+    second: {fileID: 2100000, guid: 9dbab176e229c458cb5bc1a7d5e03ce2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_UpperLegRMaterial
+    second: {fileID: 2100000, guid: 5e02779f177f04617aa45af8672c8d95, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: N_ElbowBackLMaterial
     second: {fileID: 2100000, guid: f5817362604ac4f8c83d0ba2103ff0f3, type: 2}
   - first:
@@ -338,17 +368,17 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: N_LeftwardUpperLegRMaterial
-    second: {fileID: 2100000, guid: e4972bf23dac04e03a370a0b89732286, type: 2}
+    second: {fileID: 2100000, guid: ceedebba17eab4651bc4aca09b917b0b, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: N_RightwardUpperLegLMaterial
-    second: {fileID: 2100000, guid: 4064bc30e070d4957b319fc9def997f9, type: 2}
+    second: {fileID: 2100000, guid: 40b15abbcba96449285f39cadb819e80, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: N_RightwardUpperLegRMaterial
-    second: {fileID: 2100000, guid: 58d3ee7d0a416494497ab47f10bfdcf9, type: 2}
+    second: {fileID: 2100000, guid: e4972bf23dac04e03a370a0b89732286, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -358,7 +388,17 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: N_UpperArmRMaterial
-    second: {fileID: 2100000, guid: ceedebba17eab4651bc4aca09b917b0b, type: 2}
+    second: {fileID: 2100000, guid: de9f75aede9b1423bba0a4bc0d8590f3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: N_UpperLegLMaterial
+    second: {fileID: 2100000, guid: e9d85e1e6be624221b4c25bda653e14a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: N_UpperLegRMaterial
+    second: {fileID: 2100000, guid: e4972bf23dac04e03a370a0b89732286, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -449,6 +489,16 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: T_UpperArmRMaterial
     second: {fileID: 2100000, guid: f66c955aa01824b7da4a86a1001320f6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: T_UpperLegLMaterial
+    second: {fileID: 2100000, guid: e8ad7d20f7cac4250a5a8a4fde0e1213, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: T_UpperLegRMaterial
+    second: {fileID: 2100000, guid: 1e79e0764baa349bb9bb7f2d462a33a7, type: 2}
   materials:
     materialImportMode: 2
     materialName: 1
@@ -515,7 +565,7 @@ ModelImporter:
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
-    tangentImportMode: 3
+    tangentImportMode: 2
     normalCalculationMode: 4
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
