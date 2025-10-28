@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using VContainer;
+using System.Runtime.Serialization;
 
 public class ItemResetConfirmation : MonoBehaviour
 {
@@ -13,6 +15,11 @@ public class ItemResetConfirmation : MonoBehaviour
 
     // Yesボタンの取得
     [SerializeField] private GameObject noButton;
+
+    // InventoryDataの参照
+    [SerializeField] private InventoryData inventoryData;
+    // StageInventoryDataの参照
+    [SerializeField] private StageInventoryData stageInventoryData;
 
     // ダイアログを開く直前に選択されていたボタンを記憶しておく変数
     private GameObject lastSelectedButton;
@@ -39,7 +46,8 @@ public class ItemResetConfirmation : MonoBehaviour
     {
         Debug.Log("アイテムリセットを実行します。");
         // ここで実際のアイテムリセット処理を呼び出す
-        // itemReset.itemReset();
+        inventoryData.ResetAllItems();
+        stageInventoryData.ResetAllItems();
 
         CloseDialog();
     }

@@ -19689,6 +19689,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   confirmationDialogPanel: {fileID: 1508862141}
   noButton: {fileID: 77074908}
+  gameDataManager: {fileID: 1559244142}
 --- !u!114 &1508862144
 MonoBehaviour:
   m_ObjectHideFlags: 0

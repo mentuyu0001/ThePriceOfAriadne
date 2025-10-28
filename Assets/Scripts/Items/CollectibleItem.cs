@@ -64,9 +64,6 @@ public class CollectibleItem : MonoBehaviour
                 Debug.LogWarning("アイテム情報または説明文がありません");
                 return;
             }
-            
-            CollectItem();
-            Destroy(gameObject);
 
             partsRatio.CalculatePartsRatio();
             var allRatios = partsRatio.GetAllRatios();
@@ -175,6 +172,9 @@ public class CollectibleItem : MonoBehaviour
                     2f // ディレイ
                 );
             }
+
+            CollectItem();
+            Destroy(gameObject);
         }
     }
     
