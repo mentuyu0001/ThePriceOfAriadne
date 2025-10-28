@@ -3,9 +3,9 @@ using UnityEngine;
 /// <summary>
 /// インベントリのデータを保持するシングルトン
 /// </summary>
-public class InventoryData : MonoBehaviour
+public class StageInventoryData : MonoBehaviour
 {
-    public static InventoryData Instance { get; private set; }
+    public static StageInventoryData Instance { get; private set; }
 
     // 研究報告書の取得状態
     private bool playerReportObtained;

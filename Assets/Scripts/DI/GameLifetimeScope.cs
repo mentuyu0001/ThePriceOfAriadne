@@ -207,6 +207,18 @@ public class GameLifetimeScope : LifetimeScope
             {
                 Debug.LogError("Singletons/ItemDataの子オブジェクトにInventoryDataコンポーネントが見つかりません");
             }
+
+            // StageInventoryDataの登録
+            var stageInventoryData = itemDataObject.GetComponentInChildren<StageInventoryData>();
+            if (stageInventoryData != null)
+            {
+                builder.RegisterInstance(stageInventoryData);
+                if (enableDebugLog) Debug.Log($"StageInventoryDataが正常に登録されました: {stageInventoryData.name}");
+            }
+            else
+            {
+                Debug.LogError("Singletons/ItemDataの子オブジェクトにStageInventoryDataコンポーネントが見つかりません");
+            }
         }
         else
         {
