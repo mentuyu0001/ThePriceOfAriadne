@@ -22,7 +22,7 @@ public class PlayerCustomizer : MonoBehaviour
     [Inject] private PlayerRunTimeStatus runTimeStatus;
 
     // PlayerVisualCustomizerの取得
-    [SerializeField] private PlayerVisualCustomizer visualCustomizer;
+    [SerializeField] private PlayerVisualCustomizer playerVisualCustomizer;
 
     private void Awake() {
         ChangePlayerStatus();
@@ -167,7 +167,7 @@ public class PlayerCustomizer : MonoBehaviour
 
     // 取得したパーツの装備箇所と種類を引数にし、
     // 元々装備してたパーツの種類を返すメソッド
-    public PartsChara ChangePlayerParts(PartsSlot slot, PartsChara chara) {
+    public PartsChara ChangePlayerParts(PartsSlot slot, PartsChara chara, MapPartsVisualCustomizer mapPartsVisualCustomizer) {
         PartsChara befChara = PartsChara.None;
         
         Debug.Log("交換前のプレイヤーパーツの種類: LeftArm -> " + playerParts.LeftArm
@@ -211,7 +211,10 @@ public class PlayerCustomizer : MonoBehaviour
         controller.SetStatus();
 
         // 見た目を変更する
-        visualCustomizer.ChangeVisual(slot, befChara, chara);
+        playerVisualCustomizer.ChangeVisual(slot, befChara, chara);
+
+        // マップ上のパーツの見た目も変更する
+        mapPartsVisualCustomizer.ChangeVisual(slot, chara, befChara);
 
         Debug.Log("交換後のプレイヤーパーツの種類: LeftArm -> " + playerParts.LeftArm
          + ", RightArm -> " + playerParts.RightArm + ", LeftLeg -> "
