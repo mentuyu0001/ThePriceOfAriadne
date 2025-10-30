@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
 using System.Linq;
+using TMPro;
 
 public class ItemSlot : Button
 {
@@ -9,6 +10,7 @@ public class ItemSlot : Button
     [SerializeField] ItemData itemData;
     [SerializeField] InventoryData inventoryData;
     private Image iconImage;
+    [SerializeField] TextMeshProUGUI itemText; 
 
     public string ItemName => itemData.GetItemNameByID(itemID);
     public string ItemText => itemData.GetItemTextByID(itemID);
@@ -18,10 +20,16 @@ public class ItemSlot : Button
     {
         iconImage = GetComponentsInChildren<Image>(true)
             .FirstOrDefault(img => img.gameObject.name == "IconImage");
+        itemText = GetComponentsInChildren<TextMeshProUGUI>(true)
+            .FirstOrDefault(txt => txt.gameObject.name == "ItemText");
 
         if (iconImage == null)
         {
             Debug.LogError("IconImageが見つかりません。ItemSlotの子にIconImageという名前のImageを配置してください。");
+        }
+        if (itemText == null)
+        {
+            Debug.LogError("ItemTextが見つかりません。ItemSlotの子にItemTextという名前のTextMeshProUGUIを配置してください。");
         }
         UpdateIcon();
     }
@@ -40,22 +48,6 @@ public class ItemSlot : Button
 
     private void UpdateIcon()
     {
-        if (iconImage == null)
-        {
-            Debug.LogError("iconImageがnullです");
-            return;
-        }
-        if (inventoryData == null)
-        {
-            Debug.LogError("inventoryDataがnullです");
-            return;
-        }
-        if (itemData == null)
-        {
-            Debug.LogError("itemDataがnullです");
-            return;
-        }
-
         if (IsObtained)
         {
             iconImage.sprite = itemData.GetItemIconByID(itemID);
@@ -69,19 +61,26 @@ public class ItemSlot : Button
 
     public override void OnClick()
     {
-        if (IsObtained)
-        {
-            Debug.Log($"Item: {ItemName}\nText: {ItemText}");
-        }
-        else
-        {
-            Debug.Log("Item not obtained yet.");
-        }
+        Debug.Log("OnClick ItemSlot: " + ItemName);
+        ShowItemText();
     }
 
-    public override void TriggerSelectionEffects()
+    protected override void TriggerSelectionEffects()
     {
         // 選択された際のエフェクト処理をここに追加
         Debug.Log($"ItemSlot for ItemID {itemID} selected.");
+    }
+
+    public void ShowItemText()
+    {
+        if (itemText != null && itemData != null)
+        {
+            itemText.text = ItemText;
+            Debug.Log($"テキスト表示: {itemText.text}");
+        }
+        else
+        {
+            Debug.LogError("itemTextまたはitemDataが設定されていません。");
+        }
     }
 }
