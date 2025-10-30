@@ -1128,6 +1128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b63a7de1510b04e858acd0ea79c8e2a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameOverEffect: {fileID: 0}
 --- !u!1 &805467153
 GameObject:
   m_ObjectHideFlags: 0
@@ -1782,16 +1783,7 @@ MonoBehaviour:
     RightArm: 0
     LeftLeg: 0
     RightLeg: 0
-    playerReportObtained: 0
-    theifReportObtained: 0
-    muscleReportObtained: 0
-    fireReportObtained: 0
-    assassinReportObtained: 0
-    playerDiaryObtained: 0
-    theifDiaryObtained: 0
-    muscleDiaryObtained: 0
-    fireDiaryObtained: 0
-    assassinDiaryObtained: 0
+    stageNumber: 0
 --- !u!1 &1586923810
 GameObject:
   m_ObjectHideFlags: 0
@@ -2570,6 +2562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a010000a43a574a5c9e2bd4f0c23d877, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  visualCustomizer: {fileID: 0}
 --- !u!1 &2043468818
 GameObject:
   m_ObjectHideFlags: 0
