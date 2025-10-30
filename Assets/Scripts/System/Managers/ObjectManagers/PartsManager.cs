@@ -12,12 +12,12 @@ public class PartsManager : MonoBehaviour
     [Inject] private PlayerCustomizer playerCustomizer;
 
     // プレイヤーが装備しているパーツをマップに落ちているパーツと交換するメソッド
-    public void ExchangeParts(MapParts mapParts)
+    public void ExchangeParts(MapParts mapParts, MapPartsVisualCustomizer mapPartsVisualCustomizer)
     {
         Debug.Log("交換前のマップパーツの種類: " + mapParts.SlotType + ", " + mapParts.CharaType);
 
         // マップに落ちているパーツと交換し，装備していたパーツを取得
-        PartsChara befChara = playerCustomizer.ChangePlayerParts(mapParts.SlotType, mapParts.CharaType);
+        PartsChara befChara = playerCustomizer.ChangePlayerParts(mapParts.SlotType, mapParts.CharaType, mapPartsVisualCustomizer);
 
         // マップに落ちているパーツの種類を，装備していたパーツの種類に変更
         mapParts.CharaType = befChara;
