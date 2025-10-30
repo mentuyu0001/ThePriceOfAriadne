@@ -2236,6 +2236,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2114878910}
+  - {fileID: 2008658589}
   m_Father: {fileID: 1365103312}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &221483954
@@ -4530,6 +4531,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &426662747 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7224314610825701881, guid: 9cb206c82ac534a638a9cf6c00ec5bb3, type: 3}
+  m_PrefabInstance: {fileID: 2101793060}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &435512978
 GameObject:
   m_ObjectHideFlags: 0
@@ -7726,6 +7732,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b63a7de1510b04e858acd0ea79c8e2a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameOverEffect: {fileID: 7175769800601986794, guid: e224e0acae1d8448a99f6b57f9b16f8b, type: 3}
+  player: {fileID: 426662747}
 --- !u!1 &775953726
 GameObject:
   m_ObjectHideFlags: 0
@@ -9286,7 +9294,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8336005192625649946, guid: 9cb206c82ac534a638a9cf6c00ec5bb3, type: 3}
   m_PrefabInstance: {fileID: 2101793060}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 426662747}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
@@ -20606,16 +20614,7 @@ MonoBehaviour:
     RightArm: 0
     LeftLeg: 0
     RightLeg: 0
-    playerReportObtained: 0
-    theifReportObtained: 0
-    muscleReportObtained: 0
-    fireReportObtained: 0
-    assassinReportObtained: 0
-    playerDiaryObtained: 0
-    theifDiaryObtained: 0
-    muscleDiaryObtained: 0
-    fireDiaryObtained: 0
-    assassinDiaryObtained: 0
+    stageNumber: 0
 --- !u!1 &1565075356
 GameObject:
   m_ObjectHideFlags: 0
@@ -21958,6 +21957,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   confirmationDialogPanel: {fileID: 1708425078}
   noButton: {fileID: 619450154}
+  inventoryData: {fileID: 0}
+  stageInventoryData: {fileID: 0}
 --- !u!114 &1708425081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24850,6 +24851,50 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &2008658588
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2008658589}
+  - component: {fileID: 2008658590}
+  m_Layer: 0
+  m_Name: StageInentoryData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2008658589
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2008658588}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 217372588}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2008658590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2008658588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1e15c58ba17740089ab61a30cedb4a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2012378648
 GameObject:
   m_ObjectHideFlags: 0
@@ -25466,6 +25511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a010000a43a574a5c9e2bd4f0c23d877, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerVisualCustomizer: {fileID: 0}
 --- !u!1 &2045294078
 GameObject:
   m_ObjectHideFlags: 0
