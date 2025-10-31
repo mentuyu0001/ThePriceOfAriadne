@@ -232,9 +232,10 @@ public class EnterKeyActionTrigger : MonoBehaviour
             {
                 if (isGrounded == false)
                 {
+                    // アニメーター側で設定したため不要
                     // ジャンプアニメーションをキャンセル
-                    playerAnimationManager.AniJumpFalse();
-                    playerAnimationManager.AniDoubleJumpFalse();
+                    //playerAnimationManager.AniJumpFalse();
+                    //playerAnimationManager.AniDoubleJumpFalse();
 
                 }
                 HandleKnifeThrow().Forget();
