@@ -38,7 +38,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
     [SerializeField] private float interactAnimationDuration = 1.25f;  // Interactアニメーションの時間
     [SerializeField] private float leverAnimationDuration = 1.5f;      // Leverアニメーションの時間
     [SerializeField] private float buttonAnimationDuration = 1.0f;     // Buttonアニメーションの時間
-    [SerializeField] private float shootWaterAnimationDuration = 2.0f; // ShootWaterアニメーションの時間
+    [SerializeField] private float shootWaterAnimationDuration = 3.0f; // ShootWaterアニメーションの時間
     [SerializeField] private float knifeAnimationDuration = 0.5f;      // Knifeアニメーションの時間
 
     // 表示するテキストメッセージ
@@ -452,6 +452,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
             component.ChargeWater();
             await WaitForAnimationCompletion(interactAnimationDuration);
             ResteControllerInput();
+            
             textDisplay.ShowTextByPartsRatio(
                 partsRatio,
                 objectTextData,
@@ -459,6 +460,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
                 delayBetweenTexts,
                 showDebugLogs
             );
+            
         }
         catch (System.Exception e)
         {
@@ -506,6 +508,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
             }
             ResteControllerInput();
             //await textDisplay.ShowText(fireExtinguishMessage);
+            /*
             textDisplay.ShowTextByPartsRatio(
                 partsRatio,
                 objectTextData,
@@ -513,6 +516,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
                 delayBetweenTexts,
                 showDebugLogs
             );
+            */
         }
         catch (System.Exception e)
         {
