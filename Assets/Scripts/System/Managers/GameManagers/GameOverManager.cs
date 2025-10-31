@@ -1,9 +1,11 @@
 using UnityEngine;
+using VContainer;
 
 public class GameOverManager : MonoBehaviour
 {
     [SerializeField] private GameObject gameOverEffect;
     [SerializeField] private GameObject player;
+
     public void GameOver()
     {
         Debug.Log("Game Over");
@@ -13,6 +15,12 @@ public class GameOverManager : MonoBehaviour
             Quaternion effectRotation = Quaternion.Euler(-90, 0, 0);
             Instantiate(gameOverEffect, player.transform.position, effectRotation);
             Debug.Log("Game Over Effect Triggered");
+        }
+
+        // ゲームオーバー時のサウンドを再生（Singletonのみでアクセス）
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.PlaySE(0); // 0はゲームオーバーサウンドのインデックス
         }
     }
 }
