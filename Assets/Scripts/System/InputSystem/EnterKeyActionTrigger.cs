@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using VContainer;
+using Parts.Types;
 
 /// <summary>
 /// Enteキーで発生するイベントを呼び出すスクリプト
@@ -22,6 +23,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
     [Inject] private PlayerRunTimeStatus playerRunTimeStatus;
     // テキスト表示システムの参照
     [Inject] private GameTextDisplay textDisplay;
+    [SerializeField] PartsData partsData;
      // マップに落ちているパーツオブジェクトのタグ
     [SerializeField] private string partsTag = "Parts";
     // 錆びたレバーのタグ
@@ -336,8 +338,6 @@ public class EnterKeyActionTrigger : MonoBehaviour
     {
         try
         {
-            Debug.Log("=== パーツインタラクション開始 ===");
-
             PrepareForAnimation();
             playerAnimationManager.AniInteractTrue();
 
@@ -347,13 +347,32 @@ public class EnterKeyActionTrigger : MonoBehaviour
                 SoundManager.Instance.PlaySE(4);
             }
 
-            Debug.Log("アニメーション待機中...");
+            // MapPartsからキャラ・部位を取得
+            var chara = component1.CharaType;
+            var slot = component1.SlotType;
+
+            // PartsDataから形容詞を取得
+            var info = partsData.GetPartsInfoByPartsChara(chara);
+            string adjective = info != null ? info.adjective : "";
+
+            // 部位名を日本語に変換
+            string slotName = slot switch
+            {
+                PartsSlot.LeftArm => "左腕",
+                PartsSlot.RightArm => "右腕",
+                PartsSlot.LeftLeg => "左脚",
+                PartsSlot.RightLeg => "右脚",
+                _ => "部位"
+            };
+
+            // テキスト生成
+            string getMessage = $"{adjective}{slotName}に切り替えた。";
+
             await WaitForAnimationCompletion(interactAnimationDuration);
-            Debug.Log("アニメーション完了");
 
             partsManager.ExchangeParts(component1, component2);
             ResteControllerInput();
-            await textDisplay.ShowText(partsGetMessage);
+            await textDisplay.ShowText(getMessage);
         }
         catch (System.Exception e)
         {
