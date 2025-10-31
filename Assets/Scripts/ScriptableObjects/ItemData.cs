@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Parts.Types;
 
 /// <summary>
 /// アイテムの情報を保持するスクリプタブルオブジェクト
@@ -39,6 +40,13 @@ public class ItemData : ScriptableObject
         return item?.descriptions;
     }
 
+    // アイテムIDに基づいてアイコンを取得するメソッド
+    public Sprite GetItemIconByID(int itemID)
+    {
+        var item = GetItemByID(itemID);
+        return item != null ? item.itemIcon : null;
+    }
+
     // パーツタイプとアイテム所有者が一致するかチェック
     private bool IsOwnerMatch(string partsType, ItemOwnerType ownerType)
     {
@@ -59,6 +67,40 @@ public class ItemData : ScriptableObject
             _ => descriptions.playerTone ?? "説明文がありません"
         };
     }
+
+    public string GetToneTextByPartsChara(int itemID, PartsChara chara)
+    {
+        var descriptions = GetItemDescriptionsByID(itemID);
+        if (descriptions == null) return "説明文がありません";
+
+        switch (chara)
+        {
+            case PartsChara.Normal:
+                return descriptions.playerTone ?? "";
+            case PartsChara.Thief:
+                return descriptions.theifTone ?? "";
+            case PartsChara.Muscle:
+                return descriptions.muscleTone ?? "";
+            case PartsChara.Fire:
+                return descriptions.fireTone ?? "";
+            case PartsChara.Assassin:
+                return descriptions.assassinTone ?? "";
+            default:
+                return descriptions.playerTone ?? "説明文がありません";
+        }
+    }
+
+    public string GetAllQuartersTone(int itemID)
+    {
+        var descriptions = GetItemDescriptionsByID(itemID);
+        return descriptions != null ? descriptions.allQuartersTone ?? "" : "説明文がありません";
+    }
+
+    public string GetOwnFullTone(int itemID)
+    {
+        var descriptions = GetItemDescriptionsByID(itemID);
+        return descriptions != null ? descriptions.ownFullTone ?? "" : "説明文がありません";
+    }
 }
 
 [Serializable]
@@ -69,11 +111,14 @@ public class Item
     public string name;                     // アイテムの名前
     [TextArea(3, 5)]
     public string text;                     // アイテムの中身のテキスト
-    
+
+    [Header("アイコン")]
+    public Sprite itemIcon;                 // アイテムのアイコン
+
     [Header("所有者情報")]
     [Tooltip("このアイテムの元の所有者")]
     public ItemOwnerType ownerType = ItemOwnerType.Normal;     // アイテムの所有者
-    
+
     [Header("説明文")]
     public ItemDescriptions descriptions;   // アイテムを説明するセリフ
 
@@ -88,6 +133,7 @@ public class Item
         this.itemType = itemType;
         this.ownerType = ownerType;
         this.descriptions = new ItemDescriptions();
+        this.itemIcon = null;
     }
 }
 

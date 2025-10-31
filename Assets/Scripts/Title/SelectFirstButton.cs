@@ -14,7 +14,7 @@ public class SelectFirstButton : MonoBehaviour
     private GameObject lastSelectedObject;
 
     // このUIが表示された時に呼ばれる関数
-    void OnEnable()
+    public void OnEnable()
     {
         // 最後に選択したボタンが記憶されていれば、それを選択する
         if (lastSelectedObject != null)
@@ -29,7 +29,7 @@ public class SelectFirstButton : MonoBehaviour
     }
 
     // このUIが非表示された時に呼ばれる関数
-    void OnDisable()
+    public void OnDisable()
     {
         // EventSystem.currentがnull（既に破壊されている）でないことを確認する
         if (EventSystem.current != null)
