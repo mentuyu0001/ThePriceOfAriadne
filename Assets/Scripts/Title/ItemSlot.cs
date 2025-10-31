@@ -236,6 +236,7 @@ public class ItemSlot : Button
 
     public void ReturnSelectedButton()
     {
+        pageTexts = new List<string>();
         Debug.Log("ReturnSelectedButton lastSelectedButton: " + lastSelectedButton);
         //  記憶しておいたボタンにフォーカスを戻す
         selectedButtonManager.ReturnSelectedButton();
