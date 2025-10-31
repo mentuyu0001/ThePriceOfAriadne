@@ -9,10 +9,11 @@ public class ThrowKnifeController : MonoBehaviour
     /// </summary>
 
     [Inject] private IKnifeFactory knifeFactory; // ファクトリーを注入
-    [SerializeField] private float spawnOffsetX = 1.5f; // プレイヤーからどれだけX軸方向に離れてナイフを出すか
-    [SerializeField] private float throwForce = 10.0f;
-    [SerializeField] private float waitKnife = 0.5f; // ナイフオブジェクトを表示するまでの待機時間(秒)
+    [SerializeField] private float spawnOffsetX = 2.0f; // プレイヤーからどれだけX軸方向に離れてナイフを出すか
+    [SerializeField] private float throwForce = 20.0f;
+    private float waitKnife = 0.2f; // ナイフオブジェクトを表示するまでの待機時間(秒)
     [SerializeField] private int throwCoolTime = 1000; // 次のナイフが投げれるまでのクールタイム(1000ms)
+    private float knifePosY = 0.9f;
 
     [Inject] private PlayerRunTimeStatus runTimeStatus;
     [Inject] private PlayerStatus playerStatus;
@@ -25,7 +26,7 @@ public class ThrowKnifeController : MonoBehaviour
 
             // waitKnife秒待機
             await UniTask.Delay((int)(waitKnife * 1000));
-
+    
             // プレイヤーの向きに応じてナイフの発生位置のX座標のプラスマイナスを変更する
             float direction = 1f; // まず右向き(1)で初期化
             // Y軸の回転が180度に近いかどうかで左向きかを判定する
@@ -37,7 +38,7 @@ public class ThrowKnifeController : MonoBehaviour
             // ナイフの生成座標を計算
             Vector3 spawnPosition = new Vector3(
                 transform.position.x + (spawnOffsetX * direction), // プレイヤーのX座標に、向きに応じたオフセットを加える
-                transform.position.y,                              // Y座標はプレイヤーと同じ
+                transform.position.y + knifePosY,                  // Y座標はプレイヤーと同じ
                 transform.position.z                               // Z座標もプレイヤーと同じ
             );
 
