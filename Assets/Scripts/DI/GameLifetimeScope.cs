@@ -159,6 +159,7 @@ public class GameLifetimeScope : LifetimeScope
         {
             Debug.LogError("GameDataManagerが見つかりません");
         }
+        
 
         // Singletons/PlayerDataから取得するオブジェクト
         var playerDataObject = GameObject.Find("Singletons/PlayerData");
@@ -388,6 +389,24 @@ public class GameLifetimeScope : LifetimeScope
         {
             Debug.LogError("GameTextDisplayコンポーネントが見つかりません");
         }
+        // MenuStatusDisplayの登録
+        var menuStatusDisplay = Object.FindAnyObjectByType<MenuStatusDisplay>();
+        if (menuStatusDisplay != null)
+        {
+            // 1. インスタンスを登録
+            builder.RegisterInstance(menuStatusDisplay);
+            // 2. 構築後にDIを実行
+            builder.RegisterBuildCallback(resolver =>
+            {
+                resolver.Inject(menuStatusDisplay);
+            });
+            if (enableDebugLog) Debug.Log("MenuStatusDisplayに注入予約しました");
+        }
+        else
+        {
+            Debug.LogError("MenuStatusDisplayコンポーネントが見つかりません");
+        }
+
 
         // PlayerPartsRatioの登録
         var partsRatio = Object.FindAnyObjectByType<PlayerPartsRatio>();

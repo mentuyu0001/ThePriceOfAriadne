@@ -1,199 +1,96 @@
 using UnityEngine;
-using VContainer;
 using Parts.Types;
-using UnityEngine.UI;
+using VContainer;
+using TMPro;
+
+/// <summary>
+/// メニュー画面でプレイヤーのパーツ状態を表示するスクリプト
+/// </summary>
 
 public class MenuStatusDisplay : MonoBehaviour
 {
-    // プレイヤーのパーツ情報を保持するシングルトン
-    [SerializeField] private PlayerParts playerParts;
-    [Header("表示する画像（子オブジェクトのものをアタッチする）")]
-    [SerializeField] private Image ImageLeftArm;
-    [SerializeField] private Image ImageRightArm;
-    [SerializeField] private Image ImageLeftLeg;
-    [SerializeField] private Image ImageRightLeg;
+    // パーツデータの参照
+    [SerializeField] private PartsData partsData;
 
-    // 各パーツの種類を保存する変数
-    private PartsChara LeftArm;
-    private PartsChara RightArm;
-    private PartsChara LeftLeg;
-    private PartsChara RightLeg;
+    // プレイヤーのパーツ情報の参照
+    [Inject] private PlayerParts playerParts;
 
+    // パーツの情報を表示するテキストの参照
+    [Header("パーツの名前を表示するテキスト")]
+    [SerializeField] private TextMeshProUGUI leftArmName;
+    [SerializeField] private TextMeshProUGUI rightArmName;
+    [SerializeField] private TextMeshProUGUI leftLegName;
+    [SerializeField] private TextMeshProUGUI rightLegName;
+
+    [Header("パーツの説明を表示するテキスト")]
+    [SerializeField] private TextMeshProUGUI leftArmDescription;
+    [SerializeField] private TextMeshProUGUI rightArmDescription;
+    [SerializeField] private TextMeshProUGUI leftLegDescription;
+    [SerializeField] private TextMeshProUGUI rightLegDescription;
 
     void Start()
     {
         // コンポーネントの確認
-        if (playerParts == null)
+        if (partsData == null)
         {
-            Debug.LogError("MenuStatusDisplay: playerParts connot found.");
+            Debug.LogError("MenuStatusDisplay: PartsData is not assigned.");
         }
-        if (ImageLeftArm == null)
+        if (leftArmName == null || rightArmName == null || leftLegName == null || rightLegName == null)
         {
-            Debug.LogError("MenuStatusDisplay: ImageLeftArm connot found.");
+            Debug.LogError("MenuStatusDisplay: One or more adjective GameObjects are not assigned.");
         }
-        if (ImageRightArm == null)
+        if (leftArmDescription == null || rightArmDescription == null || leftLegDescription == null || rightLegDescription == null)
         {
-            Debug.LogError("MenuStatusDisplay: ImageRightArm connot found.");
-        }
-        if (ImageLeftLeg == null)
-        {
-            Debug.LogError("MenuStatusDisplay: ImageLeftLeg connot found.");
-        }
-        if (ImageRightLeg == null)
-        {
-            Debug.LogError("MenuStatusDisplay: ImageRightLeg connot found.");
-        }
-
-    }
-
-    // オブジェクトがアクティブになったら実行される関数
-    void OnEnable()
-    {
-        if (playerParts != null)
-        {
-            // プレイヤーのパーツを取得
-            LeftArm = playerParts.LeftArm;
-            RightArm = playerParts.RightArm;
-            LeftLeg = playerParts.LeftLeg;
-            RightLeg = playerParts.RightLeg;
-            DisplayStatus();
+            Debug.LogError("MenuStatusDisplay: One or more description GameObjects are not assigned.");
         }
     }
 
     // プレイヤーのパーツを表示する関数
     void DisplayStatus()
     {
-        // Debug.Log(playerParts.LeftLeg);
-        // 左腕の画像を変更
-        if (ImageLeftArm != null)
-        {
-            switch (playerParts.LeftArm)
-            {
-                // 主人公パーツ
-                case PartsChara.Normal:
-                    ImageLeftArm.color = Color.green;
-                    break;
-                // 泥棒パーツ
-                case PartsChara.Thief:
-                    ImageLeftArm.color = new Color(0.8f, 0.0f, 1.0f);
-                    break;
-                // 軍人パーツ
-                case PartsChara.Muscle:
-                    ImageLeftArm.color = Color.red;
-                    break;
-                // アサシンパーツ
-                case PartsChara.Assassin:
-                    ImageLeftArm.color = Color.yellow;
-                    break;
-                // 消防士パーツ
-                case PartsChara.Fire:
-                    ImageLeftArm.color = Color.cyan;
-                    break;
-                case PartsChara.None:
-                    ImageLeftArm.color = Color.white;
-                    Debug.Log("MenuStatusDisplay: LeftArm is None.");
-                    break;
+        // 左腕の形容詞と説明を表示
+        PartsInfo leftArmInfo = partsData.GetPartsInfoByPartsChara(playerParts.LeftArm);
+        leftArmName.text = leftArmInfo.adjective + "左腕";
+        leftArmDescription.text = leftArmInfo.descriptionArm;
 
-            }
+        // 右腕の形容詞と説明を表示
+        PartsInfo rightArmInfo = partsData.GetPartsInfoByPartsChara(playerParts.RightArm);
+        rightArmName.text = rightArmInfo.adjective + "右腕";
+        rightArmDescription.text = rightArmInfo.descriptionArm;
+
+        // 左脚の形容詞と説明を表示
+        PartsInfo leftLegInfo = partsData.GetPartsInfoByPartsChara(playerParts.LeftLeg);
+        leftLegName.text = leftLegInfo.adjective + "左足";
+        leftLegDescription.text = leftLegInfo.descriptionLeg;   
+    
+        // 右脚の形容詞と説明を表示
+        PartsInfo rightLegInfo = partsData.GetPartsInfoByPartsChara(playerParts.RightLeg);
+        rightLegName.text = rightLegInfo.adjective + "右足";
+        rightLegDescription.text = rightLegInfo.descriptionLeg;
+    }
+
+    // VContainerの注入完了時に呼ばれるメソッド
+    [Inject]
+    public void Construct(PlayerParts injectedPlayerParts)
+    {
+        this.playerParts = injectedPlayerParts;
+        // 注入完了後に表示を更新
+        DisplayStatus();
+
+        Debug.Log("MenuStatusDisplay: PlayerParts injected successfully.");
+    }
+
+    // オブジェクトがアクティブになったら実行される関数
+    void OnEnable()
+    {   
+        if (playerParts == null)
+        {
+            // 注入前にOnEnableが呼ばれた場合はここに入るが、Constructで表示されるのでログだけにする
+            Debug.LogWarning("MenuStatusDisplay: PlayerParts is not yet injected. Waiting for injection.");
         }
-
-        // 左足の画像を変更
-        if (ImageLeftLeg != null)
+        else
         {
-            switch (playerParts.LeftLeg)
-            {
-                // 主人公パーツ
-                case PartsChara.Normal:
-                    ImageLeftLeg.color = Color.green;
-                    break;
-                // 泥棒パーツ
-                case PartsChara.Thief:
-                    ImageLeftLeg.color = new Color(0.8f, 0.0f, 1.0f);
-                    break;
-                // 軍人パーツ
-                case PartsChara.Muscle:
-                    ImageLeftLeg.color = Color.red;
-                    break;
-                // アサシンパーツ
-                case PartsChara.Assassin:
-                    ImageLeftLeg.color = Color.yellow;
-                    break;
-                // 消防士パーツ
-                case PartsChara.Fire:
-                    ImageLeftLeg.color = Color.cyan;
-                    break;
-                case PartsChara.None:
-                    ImageLeftLeg.color = Color.white;
-                    Debug.Log("MenuStatusDisplay: LeftLeg is None.");
-                    break;
-
-            }
-        }
-
-        // 右腕の画像を変更
-        if (ImageRightArm != null)
-        {
-            switch (playerParts.RightArm)
-            {
-                // 主人公パーツ
-                case PartsChara.Normal:
-                    ImageRightArm.color = Color.green;
-                    break;
-                // 泥棒パーツ
-                case PartsChara.Thief:
-                    ImageRightArm.color = new Color(0.8f, 0.0f, 1.0f);
-                    break;
-                // 軍人パーツ
-                case PartsChara.Muscle:
-                    ImageRightArm.color = Color.red;
-                    break;
-                // アサシンパーツ
-                case PartsChara.Assassin:
-                    ImageRightArm.color = Color.yellow;
-                    break;
-                // 消防士パーツ
-                case PartsChara.Fire:
-                    ImageRightArm.color = Color.cyan;
-                    break;
-                case PartsChara.None:
-                    ImageRightArm.color = Color.white;
-                    Debug.Log("MenuStatusDisplay: RightArm is None.");
-                    break;
-
-            }
-        }
-        
-        // 右足の画像を変更
-        if (ImageRightLeg !=null)
-        {
-            switch (playerParts.RightLeg)
-            {
-                // 主人公パーツ
-                case PartsChara.Normal:
-                    ImageRightLeg.color = Color.green;
-                    break;
-                // 泥棒パーツ
-                case PartsChara.Thief:
-                    ImageRightLeg.color = new Color(0.8f, 0.0f, 1.0f);
-                    break;
-                // 軍人パーツ
-                case PartsChara.Muscle:
-                    ImageRightLeg.color = Color.red;
-                    break;
-                // アサシンパーツ
-                case PartsChara.Assassin:
-                    ImageRightLeg.color = Color.yellow;
-                    break;
-                // 消防士パーツ
-                case PartsChara.Fire:
-                    ImageRightLeg.color = Color.cyan;
-                    break;
-                case PartsChara.None:
-                    ImageRightLeg.color = Color.white;
-                    Debug.Log("MenuStatusDisplay: RightLeg is None.");
-                    break;
-
-            }
+            DisplayStatus();
         }
     }
 

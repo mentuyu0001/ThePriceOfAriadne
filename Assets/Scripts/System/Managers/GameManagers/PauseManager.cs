@@ -5,10 +5,17 @@ public class PauseManager : MonoBehaviour
 {
     // Inspectorからポーズ画面のUIパネルをアタッチする
     [SerializeField] private GameObject pauseMenuUI;
+
     [SerializeField] private PlayerInput playerInput;
 
     // uiボタンのリセット用スクリプトのアタッチ
     [SerializeField] private SelectFirstButton pauseMenuUIScript;
+
+    // 設定でのプレイヤーの見た目を変更するスクリプトの参照
+    [SerializeField] private PlayerVisualCustomizer playerVisualCustomizer;
+    
+    // テキストパネルの参照
+    [SerializeField] private GameObject textPanel;
 
     // 現在ポーズ中かどうかを保持するフラグ
     private bool isPaused = false;
@@ -54,8 +61,13 @@ public class PauseManager : MonoBehaviour
     private void Pause()
     {
         pauseMenuUI.SetActive(true);
+        playerVisualCustomizer.visuallizePlayerParts(); // プレイヤーの見た目を反映
         Time.timeScale = 0f; // 時間の流れを止める
         playerInput.SwitchCurrentActionMap("UI");
         isPaused = true;
+        if (textPanel != null)
+        {
+            textPanel.SetActive(false);
+        }
     }
 }

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6c26b6825fd94d1eb7684b726a6d0f9, type: 3}
+  m_Name: PartsData
+  m_EditorClassIdentifier: 
+  parts:
+  - ownerType: 1
+    adjective: "\u83EF\u5962\u306A"
+    descriptionArm: "\u80FD\u529B\u306F\u7279\u306B\u306A\u3044"
+    descriptionLeg: "\u80FD\u529B\u306F\u7279\u306B\u306A\u3044"
+  - ownerType: 2
+    adjective: "\u75E9\u305B\u305F"
+    descriptionArm: "\u9375\u3092\u958B\u3051\u3089\u308C\u308B"
+    descriptionLeg: "\u901F\u304F\u8D70\u308C\u308B"
+  - ownerType: 3
+    adjective: "\u304C\u3063\u3057\u308A\u3068\u3057\u305F"
+    descriptionArm: "\u91CD\u3044\u3082\u306E\u3092\u52D5\u304B\u305B\u308B"
+    descriptionLeg: "\u9AD8\u304F\u30B8\u30E3\u30F3\u30D7\u3067\u304D\u308B"
+  - ownerType: 4
+    adjective: "\u7CBE\u5DE7\u306A"
+    descriptionArm: "\u30CA\u30A4\u30D5\u3092\u6295\u3052\u3089\u308C\u308B"
+    descriptionLeg: "\u4E8C\u6BB5\u30B8\u30E3\u30F3\u30D7\u304C\u3067\u304D\u308B"
+  - ownerType: 5
+    adjective: "\u3084\u3051\u3069\u75D5\u306E\u3042\u308B"
+    descriptionArm: "\u6C34\u3092\u8CAF\u3081\u3089\u308C\u308B"
+    descriptionLeg: "\u9752\u3044\u708E\u306E\u4E0A\u3092\u6B69\u3051\u308B"
