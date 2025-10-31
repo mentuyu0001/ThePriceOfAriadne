@@ -112,67 +112,7 @@ public class ItemSlot : Button
     public void ShowFlervorText()
     {
         itemText.enabled = true;
-        // パーツ占有率を再計算
-        partsRatio.CalculatePartsRatio();
-
-        // パーツ占有率を取得
-        var allRatios = partsRatio.GetAllRatios();
-
-        if (allRatios.Count == 0)
-        {
-            Debug.LogWarning("パーツ占有率が取得できませんでした");
-            return;
-        }
-
-        // 最大の占有率を取得
-        float maxRatio = allRatios.Values.Max();
-
-        // 最大占有率のパーツを全て取得（同率の場合は複数）
-        var dominantParts = allRatios.Where(x => x.Value == maxRatio)
-                                     .Select(x => (PartsChara)x.Key)
-                                     .ToList();
-
-        // テキストリストを生成
-        var textList = new List<string>();
-        foreach (var parts in dominantParts)
-        {
-            // ItemDataから口調テキストを取得
-            string text = itemData.GetToneTextByPartsChara(itemID, parts);
-            if (!string.IsNullOrEmpty(text))
-            {
-                textList.Add(text); // ←ここをAddに修正
-            }
-        }
-
-        // 全て25%なら特別なテキスト
-        if (partsRatio.IsAllQuarters())
-        {
-            string allQuartersText = itemData.GetAllQuartersTone(itemID);
-            itemText.text = allQuartersText;
-            Debug.Log("全て25%のため特別テキストを表示: " + itemText.text);
-            return;
-        }
-
-        // 100%のパーツがあれば特別なテキスト
-        if (maxRatio >= 100f && dominantParts.Count == 1)
-        {
-            string fullToneText = itemData.GetOwnFullTone(itemID);
-            itemText.text = fullToneText;
-            Debug.Log("100%のため特別テキストを表示: " + itemText.text);
-            return;
-        }
-
-        // 通常は最大占有率キャラの口調テキストを連結して表示
-        if (textList.Count > 0)
-        {
-            itemText.text = string.Join("\n", textList);
-            Debug.Log("最大占有率キャラの口調テキスト: " + itemText.text);
-        }
-        else
-        {
-            itemText.text = "セリフがありません";
-            Debug.LogWarning("表示するセリフがありません");
-        }
+        itemText.text = itemData.GetAllQuartersTone(itemID);
     }
 
     public void ShowPagedText(string rawText)
