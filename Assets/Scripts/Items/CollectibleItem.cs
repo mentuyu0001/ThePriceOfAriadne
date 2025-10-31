@@ -13,6 +13,8 @@ public class CollectibleItem : MonoBehaviour
     //アイテムのID(外部キーの役割)
     [SerializeField] private int itemID;
     [SerializeField] private float textDisplayDuration = 1f; // テキスト表示秒数
+    // アイテムのスプライトレンダラー
+    [SerializeField] private SpriteRenderer spriteRenderer;
 
     // ItemManagerの参照
     [Inject] private ItemManager itemManager;
@@ -78,6 +80,8 @@ public class CollectibleItem : MonoBehaviour
                                          .ToList();
 
             List<string> textList = new List<string>();
+
+            spriteRenderer.enabled = false; // アイテムのスプライトを非表示にする
 
             // 全て25%のとき
             if (dominantParts.Count == 4)
