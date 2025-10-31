@@ -81,7 +81,8 @@ public class PlayerStatus : MonoBehaviour
         set { canDoubleJump = value; }
     }
 
-    public bool CanThrowKnife {
+    public bool CanThrowKnife
+    {
         get { return canThrowKnife; }
         set { canThrowKnife = value; }
     }
