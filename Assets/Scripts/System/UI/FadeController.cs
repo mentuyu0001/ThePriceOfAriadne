@@ -21,10 +21,12 @@ public class FadeController : MonoBehaviour
         // アタッチされている場合
         else
         {
+            /*
             // fadeImageの色を黒にする
             fadeImage.color = Color.black;
             // フェードイン開始
             FadeIn(4.0f).Forget();
+            */
         }
     }
 

@@ -41,7 +41,7 @@ public class Controller : MonoBehaviour
 
     public bool isInputEnabled = true; // 入力を受け付けるかどうかのフラグ
 
-    private void Start()
+    private void Awake()
     {
         // isFacingRightの初期化
         if (Mathf.Approximately(transform.eulerAngles.y, 180f)) {
@@ -309,11 +309,45 @@ public class Controller : MonoBehaviour
     {
         // 移動入力をゼロにリセット
         moveInput = Vector2.zero;
-        
+
         // 移動フラグをリセット
         isMoving = false;
-        
+
         // 必要に応じて他の移動関連の状態もリセット
         // 例: ジャンプフラグなど
+    }
+
+    public void StartAndGoalSetFrictionZero()
+    {
+        // 動き始めたら摩擦を0にする
+        col.sharedMaterial.friction = 0;
+        // physicsマテリアルの更新
+        col.enabled = false;
+        col.enabled = true;
+    }
+    public void StartAndGoalSetFrictionAdd()
+    {
+        col.sharedMaterial.friction = 3.5f;
+        // physicsマテリアルの更新
+        col.enabled = false;
+        col.enabled = true;
+    }
+
+    // スタートゴール時のみのアニーメーション速度を設定する
+    public void StartAndGoalVelocity()
+    {
+        float forceX;
+        forceX = 7.5f - rb.linearVelocity.x; // 7.5はノーマル状態のMaxSpeed
+        forceX /= 10; // 10はノーマル状態の空気抵抗
+        rb.AddForce(new Vector2(forceX, 0f));
+    }
+
+    public float GetVelocity()
+    {
+        return rb.linearVelocity.x;
+    }
+    public void StartAndGoalStop()
+    {
+        
     }
 }
