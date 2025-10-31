@@ -147,6 +147,18 @@ public class GameLifetimeScope : LifetimeScope
         {
             Debug.LogError("GameOverManagerが見つかりません");
         }
+        // GameDataManagerを自動検索
+        var gameDataManager = Object.FindAnyObjectByType<GameDataManager>();
+        if (gameDataManager != null)
+        {
+            builder.RegisterInstance(gameDataManager);
+            builder.RegisterBuildCallback(resolver => resolver.Inject(gameDataManager)); // ← 依存注入を追加
+            if (enableDebugLog) Debug.Log($"GameDataManagerが正常に登録されました: {gameDataManager.name}");
+        }
+        else
+        {
+            Debug.LogError("GameDataManagerが見つかりません");
+        }
 
         // Singletons/PlayerDataから取得するオブジェクト
         var playerDataObject = GameObject.Find("Singletons/PlayerData");
@@ -194,6 +206,18 @@ public class GameLifetimeScope : LifetimeScope
             else
             {
                 Debug.LogError("Singletons/ItemDataの子オブジェクトにInventoryDataコンポーネントが見つかりません");
+            }
+
+            // StageInventoryDataの登録
+            var stageInventoryData = itemDataObject.GetComponentInChildren<StageInventoryData>();
+            if (stageInventoryData != null)
+            {
+                builder.RegisterInstance(stageInventoryData);
+                if (enableDebugLog) Debug.Log($"StageInventoryDataが正常に登録されました: {stageInventoryData.name}");
+            }
+            else
+            {
+                Debug.LogError("Singletons/ItemDataの子オブジェクトにStageInventoryDataコンポーネントが見つかりません");
             }
         }
         else
@@ -285,24 +309,6 @@ public class GameLifetimeScope : LifetimeScope
         else
         {
             Debug.LogError("ItemManagerコンポーネントが見つかりません");
-        }
-
-        // GanmeDataManagerを登録
-        var gameDataManager = Object.FindAnyObjectByType<GameDataManager>();
-        if (gameDataManager != null)
-        {
-            // 1. インスタンスを登録
-            builder.RegisterInstance(gameDataManager);
-            // 2. 構築後にDIを実行
-            builder.RegisterBuildCallback(resolver =>
-            {
-                resolver.Inject(gameDataManager);
-            });
-            if (enableDebugLog) Debug.Log("GameDataManagerに注入予約しました");
-        }
-        else
-        {
-            Debug.LogError("GameDataManagerコンポーネントが見つかりません");
         }
 
         // Playerにattachされているコンポーネントの登録
@@ -701,7 +707,7 @@ public class GameLifetimeScope : LifetimeScope
         }
         else
         {
-            Debug.LogError("WaterTankコンポーネントが見つかりません");
+            Debug.LogWarning("WaterTankコンポーネントが見つかりません");
         }
 
         // FireCheckZone

@@ -168,10 +168,11 @@ public class EnterKeyActionTrigger : MonoBehaviour
             {
                 if (touchingCollision.gameObject.CompareTag(partsTag))
                 {
-                    var component = touchingCollision.gameObject.GetComponent<MapParts>();
-                    if (component != null)
+                    var component1 = touchingCollision.gameObject.GetComponent<MapParts>();
+                    var component2 = touchingCollision.gameObject.GetComponent<MapPartsVisualCustomizer>();
+                    if (component1 != null)
                     {
-                        HandlePartsInteraction(component).Forget();
+                        HandlePartsInteraction(component1, component2).Forget();
                         interacted = true;
                         if (showDebugLogs) Debug.Log("パーツとインタラクトしました");
                     }
@@ -231,9 +232,10 @@ public class EnterKeyActionTrigger : MonoBehaviour
             {
                 if (isGrounded == false)
                 {
+                    // アニメーター側で設定したため不要
                     // ジャンプアニメーションをキャンセル
-                    playerAnimationManager.AniJumpFalse();
-                    playerAnimationManager.AniDoubleJumpFalse();
+                    //playerAnimationManager.AniJumpFalse();
+                    //playerAnimationManager.AniDoubleJumpFalse();
 
                 }
                 HandleKnifeThrow().Forget();
@@ -330,7 +332,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
     }
 
     // パーツインタラクション処理
-    private async UniTaskVoid HandlePartsInteraction(MapParts component)
+    private async UniTaskVoid HandlePartsInteraction(MapParts component1, MapPartsVisualCustomizer component2)
     {
         try
         {
@@ -338,12 +340,12 @@ public class EnterKeyActionTrigger : MonoBehaviour
             
             PrepareForAnimation();
             playerAnimationManager.AniInteractTrue();
-            partsManager.ExchangeParts(component);
             
             Debug.Log("アニメーション待機中...");
             await WaitForAnimationCompletion(interactAnimationDuration);
             Debug.Log("アニメーション完了");
 
+            partsManager.ExchangeParts(component1, component2);
             ResteControllerInput();
             await textDisplay.ShowText(partsGetMessage);
         }

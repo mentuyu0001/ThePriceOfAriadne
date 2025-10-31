@@ -45,6 +45,12 @@ public class PlayerVisualCustomizer : MonoBehaviour
 
     public void Awake()
     {
+        visuallizePlayerParts();
+    }
+    
+    // プレイヤーの装備しているパーツに応じて見た目を変更するメソッド
+    public void visuallizePlayerParts()
+    {
         // 全てのパーツを格納したリストを構築
         List<GameObject> allParts = new List<GameObject>();
         allParts.AddRange(NormalArmL);
@@ -86,7 +92,7 @@ public class PlayerVisualCustomizer : MonoBehaviour
             Debug.LogError("不明な装備");
             return;
         }
-            
+
         // 左腕の表示
         foreach (GameObject obj in leftArms)
         {

@@ -388,7 +388,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: N_UpperArmRMaterial
-    second: {fileID: 2100000, guid: de9f75aede9b1423bba0a4bc0d8590f3, type: 2}
+    second: {fileID: 2100000, guid: 139a1945f4ec4473b8fe6817fd40e655, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule

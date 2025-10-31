@@ -114,9 +114,9 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.25
-        value: {x: 179.9, y: -0.23999023, z: -10}
-        inSlope: {x: -0.20199585, y: 0.067993164, z: 80}
-        outSlope: {x: -0.20199585, y: 0.067993164, z: 80}
+        value: {x: 179.9, y: -0.23999023, z: -23}
+        inSlope: {x: -0.20199585, y: 0.067993164, z: 0}
+        outSlope: {x: -0.20199585, y: 0.067993164, z: 0}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
@@ -157,7 +157,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.25
-        value: {x: 3.882, y: -11.723, z: -20}
+        value: {x: 3.882, y: -11.723, z: 10}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -167,8 +167,8 @@ AnimationClip:
       - serializedVersion: 3
         time: 0.5
         value: {x: 0.439, y: -12.347, z: 20}
-        inSlope: {x: 0, y: 0, z: 156}
-        outSlope: {x: 0, y: 0, z: 156}
+        inSlope: {x: 0, y: 0, z: 83.99999}
+        outSlope: {x: 0, y: 0, z: 83.99999}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
@@ -209,7 +209,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.25
-        value: {x: 15, y: -77.912, z: 0.001}
+        value: {x: 10, y: -77.912, z: 0.001}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -1773,9 +1773,9 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.25
-        value: -10
-        inSlope: 80
-        outSlope: 80
+        value: -23
+        inSlope: 0
+        outSlope: 0
         tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
@@ -1935,7 +1935,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.25
-        value: -20
+        value: 10
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1945,8 +1945,8 @@ AnimationClip:
       - serializedVersion: 3
         time: 0.5
         value: 20
-        inSlope: 156
-        outSlope: 156
+        inSlope: 83.99999
+        outSlope: 83.99999
         tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
@@ -1992,7 +1992,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.25
-        value: 15
+        value: 10
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -5064,7 +5064,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Armature/chest/upperleg_L/knee_L/foreleg_L
+    path: Armature/chest/upperleg_L/knee_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -5076,7 +5076,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Armature/chest/upperleg_L/knee_L/foreleg_L
+    path: Armature/chest/upperleg_L/knee_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -5088,7 +5088,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Armature/chest/upperleg_L/knee_L/foreleg_L
+    path: Armature/chest/upperleg_L/knee_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -5136,7 +5136,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Armature/chest/upperleg_L/knee_L
+    path: Armature
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -5148,7 +5148,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Armature/chest/upperleg_L/knee_L
+    path: Armature
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -5160,7 +5160,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Armature/chest/upperleg_L/knee_L
+    path: Armature
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -5316,7 +5316,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Armature/chest/upperleg_R/knee_R
+    path: Armature/chest/upperleg_L/knee_L/foreleg_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -5328,7 +5328,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Armature/chest/upperleg_R/knee_R
+    path: Armature/chest/upperleg_L/knee_L/foreleg_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -5340,7 +5340,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Armature/chest/upperleg_R/knee_R
+    path: Armature/chest/upperleg_L/knee_L/foreleg_L
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -5676,7 +5676,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Armature/chest/upperleg_R/knee_R/foreleg_R
+    path: Armature/chest/upperleg_R/knee_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -5688,7 +5688,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Armature/chest/upperleg_R/knee_R/foreleg_R
+    path: Armature/chest/upperleg_R/knee_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -5700,7 +5700,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Armature/chest/upperleg_R/knee_R/foreleg_R
+    path: Armature/chest/upperleg_R/knee_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -5748,7 +5748,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Armature
+    path: Armature/chest/upperleg_R/knee_R/foreleg_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -5760,7 +5760,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Armature
+    path: Armature/chest/upperleg_R/knee_R/foreleg_R
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -5772,7 +5772,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Armature
+    path: Armature/chest/upperleg_R/knee_R/foreleg_R
     classID: 4
     script: {fileID: 0}
     flags: 0

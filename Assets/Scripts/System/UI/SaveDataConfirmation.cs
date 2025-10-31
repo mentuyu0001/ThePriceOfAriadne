@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-
+using VContainer;
 public class SaveDataConfirmation : MonoBehaviour
 {
     /// <summary>
@@ -13,6 +13,8 @@ public class SaveDataConfirmation : MonoBehaviour
 
     // Yesボタンの取得
     [SerializeField] private GameObject noButton;
+
+    [SerializeField] private GameDataManager gameDataManager;
 
     // ダイアログを開く直前に選択されていたボタンを記憶しておく変数
     private GameObject lastSelectedButton;
@@ -44,8 +46,8 @@ public class SaveDataConfirmation : MonoBehaviour
     {
         Debug.Log("セーブを実行します。");
         // ここで実際のセーブ処理を呼び出す
-        // saveManager.SaveGame(currentSlot);
-
+        gameDataManager.SetCurrentSlot(saveCurrentSlot);
+        gameDataManager.SaveGame();
         CloseDialog();
     }
 
@@ -53,8 +55,8 @@ public class SaveDataConfirmation : MonoBehaviour
     {
         Debug.Log("ロードを実行します。");
         // ここで実際のロード処理を呼び出す
-        // saveManager.SaveGame(currentSlot);
-
+        gameDataManager.SetCurrentSlot(saveCurrentSlot);
+        gameDataManager.LoadGame();
         CloseDialog(); // 実際は閉じずにゲームを起動する
     }
 

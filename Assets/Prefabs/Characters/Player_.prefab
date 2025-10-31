@@ -68,6 +68,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8877597108882621252, guid: 8d8a3be38d6d94d3aa7f65477c67d3b0, type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -147,7 +151,6 @@ MonoBehaviour:
     m_Bits: 8
   sizeModifier: {x: 1, y: 0.1}
   groundCheckBuffer: 0
-  playerVisualCustomizer: {fileID: 0}
   isInputEnabled: 1
 --- !u!114 &2580708355860867723
 MonoBehaviour:
@@ -408,6 +411,13 @@ MonoBehaviour:
   fireExtinguishMessage: "\u706B\u3092\u6D88\u3057\u305F!"
   noWaterTankMessage: "\u6C34\u30BF\u30F3\u30AF\u304C\u88C5\u5099\u3055\u308C\u3066\u3044\u307E\u305B\u3093"
   noWaterMessage: "\u6C34\u304C\u3042\u308A\u307E\u305B\u3093"
+  delayBetweenTexts: 2
+  partsID: 0
+  leverID: 1
+  buttonID: 5
+  waterTankID: 6
+  canselWaterTankID: 7
+  fireExtinguishID: 8
   showDebugLogs: 1
 --- !u!114 &6700021973068472837
 MonoBehaviour:

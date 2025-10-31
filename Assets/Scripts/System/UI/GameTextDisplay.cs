@@ -14,7 +14,8 @@ public class GameTextDisplay : MonoBehaviour
 {
     [Header("UI要素")]
     [SerializeField] private GameObject textPanel;
-    [SerializeField] private TextMeshProUGUI messageText;
+    [SerializeField] private TextMeshProUGUI messageText1;
+    [SerializeField] private TextMeshProUGUI messageText2;
     [SerializeField] private GameObject textBackground; 
     
     [Header("表示設定")]
@@ -49,12 +50,20 @@ public class GameTextDisplay : MonoBehaviour
         }
         
         // テキスト用のCanvasGroupを設定
-        if (messageText != null)
+        if (messageText1 != null)
         {
-            textCanvasGroup = messageText.GetComponent<CanvasGroup>();
+            textCanvasGroup = messageText1.GetComponent<CanvasGroup>();
             if (textCanvasGroup == null)
             {
-                textCanvasGroup = messageText.gameObject.AddComponent<CanvasGroup>();
+                textCanvasGroup = messageText1.gameObject.AddComponent<CanvasGroup>();
+            }
+        }
+        if (messageText2 != null)
+        {
+            textCanvasGroup = messageText2.GetComponent<CanvasGroup>();
+            if (textCanvasGroup == null)
+            {
+                textCanvasGroup = messageText2.gameObject.AddComponent<CanvasGroup>();
             }
         }
         else
@@ -79,7 +88,7 @@ public class GameTextDisplay : MonoBehaviour
         HideImmediate();
     }
 
-    public async UniTask ShowText(string message)
+    public async UniTask ShowText(string message1, string message2 = "")
     {
         if (isDestroyed || this == null) return;
         
@@ -97,7 +106,7 @@ public class GameTextDisplay : MonoBehaviour
             return;
         }
         
-        if (textPanel == null || messageText == null || canvasGroup == null)
+        if (textPanel == null || messageText1 == null || messageText2 == null || canvasGroup == null)
         {
             Debug.LogError("❌ UI要素がnullです");
             return;
@@ -109,9 +118,13 @@ public class GameTextDisplay : MonoBehaviour
 
         try
         {
-            if (messageText != null)
+            if (messageText1 != null)
             {
-                messageText.text = message; // 全文を即座に設定
+                messageText1.text = message1; // 全文を即座に設定
+            }
+            if (messageText2 != null)
+            {
+                messageText2.text = message2;
             }
             
             if (textPanel != null)
@@ -187,16 +200,16 @@ public class GameTextDisplay : MonoBehaviour
 
     private async UniTask ShowTextGradually(string fullText, CancellationToken token)
     {
-        if (messageText == null || isDestroyed || this == null) return;
+        if (messageText1 == null || isDestroyed || this == null) return;
         
         for (int i = 0; i <= fullText.Length; i++)
         {
-            if (messageText == null || isDestroyed || this == null || token.IsCancellationRequested)
+            if (messageText1 == null || isDestroyed || this == null || token.IsCancellationRequested)
             {
                 return;
             }
             
-            messageText.text = fullText.Substring(0, i);
+            messageText1.text = fullText.Substring(0, i);
             
             try
             {
@@ -485,29 +498,10 @@ public static class GameTextDisplayExtensions
         }
         else
         {
-            // 複数ある場合は順次表示
-            for (int i = 0; i < textList.Count; i++)
-            {
-                if (showDebugLogs) Debug.Log($"表示するテキスト ({i + 1}/{textList.Count}):\n{textList[i]}");
-                
-                await textDisplay.ShowText(textList[i]);
-                
-                // 最後のテキストでない場合は待機してから非表示
-                if (i < textList.Count - 1)
-                {
-                    await UniTask.Delay(
-                        System.TimeSpan.FromSeconds(delayBetweenTexts),
-                        cancellationToken: textDisplay.GetCancellationTokenOnDestroy()
-                    );
-                    
-                    // 次のテキストを表示する前に現在のテキストを非表示
-                    textDisplay.HideText();
-                    
-                    // フェードアウトが完了するまで待機
-                    await UniTask.WaitUntil(() => !textDisplay.IsFading, 
-                        cancellationToken: textDisplay.GetCancellationTokenOnDestroy());
-                }
-            }
+            // 複数ある場合の表示
+            if (showDebugLogs) Debug.Log($"表示するテキスト1:\n{textList[0]}");
+            if (showDebugLogs) Debug.Log($"表示するテキスト2:\n{textList[1]}");
+            await textDisplay.ShowText(textList[0], textList[1]);
         }
     }
 }
