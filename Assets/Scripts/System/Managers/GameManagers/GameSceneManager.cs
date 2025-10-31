@@ -5,11 +5,11 @@ public class GameSceneManager : MonoBehaviour
 {
     public void LoadStage2()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Stage2New");
     }
     public void LoadTitle()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("TitleScene");
     }
     public void QuitGame()
     {
