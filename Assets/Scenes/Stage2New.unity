@@ -2864,6 +2864,7 @@ GameObject:
   - component: {fileID: 358127354}
   - component: {fileID: 358127353}
   - component: {fileID: 358127352}
+  - component: {fileID: 358127355}
   m_Layer: 0
   m_Name: Goal
   m_TagString: Untagged
@@ -2962,7 +2963,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2987,6 +2988,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &358127355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 358127351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed946f33bcaeda548ac2272d42ff3c1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeController: {fileID: 1827676353}
+  controller: {fileID: 1886981975}
+  playerAnimationManager: {fileID: 705354874}
+  GoalObg: {fileID: 358127351}
 --- !u!1 &360644856 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6155022801611536632, guid: 8d8a3be38d6d94d3aa7f65477c67d3b0, type: 3}
@@ -4219,7 +4236,7 @@ Transform:
   m_GameObject: {fileID: 498434889}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -8, z: 0}
+  m_LocalPosition: {x: 0, y: -5.8, z: 0}
   m_LocalScale: {x: 100, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -33272,11 +33289,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 778694610638680832, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
       propertyPath: m_Size.x
-      value: 7.31
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 778694610638680832, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
       propertyPath: m_Size.y
-      value: 12.8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 778694610638680832, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
       propertyPath: m_IsTrigger
@@ -33284,11 +33301,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 778694610638680832, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 7.31
+      value: 0.57109374
       objectReference: {fileID: 0}
     - target: {fileID: 778694610638680832, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 12.8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2079520431039721697, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
       propertyPath: m_Name
@@ -33296,7 +33313,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4076350072892404869, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
       propertyPath: itemID
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4076350072892404869, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
       propertyPath: spriteRenderer
@@ -34643,7 +34660,7 @@ Transform:
   m_GameObject: {fileID: 1586923810}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 36.714966, y: 16.199999, z: -10}
+  m_LocalPosition: {x: -40.716106, y: 4.251869, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -39776,7 +39793,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
@@ -40789,7 +40806,7 @@ Transform:
   m_GameObject: {fileID: 1891891972}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 42.4, y: 16.2, z: -10}
+  m_LocalPosition: {x: -52.31, y: 1.9, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -41069,7 +41086,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1974069033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41129,11 +41146,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1948155234025144373, guid: 16536c3107ae5472eb1befe2a870ba33, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 42.4
+      value: -52.31
       objectReference: {fileID: 0}
     - target: {fileID: 1948155234025144373, guid: 16536c3107ae5472eb1befe2a870ba33, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 16.2
+      value: 1.9
       objectReference: {fileID: 0}
     - target: {fileID: 1948155234025144373, guid: 16536c3107ae5472eb1befe2a870ba33, type: 3}
       propertyPath: m_LocalPosition.z
