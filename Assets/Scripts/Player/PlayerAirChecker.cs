@@ -16,6 +16,7 @@ public class PlayerAirChecker : MonoBehaviour
     [SerializeField] private LayerMask groundLayer; // 地面のレイヤーを指定
     [SerializeField] private Vector2 sizeModifier = new Vector2(1.0f, 0.1f); // レイを飛ばす際のコライダーサイズ 例：幅は90%、高さは20%
     [SerializeField] private float groundCheckBuffer = 0f; // コライダーの底辺から伸ばすレイの長さ
+    [SerializeField] private Controller controller; // Controllerスクリプトへの参照
     [Inject] private PlayerRunTimeStatus runTimeStatus; // 二段ジャンプのプロパティを取得
     [Inject] private PlayerStatus playerStatus; // 二段ジャンプできるかどうかを取得する
 
@@ -94,6 +95,8 @@ public class PlayerAirChecker : MonoBehaviour
 
             wasGround = isGround; // 変更を同期させる
 
+            controller.PlayWalkSEOnLanding(); // 着地時の歩行SE再生
+            
             // 1フレーム待機
             await UniTask.Yield(PlayerLoopTiming.Update);
         }

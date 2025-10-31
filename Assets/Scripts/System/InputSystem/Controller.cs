@@ -41,6 +41,8 @@ public class Controller : MonoBehaviour
 
     public bool isInputEnabled = true; // 入力を受け付けるかどうかのフラグ
 
+    // 着地判定用フラグ
+    private bool wasGrounded = true;
     private void Awake()
     {
         // isFacingRightの初期化
@@ -180,6 +182,13 @@ public class Controller : MonoBehaviour
 
                 isMoving = true;
 
+                
+                // 地上にいたら、移動SE（id:6）を再生
+                if (SoundManager.Instance != null && airChecker != null && airChecker.IsGround)
+                {
+                    SoundManager.Instance.PlaySE(6);
+                }
+
                 // Walkアニメーションの開始
                 if (playerAnimationManager != null)
                 {
@@ -207,6 +216,7 @@ public class Controller : MonoBehaviour
             // Walkアニメーションの停止
             if (playerAnimationManager != null)
             {
+                SoundManager.Instance.StopSE(); // 歩行SEを停止
                 playerAnimationManager.AniWalkFalse();
             }
             else
@@ -243,6 +253,7 @@ public class Controller : MonoBehaviour
                 forceX = (targetVelocityX - rb.linearVelocity.x);
                 if (airChecker != null && !airChecker.IsGround)
                 {
+                    //SoundManager.Instance.StopSE(); // 歩行SEを停止
                     // 空中にいる場合は移動の強さを弱める
                     forceX /= airResistance;
                 }
@@ -265,10 +276,17 @@ public class Controller : MonoBehaviour
         {
             if (airChecker != null && airChecker.IsGround)
             {
+                SoundManager.Instance.StopSE(); // 歩行SEを停止
+                
                 // 地面にいる場合のみジャンプ処理を実行
                 rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
-                // ジャンプアニメーションの開始
+                // ジャンプSE（id:3）を再生
+                if (SoundManager.Instance != null)
+                {
+                    SoundManager.Instance.PlaySE(3);
+                }
+
                 if (playerAnimationManager != null)
                 {
                     playerAnimationManager.AniJumpTrue();
@@ -288,7 +306,12 @@ public class Controller : MonoBehaviour
                     rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                     runTimeStatus.CanDoubleJump = false;
 
-                    // ジャンプアニメーションの開始
+                    // ジャンプSE（id:3）を再生
+                    if (SoundManager.Instance != null)
+                    {
+                        SoundManager.Instance.PlaySE(3);
+                    }
+
                     if (playerAnimationManager != null)
                     {
                         playerAnimationManager.AniDoubleJumpTrue();
@@ -348,6 +371,16 @@ public class Controller : MonoBehaviour
     }
     public void StartAndGoalStop()
     {
-        
+
+    }
+    // 着地時に歩行SEを鳴らすメソッド
+    public void PlayWalkSEOnLanding()
+    {
+        // 地面に着地した瞬間かつ移動入力がある場合のみ歩行SEを再生
+        if (moveInput.x != 0 && SoundManager.Instance != null)
+        {
+            Debug.Log("PlayWalkSEOnLanding: 地面に着地しました。歩行SEを再生します。");
+            SoundManager.Instance.PlaySE(6, true); // 歩行SE（ループ再生）
+        }
     }
 }
