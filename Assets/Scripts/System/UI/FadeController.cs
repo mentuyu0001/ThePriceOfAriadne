@@ -8,10 +8,9 @@ public class FadeController : MonoBehaviour
     // 透明度を操作する真っ黒な画像
     private Image fadeImage;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
-        // コンポーネントを取得
+        // fadeImageのコンポーネントを取得
         fadeImage = GetComponent<Image>();
         // コンポーネントがアタッチされているかチェック
         if (fadeImage == null)
@@ -21,12 +20,9 @@ public class FadeController : MonoBehaviour
         // アタッチされている場合
         else
         {
-            /*
+            Debug.Log("FadeController: fadeImage found.");
             // fadeImageの色を黒にする
             fadeImage.color = Color.black;
-            // フェードイン開始
-            FadeIn(4.0f).Forget();
-            */
         }
     }
 
@@ -35,8 +31,11 @@ public class FadeController : MonoBehaviour
     {
         if (fadeImage != null)
         {
+            Debug.Log("FadeController: Start Fade-in");
             // fadeImageの透明度をduration秒かけて0にする
-            await fadeImage.DOFade(0.0f, duration);
+            await fadeImage.DOFade(0.0f, duration)
+                .Play();
+            Debug.Log("FadeController: Finish Fade-in");
         }
     }
 
@@ -45,8 +44,11 @@ public class FadeController : MonoBehaviour
     {
         if (fadeImage != null)
         {
+            Debug.Log("FadeController: Start Fade-out");
             // fadeImageの透明度をduration秒かけて1にする
-            await fadeImage.DOFade(1.0f, duration);
+            await fadeImage.DOFade(1.0f, duration)
+                .Play();
+            Debug.Log("FadeController: Finish Fade-out");
         }
     }
 
