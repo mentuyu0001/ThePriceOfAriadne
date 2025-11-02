@@ -133,12 +133,6 @@ public class LaserTarget : MonoBehaviour
             moveSequence.Pause();
             Debug.Log("LaserTarget: ターゲットを停止しました");
 
-            // 破壊SE（id:5）を再生
-            if (SoundManager.Instance != null)
-            {
-                SoundManager.Instance.PlaySE(5);
-            }
-
             // ターゲットを非表示にする
             gameObject.SetActive(false);
         }
@@ -153,6 +147,12 @@ public class LaserTarget : MonoBehaviour
             // Laserギミックを停止
             if (laser != null)
             {
+                // 破壊SE（id:5）を再生
+                if (SoundManager.Instance != null)
+                {
+                    SoundManager.Instance.PlaySE(5);
+                }
+            
                 laser.KillLaser();
                 laser.StopGimick();
                 Debug.Log("LaserTarget: ナイフとの衝突を検知し、レーザーギミックを停止しました");
@@ -176,6 +176,12 @@ public class LaserTarget : MonoBehaviour
             {
                 laser.StopGimick();
                 laser.KillLaser();
+                // 破壊SE（id:5）を再生
+                if (SoundManager.Instance != null)
+                {
+                    SoundManager.Instance.PlaySE(5);
+                }
+            
                 Debug.Log("LaserTarget: ナイフとの衝突を検知し、レーザーギミックを停止しました");
             }
             else
