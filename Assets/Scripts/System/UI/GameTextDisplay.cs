@@ -114,7 +114,7 @@ public class GameTextDisplay : MonoBehaviour
 
         currentCts = new CancellationTokenSource();
         isDisplaying = true;
-        isFading = true; // フェード開始
+        // isFading = true; // フェード開始
 
         try
         {
@@ -135,7 +135,7 @@ public class GameTextDisplay : MonoBehaviour
             // フェードイン
             await FadeIn(currentCts.Token);
             
-            isFading = false; // フェードイン完了
+            // isFading = false; // フェードイン完了
             
             // 表示を維持（HideTextが呼ばれるまで待機）
         }
@@ -320,6 +320,7 @@ public class GameTextDisplay : MonoBehaviour
         if (canvasGroup == null || isDestroyed || this == null) return;
 
         float elapsed = 0f;
+        float startAlpha = canvasGroup.alpha;
         while (elapsed < fadeOutDuration)
         {
             if (canvasGroup == null || isDestroyed || this == null || token.IsCancellationRequested)
@@ -328,7 +329,7 @@ public class GameTextDisplay : MonoBehaviour
             }
             
             elapsed += Time.deltaTime;
-            float alpha = Mathf.Clamp01(1f - (elapsed / fadeOutDuration));
+            float alpha = Mathf.Clamp01(startAlpha - (elapsed / fadeOutDuration));
             
             canvasGroup.alpha = alpha;
             

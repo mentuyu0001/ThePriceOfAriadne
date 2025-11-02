@@ -2377,7 +2377,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &314370583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39856,7 +39856,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1827676352
 RectTransform:
   m_ObjectHideFlags: 0
@@ -43084,8 +43084,8 @@ MonoBehaviour:
   messageText1: {fileID: 537243318}
   messageText2: {fileID: 1481834969}
   textBackground: {fileID: 700321889}
-  fadeInDuration: 1
-  fadeOutDuration: 1
+  fadeInDuration: 0.3
+  fadeOutDuration: 0.3
   characterDisplayInterval: 0.05
   showDebugLogs: 1
 --- !u!4 &2146665497
