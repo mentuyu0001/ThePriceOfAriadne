@@ -94,8 +94,6 @@ public class PlayerAirChecker : MonoBehaviour
             }
 
             wasGround = isGround; // 変更を同期させる
-
-            controller.PlayWalkSEOnLanding(); // 着地時の歩行SE再生
             
             // 1フレーム待機
             await UniTask.Yield(PlayerLoopTiming.Update);
