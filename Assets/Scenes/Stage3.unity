@@ -2767,7 +2767,7 @@ Transform:
   m_GameObject: {fileID: 358127351}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 45.35, y: 4.1, z: 0.50026137}
+  m_LocalPosition: {x: 46.8, y: 4.1, z: 0.50026137}
   m_LocalScale: {x: 1, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -41270,7 +41270,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4078478342881044909, guid: 16536c3107ae5472eb1befe2a870ba33, type: 3}
       propertyPath: waterDuration
-      value: 0.5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4078478342881044909, guid: 16536c3107ae5472eb1befe2a870ba33, type: 3}
       propertyPath: playerDirectionRight
@@ -42669,8 +42669,6 @@ MonoBehaviour:
   messageText1: {fileID: 537243318}
   messageText2: {fileID: 1481834969}
   textBackground: {fileID: 700321889}
-  fadeInDuration: 1
-  fadeOutDuration: 1
   characterDisplayInterval: 0.05
   showDebugLogs: 1
 --- !u!4 &2146665497
