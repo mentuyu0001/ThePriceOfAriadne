@@ -10,11 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 8d8a3be38d6d94d3aa7f65477c67d3b0, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.3
+      value: 0.275
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8d8a3be38d6d94d3aa7f65477c67d3b0, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.3
+      value: 0.275
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8d8a3be38d6d94d3aa7f65477c67d3b0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -152,6 +152,7 @@ MonoBehaviour:
   sizeModifier: {x: 1, y: 0.1}
   groundCheckBuffer: 0
   isInputEnabled: 1
+  isStartGoal: 1
 --- !u!114 &2580708355860867723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,6 +395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecb7e76ad090d4a898ea03cfd2732e59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  partsData: {fileID: 0}
   partsTag: Parts
   leverTag: RustyLever
   stopButtonTag: StopButton
@@ -436,6 +438,7 @@ MonoBehaviour:
     m_Bits: 8
   sizeModifier: {x: 1, y: 0.1}
   groundCheckBuffer: 0
+  controller: {fileID: 0}
 --- !u!114 &1046654995328919409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -450,7 +453,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnOffsetX: 1.5
   throwForce: 10
-  waitKnife: 0.5
   throwCoolTime: 1000
 --- !u!114 &4078478342881044909
 MonoBehaviour:

@@ -107,7 +107,6 @@ public class HeavyObject : MonoBehaviour
             // プレイヤーとの距離をチェック
             //float distance = Vector2.Distance(rb.position, player.transform.position);
             float distance = Mathf.Abs(rb.position.x - player.transform.position.x);
-            Debug.Log($"HeavyObject: プレイヤーとの距離 = {distance}");
 
             Vector2 hitPos = collision.GetContact(0).point;
             Vector2 direction = (hitPos - rb.position).normalized;
