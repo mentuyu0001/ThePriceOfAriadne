@@ -26,7 +26,7 @@ public class GameStartManager : MonoBehaviour
         {
             SoundManager.Instance.PlaySE(6, true);
         }
-                
+
 
         startObg.SetActive(false);
 

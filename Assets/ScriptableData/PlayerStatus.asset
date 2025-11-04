@@ -24,7 +24,7 @@ MonoBehaviour:
   normalCanDoubleJump: 0
   normalCanThrowKnife: 0
   theifFriction: 10
-  theifAirResistance: 30
+  theifAirResistance: 10
   thiefMoveSpeed: 12
   thiefCanUnlock: 1
   muscleJumpForce: 10
