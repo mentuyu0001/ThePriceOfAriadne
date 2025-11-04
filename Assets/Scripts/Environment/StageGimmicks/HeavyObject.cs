@@ -33,6 +33,7 @@ public class HeavyObject : MonoBehaviour
     [SerializeField] private int pushSEIndex = 1; // 押しSEのインデックス
 
     private bool isPushing = false;
+    private bool isPushingSound = false;
     private Rigidbody2D rb;
     private Rigidbody2D playerRb;
     private Vector2 previousPlayerPosition;
@@ -143,10 +144,7 @@ public class HeavyObject : MonoBehaviour
         playerAnimationManager.AniPushTrue();
 
         // 押しSEをループ再生
-        if (SoundManager.Instance != null)
-        {
-            SoundManager.Instance.PlaySE(pushSEIndex, true); // ループ再生
-        }
+        HandlePushSound();
         
         // 既存のループをキャンセル
         moveCts?.Cancel();
@@ -159,17 +157,14 @@ public class HeavyObject : MonoBehaviour
     private void StopPushing()
     {
         if (!isPushing) return;
-        
+
         isPushing = false;
 
         // アニメーションを停止
         playerAnimationManager.AniPushFalse();
 
         // 押しSEを停止
-        if (SoundManager.Instance != null)
-        {
-            SoundManager.Instance.StopSE();
-        }
+        HandlePushSound();
         
         // ループをキャンセル
         moveCts?.Cancel();
@@ -292,5 +287,24 @@ public class HeavyObject : MonoBehaviour
         // クリーンアップ
         moveCts?.Cancel();
         moveCts = null;
+    }
+
+    private void HandlePushSound()
+    {
+        // SoundManagerが存在しない場合は何もしない
+        if (SoundManager.Instance == null) return;
+
+        if (!isPushingSound && playerRb.linearVelocityX != 0)
+        {
+            SoundManager.Instance.StopSE();
+            SoundManager.Instance.PlaySE(pushSEIndex, true);
+            isPushingSound = true; // 再生中にフラグを立てる
+        }
+
+        else
+        {
+            SoundManager.Instance.StopSE();
+            isPushingSound = false; // 停止したらフラグを降ろす
+        }
     }
 }

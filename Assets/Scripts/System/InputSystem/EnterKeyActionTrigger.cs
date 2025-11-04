@@ -39,8 +39,8 @@ public class EnterKeyActionTrigger : MonoBehaviour
     [Header("アニメーション待機時間設定")]
     [SerializeField] private float interactAnimationDuration = 1.25f;  // Interactアニメーションの時間
     [SerializeField] private float leverAnimationDuration = 1.5f;      // Leverアニメーションの時間
-    [SerializeField] private float buttonAnimationDuration = 1.0f;     // Buttonアニメーションの時間
-    [SerializeField] private float shootWaterAnimationDuration = 3.0f; // ShootWaterアニメーションの時間
+    private float buttonAnimationDuration = 2.0f;     // Buttonアニメーションの時間
+    private float shootWaterAnimationDuration = 3.0f; // ShootWaterアニメーションの時間
     [SerializeField] private float knifeAnimationDuration = 0.5f;      // Knifeアニメーションの時間
 
     // 表示するテキストメッセージ

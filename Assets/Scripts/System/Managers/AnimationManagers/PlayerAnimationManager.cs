@@ -82,6 +82,9 @@ public class PlayerAnimationManager : MonoBehaviour
         playerAnimator.SetBool("ButtonTrigger", true);
     }
 
-
+    public bool GetHeavyBool()
+    {
+        return playerAnimator.GetBool("PushBool");
+    }
 
 }

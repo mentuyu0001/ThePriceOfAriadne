@@ -64,10 +64,10 @@ public class LockedDoor : MonoBehaviour
     public void TryToOpen()
     {
         // 対応する鍵を持っていれば開く
-        if (KeyManager.TryToUseKey(doorID))
+        if (KeyManager.TryToUseKey(doorID) || playerStatus.CanUnlock)
         {
             OpenDoor();
-            
+
             // テキストを閉じる
             if (textDisplay != null && textDisplay.IsDisplaying)
             {

@@ -13,7 +13,7 @@ public class ShootWaterController : MonoBehaviour
 
     [SerializeField] private float displayDistance = 1.5f; // 前方に表示する距離
     [SerializeField] public float waterWait = 0.5f; // 水の発射待機時間
-    [SerializeField] public float waterDuration = 1.0f; // 表示時間（秒）
+    public float waterDuration = 2.5f; // 表示時間（秒）
     
     private Rigidbody2D playerRigidbody; // プレイヤーのRigidbody2D
     

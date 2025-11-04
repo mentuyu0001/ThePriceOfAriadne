@@ -404,12 +404,16 @@ public class Controller : MonoBehaviour
         // ◆ 再生すべき条件：地上にいて、移動していて、かつ現在再生されていない
         if (airChecker.IsGround && isMoving && !isWalkSoundPlaying)
         {
+            if (playerAnimationManager.GetHeavyBool()) return;
+            playerAnimationManager.AniJumpFalse();
+            playerAnimationManager.AniDoubleJumpFalse();
             SoundManager.Instance.PlaySE(6, true);
             isWalkSoundPlaying = true; // 再生中にフラグを立てる
         }
         // ◆ 停止すべき条件：（空中にいる、または移動していない）かつ現在再生されている
         else if ((!airChecker.IsGround || !isMoving) && isWalkSoundPlaying)
         {
+            playerAnimationManager.AniJumpTrue();
             SoundManager.Instance.StopSE();
             isWalkSoundPlaying = false; // 停止したらフラグを降ろす
         }

@@ -19,8 +19,8 @@ public class GameTutorialTextDisplay : MonoBehaviour
     [SerializeField] private GameObject textBackground; 
     
     [Header("表示設定")]
-    [SerializeField] private float fadeInDuration = 0.3f;
-    [SerializeField] private float fadeOutDuration = 0.3f;
+    private float fadeInDuration = 0.3f;
+    private float fadeOutDuration = 0.3f;
     [SerializeField] private float characterDisplayInterval = 0.05f;
     
     [Header("デバッグ")]
