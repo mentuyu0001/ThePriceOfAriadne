@@ -15,6 +15,7 @@ public class SaveDataConfirmation : MonoBehaviour
     [SerializeField] private GameObject noButton;
 
     [SerializeField] private GameDataManager gameDataManager;
+    [SerializeField] private ItemManager itemManager;
 
     // ダイアログを開く直前に選択されていたボタンを記憶しておく変数
     private GameObject lastSelectedButton;
@@ -49,7 +50,10 @@ public class SaveDataConfirmation : MonoBehaviour
         SoundManager.Instance.PlaySE(11); // 11はUI決定音のインデックス
         gameDataManager.SetCurrentSlot(saveCurrentSlot);
         gameDataManager.SaveGame();
+        itemManager.SyncStageToInventory(); // ステージのアイテムシングルトンとタイトル用のシングルトンを同期
         CloseDialog();
+
+        // シーンの遷移
     }
 
     public void OnYesButtonClickedLoad()
