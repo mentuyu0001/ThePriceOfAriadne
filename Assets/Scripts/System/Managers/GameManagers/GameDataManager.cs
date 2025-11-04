@@ -40,6 +40,7 @@ public class GameDataManager : MonoBehaviour
     [Inject] private InventoryData inventoryData; // インベントリのデータを保持
     [Inject] private StageNumber stageNumber; // 現在のステージを管理するシングルトン
     [Inject] private GameSceneManager sceneManager; // GameSceneManagerのインスタンス
+    [Inject] private PlayerCustomizer playerCustomizer; // PlayerCustomizerのインスタンス
     public SaveData saveData; // セーブデータを保持するインスタンス
     private string saveFilePath; // セーブファイルのパス
 
@@ -139,11 +140,12 @@ public class GameDataManager : MonoBehaviour
             Debug.Log("ロードしました");
 
             // --- ロードしたデータをゲームに反映させる処理 ---
-            //playerParts.LeftArm = saveData.LeftArm;
-            playerParts.LeftArm = PartsChara.Thief; // テスト用にthiefをセット
-            playerParts.RightArm = saveData.RightArm;
-            playerParts.LeftLeg = saveData.LeftLeg;
-            playerParts.RightLeg = saveData.RightLeg;
+            playerCustomizer.ChangePlayerParts(PartsSlot.LeftArm, PartsChara.Thief, null);// テスト用にthiefをセット
+            //playerCustomizer.ChangePlayerParts(PartsSlot.LeftArm, saveData.LeftArm, null);
+            playerCustomizer.ChangePlayerParts(PartsSlot.RightArm, saveData.RightArm, null);
+            playerCustomizer.ChangePlayerParts(PartsSlot.LeftLeg, saveData.LeftLeg, null);
+            playerCustomizer.ChangePlayerParts(PartsSlot.RightLeg, saveData.RightLeg, null);
+
             //stageNumber.SetCurrentStage(saveData.stageNumber); // ゲームの進行状況も反映
             stageNumber.SetCurrentStage(2); // テスト用にステージ番号をセット
 

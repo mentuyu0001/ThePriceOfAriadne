@@ -10,12 +10,28 @@ using Parts.Types; // 追加
 public class PlayerPartsRatio : MonoBehaviour
 {
     [Inject] private PlayerParts playerParts;
-    
     private Dictionary<PartsChara, float> partsRatios = new Dictionary<PartsChara, float>();
+    private bool isInitialized = false;
 
+    [Inject]
+    public void Initialize()
+    {
+        if (playerParts == null)
+        {
+            Debug.LogError("PlayerPartsRatio: PlayerPartsが注入されていません");
+            return;
+        }
+        isInitialized = true;
+        CalculatePartsRatio();
+    }
+
+    // Start()は安全のために残しておく
     private void Start()
     {
-        CalculatePartsRatio();
+        if (!isInitialized)
+        {
+            Debug.LogWarning("PlayerPartsRatio: 初期化が完了していません");
+        }
     }
 
     public void CalculatePartsRatio()
