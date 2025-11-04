@@ -380,6 +380,7 @@ MonoBehaviour:
   laserStand: {fileID: 4337801598738591519}
   laserBeam: {fileID: 5459649234081751636}
   target: {fileID: 2001828018527886940}
+  isActive: 1
 --- !u!61 &8933267465884229026
 BoxCollider2D:
   m_ObjectHideFlags: 0
