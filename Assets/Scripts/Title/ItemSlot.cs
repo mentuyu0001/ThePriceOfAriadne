@@ -20,7 +20,7 @@ public class ItemSlot : Button
     [SerializeField] GameObject buttons;
     [SerializeField] SelectedButtonManager selectedButtonManager;
 
-    private Image iconImage;
+    [SerializeField] public Image iconImage;
 
     // ダイアログを開く直前に選択されていたボタンを記憶しておく変数
     private GameObject lastSelectedButton;
@@ -62,22 +62,34 @@ public class ItemSlot : Button
         UpdateIcon();
     }
 
-    private void UpdateIcon()
+    public void UpdateIcon()
     {
-        if (IsObtained)
+        if (iconImage == null)
         {
-            iconImage.sprite = itemData.GetItemIconByID(itemID);
-            iconImage.enabled = true;
+            Debug.LogError($"{gameObject.name}: IconImageがnullです");
+            return;
         }
-        else
-        {
-            iconImage.enabled = false;
-        }
+
+        // 即座に表示/非表示を切り替え
+        iconImage.enabled = IsObtained;
+        iconImage.gameObject.SetActive(IsObtained);  // SetActiveを追加
+        
+        // キャンバスを強制的に更新
+        Canvas.ForceUpdateCanvases();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(iconImage.rectTransform);
+        
+        Debug.Log($"{gameObject.name}のアイコン表示を{(IsObtained ? "表示" : "非表示")}に設定しました " +
+                  $"(enabled: {iconImage.enabled}, active: {iconImage.gameObject.activeSelf})");
     }
 
     public override void OnClick()
     {
         base.OnClick(); // 決定音を鳴らす
+        if(IsObtained == false)
+        {
+            Debug.Log("未取得のアイテムです。");
+            return;
+        }
         // アイテム説明用UIのボタンを表示
         ButtonsSetTrue();
         // 現在選択されているUI要素を記憶する

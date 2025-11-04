@@ -15,7 +15,7 @@ public class InventoryData : MonoBehaviour
     private bool assassinReportObtained;
 
     // アイテムの取得状態
-    private bool playerItemObtained;
+    private bool playerItemObtained = true;
     private bool theifItemObtained;
     private bool muscleItemObtained;
     private bool fireItemObtained;
@@ -103,7 +103,7 @@ public class InventoryData : MonoBehaviour
     // すべてのアイテムをリセットするメソッド
     public void ResetAllItems()
     {
-        playerReportObtained = true;
+        playerReportObtained = false;
         theifReportObtained = false;
         muscleReportObtained = false;
         fireReportObtained = false;

@@ -34,6 +34,7 @@ public class ItemResetConfirmation : MonoBehaviour
     // 各セーブスロットのボタンからこのメソッドを呼び出す
     public void ShowConfirmationDialog()
     {
+        UnityEngine.Debug.Log("ShowConfirmationDialog called");
         // 現在選択されているUI要素を記憶する
         lastSelectedButton = EventSystem.current.currentSelectedGameObject;
         confirmationDialogPanel.SetActive(true);
