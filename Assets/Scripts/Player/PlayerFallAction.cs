@@ -19,7 +19,6 @@ public class PlayerFallAction : FallingEntity
     protected override void FallAction()
     {
         gameOverManager.GameOver();
-        Destroy(this.gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collider) {

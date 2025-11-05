@@ -146,10 +146,6 @@ public class GameDataManager : MonoBehaviour
                 string json = File.ReadAllText(saveFilePath);
                 saveData = JsonUtility.FromJson<SaveData>(json);
                 Debug.Log("セーブデータをロードしました");
-                
-                
-                // ステージへ移動
-                sceneManager.LoadStage(saveData.stageNumber);
 
                 // パーツ変更処理
                 try
@@ -164,6 +160,9 @@ public class GameDataManager : MonoBehaviour
                     Debug.LogError($"パーツロード中にエラーが発生: {e.Message}\n{e.StackTrace}");
                     return;
                 }
+
+                // ステージへ移動
+                sceneManager.LoadStage(saveData.stageNumber);
             }
             catch (System.Exception e)
             {
