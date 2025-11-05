@@ -27,7 +27,6 @@ public class PlayerRunTimeStatus : MonoBehaviour
 
     public void ResetRunTimeStatus() {
         CanDoubleJump = false;
-        CanShootWater = false;
         CanThrowKnife = false;
     }
 }
