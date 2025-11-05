@@ -20,6 +20,17 @@ public class GameSceneManager : MonoBehaviour
     {
         SceneManager.LoadScene("TitleScene");
     }
+
+    public void LoadSaveScene(int currentStage)
+    {
+        if(currentStage < 1 || currentStage > 4)
+        {
+            UnityEngine.Debug.LogError("現在のステージ番号が不正です: " + currentStage);
+            return;
+        }
+        string sceneName = $"Save{currentStage}to{currentStage + 1}";
+        SceneManager.LoadScene(sceneName);
+    }
     public void QuitGame()
     {
         Application.Quit();

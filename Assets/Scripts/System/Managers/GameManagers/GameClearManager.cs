@@ -82,8 +82,9 @@ public class GameClearManager : MonoBehaviour
 
             // 入力を再開する
             controller.isStartGoal = false;
-
-            gameSceneManager.LoadTitle();
         }
+
+        // セーブシーンへ移動
+        gameSceneManager.LoadSaveScene(stageNumber.GetCurrentStage()-1);
     }
 }

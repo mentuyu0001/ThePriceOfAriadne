@@ -1521,6 +1521,7 @@ RectTransform:
   - {fileID: 983415593}
   - {fileID: 1520459587}
   - {fileID: 32644531}
+  - {fileID: 1258828082}
   - {fileID: 595211233}
   - {fileID: 791608971}
   - {fileID: 1508862142}
@@ -2237,6 +2238,22 @@ PrefabInstance:
       propertyPath: confirmation
       value: 
       objectReference: {fileID: 1508862143}
+    - target: {fileID: 2206589488150666926, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
+      propertyPath: gameDataManager
+      value: 
+      objectReference: {fileID: 1559244142}
+    - target: {fileID: 2206589488150666926, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
+      propertyPath: menuStatusDisplay
+      value: 
+      objectReference: {fileID: 1571884626}
+    - target: {fileID: 2206589488150666926, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
+      propertyPath: playerStatusDisplay
+      value: 
+      objectReference: {fileID: 1571884624}
+    - target: {fileID: 2206589488150666926, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
+      propertyPath: playerVisualCustomizer
+      value: 
+      objectReference: {fileID: 1191101982}
     - target: {fileID: 2761839346031790338, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
       propertyPath: m_Name
       value: LoadDataSlot2
@@ -5787,6 +5804,8 @@ MonoBehaviour:
   gameOverEffect: {fileID: 7175769800601986794, guid: e224e0acae1d8448a99f6b57f9b16f8b, type: 3}
   player: {fileID: 1886981966}
   gameSceneManager: {fileID: 1480997590}
+  fadeController: {fileID: 0}
+  gameDataManager: {fileID: 0}
 --- !u!1 &775953726
 GameObject:
   m_ObjectHideFlags: 0
@@ -7436,6 +7455,22 @@ PrefabInstance:
       propertyPath: confirmation
       value: 
       objectReference: {fileID: 1508862143}
+    - target: {fileID: 2206589488150666926, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
+      propertyPath: gameDataManager
+      value: 
+      objectReference: {fileID: 1559244142}
+    - target: {fileID: 2206589488150666926, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
+      propertyPath: menuStatusDisplay
+      value: 
+      objectReference: {fileID: 1571884626}
+    - target: {fileID: 2206589488150666926, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
+      propertyPath: playerStatusDisplay
+      value: 
+      objectReference: {fileID: 1571884624}
+    - target: {fileID: 2206589488150666926, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
+      propertyPath: playerVisualCustomizer
+      value: 
+      objectReference: {fileID: 1191101982}
     - target: {fileID: 2761839346031790338, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
       propertyPath: m_Name
       value: LoadDataSlot4
@@ -8322,7 +8357,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec5a0d777f91f434db80b1c7da0ee1ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerParts: {fileID: 1872299853}
   NormalArmL:
   - {fileID: 1979229732}
   - {fileID: 1979229730}
@@ -8691,6 +8725,160 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8963328682077722835, guid: 8d8a3be38d6d94d3aa7f65477c67d3b0, type: 3}
   m_PrefabInstance: {fileID: 1272001097}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1258828081
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1258828082}
+  - component: {fileID: 1258828086}
+  - component: {fileID: 1258828085}
+  - component: {fileID: 1258828084}
+  - component: {fileID: 1258828083}
+  m_Layer: 5
+  m_Name: Return
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1258828082
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258828081}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.2999863, y: 0.2999863, z: 0.9999853}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 221483955}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -874, y: 480}
+  m_SizeDelta: {x: 512, y: 512}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1258828083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258828081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dae8b6730a9fe4459a416dc4152b63f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1258828084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258828081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 4
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 1815445182}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 1815445182}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 0.4056604, g: 0.4056604, b: 0.4056604, a: 1}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1258828085}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1480997590}
+        m_TargetAssemblyTypeName: GameSceneManager, Assembly-CSharp
+        m_MethodName: LoadStage
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2025293960}
+        m_TargetAssemblyTypeName: SelectFirstButton, Assembly-CSharp
+        m_MethodName: ResetLastSelected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1258828085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258828081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 2800000, guid: 1bc6f41e963fd44599da6eeda7e09dc5, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &1258828086
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258828081}
+  m_CullTransparentMesh: 1
 --- !u!1 &1261370576
 GameObject:
   m_ObjectHideFlags: 0
@@ -9068,6 +9256,22 @@ PrefabInstance:
       propertyPath: confirmation
       value: 
       objectReference: {fileID: 1508862143}
+    - target: {fileID: 2206589488150666926, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
+      propertyPath: gameDataManager
+      value: 
+      objectReference: {fileID: 1559244142}
+    - target: {fileID: 2206589488150666926, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
+      propertyPath: menuStatusDisplay
+      value: 
+      objectReference: {fileID: 1571884626}
+    - target: {fileID: 2206589488150666926, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
+      propertyPath: playerStatusDisplay
+      value: 
+      objectReference: {fileID: 1571884624}
+    - target: {fileID: 2206589488150666926, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
+      propertyPath: playerVisualCustomizer
+      value: 
+      objectReference: {fileID: 1191101982}
     - target: {fileID: 2761839346031790338, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
       propertyPath: m_Name
       value: LoadDataSlot6
@@ -10388,6 +10592,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1466147876}
   m_CullTransparentMesh: 1
+--- !u!1 &1475857940
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1475857942}
+  - component: {fileID: 1475857941}
+  m_Layer: 0
+  m_Name: StageNumber
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1475857941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475857940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6585ba7ae41149248e95cf34736641f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentStage: 4
+--- !u!4 &1475857942
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475857940}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -5.913244, y: -0.26942253, z: 0.55722046}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1478699644 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6630972483929899797, guid: 8d8a3be38d6d94d3aa7f65477c67d3b0, type: 3}
@@ -10497,7 +10746,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec5a0d777f91f434db80b1c7da0ee1ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerParts: {fileID: 1872299853}
   NormalArmL:
   - {fileID: 2124103286}
   - {fileID: 539534501}
@@ -11159,6 +11407,22 @@ PrefabInstance:
       propertyPath: confirmation
       value: 
       objectReference: {fileID: 1508862143}
+    - target: {fileID: 2206589488150666926, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
+      propertyPath: gameDataManager
+      value: 
+      objectReference: {fileID: 1559244142}
+    - target: {fileID: 2206589488150666926, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
+      propertyPath: menuStatusDisplay
+      value: 
+      objectReference: {fileID: 1571884626}
+    - target: {fileID: 2206589488150666926, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
+      propertyPath: playerStatusDisplay
+      value: 
+      objectReference: {fileID: 1571884624}
+    - target: {fileID: 2206589488150666926, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
+      propertyPath: playerVisualCustomizer
+      value: 
+      objectReference: {fileID: 1191101982}
     - target: {fileID: 2761839346031790338, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
       propertyPath: m_Name
       value: LoadDataSlot3
@@ -11310,6 +11574,16 @@ MonoBehaviour:
     RightArm: 0
     LeftLeg: 0
     RightLeg: 0
+    playerReportObtained: 0
+    theifReportObtained: 0
+    muscleReportObtained: 0
+    fireReportObtained: 0
+    assassinReportObtained: 0
+    playerDiaryObtained: 0
+    theifDiaryObtained: 0
+    muscleDiaryObtained: 0
+    fireDiaryObtained: 0
+    assassinDiaryObtained: 0
     stageNumber: 0
 --- !u!1 &1565075356
 GameObject:
@@ -11649,7 +11923,7 @@ Transform:
   m_GameObject: {fileID: 1586923810}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40.706264, y: 4.251869, z: -10}
+  m_LocalPosition: {x: -40.709045, y: 4.251869, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11942,6 +12216,7 @@ MonoBehaviour:
   noButton: {fileID: 619450154}
   inventoryData: {fileID: 0}
   stageInventoryData: {fileID: 0}
+  itemSlots: []
 --- !u!114 &1708425081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12625,7 +12900,7 @@ PrefabInstance:
     - target: {fileID: 2000562346284602601, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1258828084}
     - target: {fileID: 2000562346284602601, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
       propertyPath: m_Navigation.m_SelectOnDown
       value: 
@@ -12650,6 +12925,22 @@ PrefabInstance:
       propertyPath: confirmation
       value: 
       objectReference: {fileID: 1508862143}
+    - target: {fileID: 2206589488150666926, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
+      propertyPath: gameDataManager
+      value: 
+      objectReference: {fileID: 1559244142}
+    - target: {fileID: 2206589488150666926, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
+      propertyPath: menuStatusDisplay
+      value: 
+      objectReference: {fileID: 1571884626}
+    - target: {fileID: 2206589488150666926, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
+      propertyPath: playerStatusDisplay
+      value: 
+      objectReference: {fileID: 1571884624}
+    - target: {fileID: 2206589488150666926, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
+      propertyPath: playerVisualCustomizer
+      value: 
+      objectReference: {fileID: 1191101982}
     - target: {fileID: 2761839346031790338, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
       propertyPath: m_Name
       value: LoadDataSlot1
@@ -12781,6 +13072,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4597170438716275385, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
   m_PrefabInstance: {fileID: 1815445177}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1815445182 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2000562346284602601, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
+  m_PrefabInstance: {fileID: 1815445177}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1815445178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1827676351
 GameObject:
   m_ObjectHideFlags: 0
@@ -15005,6 +15307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a010000a43a574a5c9e2bd4f0c23d877, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statusDisplay: {fileID: 0}
   playerVisualCustomizer: {fileID: 1191101982}
 --- !u!1 &2045294078
 GameObject:
@@ -15089,6 +15392,22 @@ PrefabInstance:
       propertyPath: confirmation
       value: 
       objectReference: {fileID: 1508862143}
+    - target: {fileID: 2206589488150666926, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
+      propertyPath: gameDataManager
+      value: 
+      objectReference: {fileID: 1559244142}
+    - target: {fileID: 2206589488150666926, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
+      propertyPath: menuStatusDisplay
+      value: 
+      objectReference: {fileID: 1571884626}
+    - target: {fileID: 2206589488150666926, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
+      propertyPath: playerStatusDisplay
+      value: 
+      objectReference: {fileID: 1571884624}
+    - target: {fileID: 2206589488150666926, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
+      propertyPath: playerVisualCustomizer
+      value: 
+      objectReference: {fileID: 1191101982}
     - target: {fileID: 2761839346031790338, guid: 7a239e0718e59724c9eb8a4961e70297, type: 3}
       propertyPath: m_Name
       value: LoadDataSlot5
@@ -15681,8 +16000,6 @@ MonoBehaviour:
   messageText1: {fileID: 537243318}
   messageText2: {fileID: 1481834969}
   textBackground: {fileID: 700321889}
-  fadeInDuration: 0.3
-  fadeOutDuration: 0.3
   characterDisplayInterval: 0.05
   showDebugLogs: 1
 --- !u!4 &2146665497
@@ -15721,6 +16038,7 @@ SceneRoots:
   - {fileID: 742264107}
   - {fileID: 1432407760}
   - {fileID: 1365103312}
+  - {fileID: 1475857942}
   - {fileID: 283318550}
   - {fileID: 1972325267}
   - {fileID: 1979229716}

@@ -9,8 +9,41 @@ EditorBuildSettings:
     path: Assets/Scenes/TitleScene.unity
     guid: dc4d96a04d35f4070a8c6ca6552b9dc5
   - enabled: 1
-    path: Assets/Scenes/Stage2.unity
+    path: Assets/Scenes/Stage2Old.unity
     guid: 4145d02c49d844ec698dc1b2c490c327
+  - enabled: 1
+    path: Assets/Scenes/Stage1.unity
+    guid: 156765b1de86df847976173b4a8feced
+  - enabled: 1
+    path: Assets/Scenes/Stage2.unity
+    guid: 5f7125202446e9f42a08983d7b6794fc
+  - enabled: 1
+    path: Assets/Scenes/Stage3.unity
+    guid: 92cb5bcc215cbe14fad1e010b6a153a4
+  - enabled: 1
+    path: Assets/Scenes/Stage4.unity
+    guid: 30235f7961ee6bf4b95ef42a8f5b9e77
+  - enabled: 1
+    path: Assets/Scenes/Stage5.unity
+    guid: 5bdb03ad897fd43c58d7480840b890bf
+  - enabled: 1
+    path: Assets/Scenes/Prologue.unity
+    guid: 0bb09c0411423478292075c18d7f8e5e
+  - enabled: 1
+    path: Assets/Scenes/Ending.unity
+    guid: 69e6b70ec492a42eb87cf43e601e20b0
+  - enabled: 1
+    path: Assets/Scenes/Save1to2.unity
+    guid: 8ea98b53914924c3d8d9bd413141711b
+  - enabled: 1
+    path: Assets/Scenes/Save2to3.unity
+    guid: 57a76358dbf654d428e7ff2c3360a46c
+  - enabled: 1
+    path: Assets/Scenes/Save3to4.unity
+    guid: 030fa7704488642589dd4900dada8299
+  - enabled: 1
+    path: Assets/Scenes/Save4to5.unity
+    guid: 09692a563fa9944869a2f6d2949793fc
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 4d2decb0bd95449399a5f6b3061f10ec, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

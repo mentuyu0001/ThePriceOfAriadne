@@ -432,7 +432,7 @@ public class GameLifetimeScope : LifetimeScope
             Debug.LogError("GameTextDisplayコンポーネントが見つかりません");
         }
         // MenuStatusDisplayの登録
-        var menuStatusDisplay = Object.FindAnyObjectByType<MenuStatusDisplay>();
+        var menuStatusDisplay = Object.FindObjectOfType<MenuStatusDisplay>(true); // includeInactiveをtrueに設定
         if (menuStatusDisplay != null)
         {
             // 1. インスタンスを登録
