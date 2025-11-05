@@ -93,15 +93,30 @@ public class ItemManager : MonoBehaviour
     // StageInventoryDataの取得状況をInventoryDataに反映する
     public void SyncStageToInventory()
     {
-        inventoryData.PlayerReportObtained = stageInventoryData.PlayerReportObtained;
-        inventoryData.TheifReportObtained = stageInventoryData.TheifReportObtained;
-        inventoryData.MuscleReportObtained = stageInventoryData.MuscleReportObtained;
-        inventoryData.FireReportObtained = stageInventoryData.FireReportObtained;
-        inventoryData.AssassinReportObtained = stageInventoryData.AssassinReportObtained;
-        inventoryData.PlayerItemObtained = stageInventoryData.PlayerItemObtained;
-        inventoryData.TheifItemObtained = stageInventoryData.TheifItemObtained;
-        inventoryData.MuscleItemObtained = stageInventoryData.MuscleItemObtained;
-        inventoryData.FireItemObtained = stageInventoryData.FireItemObtained;
-        inventoryData.AssassinItemObtained = stageInventoryData.AssassinItemObtained;
+        if (stageInventoryData.PlayerReportObtained) inventoryData.PlayerReportObtained = stageInventoryData.PlayerReportObtained;
+        if (stageInventoryData.TheifReportObtained) inventoryData.TheifReportObtained = stageInventoryData.TheifReportObtained;
+        if (stageInventoryData.MuscleReportObtained) inventoryData.MuscleReportObtained = stageInventoryData.MuscleReportObtained;
+        if (stageInventoryData.FireReportObtained) inventoryData.FireReportObtained = stageInventoryData.FireReportObtained;
+        if (stageInventoryData.AssassinReportObtained) inventoryData.AssassinReportObtained = stageInventoryData.AssassinReportObtained;
+        if (stageInventoryData.PlayerItemObtained) inventoryData.PlayerItemObtained = stageInventoryData.PlayerItemObtained;
+        if (stageInventoryData.TheifItemObtained) inventoryData.TheifItemObtained = stageInventoryData.TheifItemObtained;
+        if (stageInventoryData.MuscleItemObtained) inventoryData.MuscleItemObtained = stageInventoryData.MuscleItemObtained;
+        if (stageInventoryData.FireItemObtained) inventoryData.FireItemObtained = stageInventoryData.FireItemObtained;
+        if (stageInventoryData.AssassinItemObtained) inventoryData.AssassinItemObtained = stageInventoryData.AssassinItemObtained;
+    }
+
+    // Inventoryの取得状況をStageにコピーする
+    public void SyncInventoryToStage()
+    {
+        stageInventoryData.PlayerReportObtained = inventoryData.PlayerReportObtained;
+        stageInventoryData.TheifReportObtained = inventoryData.TheifReportObtained;
+        stageInventoryData.MuscleReportObtained = inventoryData.MuscleReportObtained;
+        stageInventoryData.FireReportObtained = inventoryData.FireReportObtained;
+        stageInventoryData.AssassinReportObtained = inventoryData.AssassinReportObtained;
+        stageInventoryData.PlayerItemObtained = inventoryData.PlayerItemObtained;
+        stageInventoryData.TheifItemObtained = inventoryData.TheifItemObtained;
+        stageInventoryData.MuscleItemObtained = inventoryData.MuscleItemObtained;
+        stageInventoryData.FireItemObtained = inventoryData.FireItemObtained;
+        stageInventoryData.AssassinItemObtained = inventoryData.AssassinItemObtained;
     }
 }

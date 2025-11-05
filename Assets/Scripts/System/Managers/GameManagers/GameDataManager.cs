@@ -3,6 +3,7 @@ using System.IO; // ファイルの読み書きに必要
 using VContainer;
 using Parts.Types;
 using UnityEngine.SceneManagement;
+using System.Runtime.CompilerServices;
 
 // セーブするデータのクラス
 // [System.Serializable] をつけないとJsonUtilityで変換できない
@@ -16,8 +17,6 @@ public class SaveData
     public PartsChara RightLeg;
 
     // アイテムの取得状況を保存する変数
-
-    /*
     public bool playerReportObtained;
     public bool theifReportObtained;
     public bool muscleReportObtained;
@@ -28,7 +27,7 @@ public class SaveData
     public bool muscleDiaryObtained;
     public bool fireDiaryObtained;
     public bool assassinDiaryObtained;
-    */
+
 
     // ゲームの進行状況を保存する変数
     public int stageNumber;
@@ -55,7 +54,7 @@ public class GameDataManager : MonoBehaviour
 
     void Start()
     {
-        playerParts = GameObject.Find ("PlayerParts").GetComponent<PlayerParts>();
+        playerParts = GameObject.Find("PlayerParts").GetComponent<PlayerParts>();
         Debug.Log("playerParts: " + playerParts);
         Debug.Log("inventoryData: " + inventoryData);
         // 依存関係の注入確認
@@ -96,20 +95,6 @@ public class GameDataManager : MonoBehaviour
         saveData.LeftLeg = playerParts.LeftLeg;
         saveData.RightLeg = playerParts.RightLeg;
         saveData.stageNumber = stageNumber.GetCurrentStage();
-
-        /*
-        saveData.playerReportObtained = inventoryData.PlayerReportObtained;
-        saveData.theifReportObtained = inventoryData.TheifReportObtained;
-        saveData.muscleReportObtained = inventoryData.MuscleReportObtained;
-        saveData.fireReportObtained = inventoryData.FireReportObtained;
-        saveData.assassinReportObtained = inventoryData.AssassinReportObtained;
-        saveData.playerDiaryObtained = inventoryData.PlayerDiaryObtained;
-        saveData.theifDiaryObtained = inventoryData.TheifDiaryObtained;
-        saveData.muscleDiaryObtained = inventoryData.MuscleDiaryObtained;
-        saveData.fireDiaryObtained = inventoryData.FireDiaryObtained;
-        saveData.assassinDiaryObtained = inventoryData.AssassinDiaryObtained;
-        */
-        // ... 他のデータも同様に設定   
 
         // SaveDataをJSON形式の文字列に変換
         string json = JsonUtility.ToJson(saveData);
@@ -174,6 +159,101 @@ public class GameDataManager : MonoBehaviour
         {
             Debug.LogWarning($"セーブファイルが見つかりません: {saveFilePath}");
             saveData = new SaveData();
+        }
+    }
+
+    // アイテムをセーブする
+    public void SaveItemData()
+    {
+        if (!isInitialized)
+        {
+            Debug.LogError("GameDataManager: まだ初期化されていません");
+            return;
+        }
+
+        // saveDataを初期化
+        if (saveData == null)
+        {
+            saveData = new SaveData();
+        }
+
+        // 今のゲームの状態をsaveDataインスタンスに設定する
+        saveData.playerReportObtained = inventoryData.PlayerReportObtained;
+        saveData.theifReportObtained = inventoryData.TheifReportObtained;
+        saveData.muscleReportObtained = inventoryData.MuscleReportObtained;
+        saveData.fireReportObtained = inventoryData.FireReportObtained;
+        saveData.assassinReportObtained = inventoryData.AssassinReportObtained;
+        saveData.playerDiaryObtained = inventoryData.PlayerItemObtained;
+        saveData.theifDiaryObtained = inventoryData.TheifItemObtained;
+        saveData.muscleDiaryObtained = inventoryData.MuscleItemObtained;
+        saveData.fireDiaryObtained = inventoryData.FireItemObtained;
+        saveData.assassinDiaryObtained = inventoryData.AssassinItemObtained;
+
+        // SaveDataをJSON形式の文字列に変換
+        string json = JsonUtility.ToJson(saveData);
+
+        // JSON文字列をファイルに書き込む
+        saveFilePath = Application.persistentDataPath + $"/save_item.json";
+        File.WriteAllText(saveFilePath, json);
+
+        Debug.Log("アイテムをセーブしました: " + saveFilePath);
+    }
+
+    // アイテムをロードする
+    public void LoadItemData()
+    {
+        if (!isInitialized)
+        {
+            Debug.LogError("GameDataManager: まだ初期化されていません");
+            return;
+        }
+
+        // playerCustomizerのnullチェックを追加
+        if (playerCustomizer == null)
+        {
+            Debug.LogError("GameDataManager: PlayerCustomizerが注入されていません");
+            return;
+        }
+
+        saveFilePath = Application.persistentDataPath + $"/save_item.json";
+        if (File.Exists(saveFilePath))
+        {
+            try
+            {
+                string json = File.ReadAllText(saveFilePath);
+                saveData = JsonUtility.FromJson<SaveData>(json);
+                Debug.Log("セーブデータをロードしました");
+
+                // アイテムロード
+                try
+                {
+                    inventoryData.PlayerReportObtained = saveData.playerReportObtained;
+                    inventoryData.TheifReportObtained = saveData.theifReportObtained;
+                    inventoryData.MuscleReportObtained = saveData.muscleReportObtained;
+                    inventoryData.FireReportObtained = saveData.fireReportObtained;
+                    inventoryData.AssassinReportObtained = saveData.assassinReportObtained;
+                    inventoryData.PlayerItemObtained = saveData.playerDiaryObtained;
+                    inventoryData.TheifItemObtained = saveData.theifDiaryObtained;
+                    inventoryData.MuscleItemObtained = saveData.muscleDiaryObtained;
+                    inventoryData.FireItemObtained = saveData.fireDiaryObtained;
+                    inventoryData.AssassinItemObtained = saveData.assassinDiaryObtained;
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogError($"アイテムロード中にエラーが発生: {e.Message}\n{e.StackTrace}");
+                    return;
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"ロード処理中にエラーが発生: {e.Message}\n{e.StackTrace}");
+                return;
+            }
+        }
+        else
+        {
+            SaveItemData();
+            LoadItemData();
         }
     }
 }

@@ -103,7 +103,7 @@ public class StageInventoryData : MonoBehaviour
     // すべてのアイテムをリセットするメソッド
     public void ResetAllItems()
     {
-        playerReportObtained = true;
+        playerReportObtained = false;
         theifReportObtained = false;
         muscleReportObtained = false;
         fireReportObtained = false;
