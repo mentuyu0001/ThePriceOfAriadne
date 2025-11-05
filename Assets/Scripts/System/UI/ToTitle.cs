@@ -1,12 +1,11 @@
 using UnityEngine;
 
-public class ToTitle : MonoBehaviour
+public class ToTitle : Button
 {
-    [SerializeField] private GameSceneManager gameSceneManager;
-    [SerializeField] private FadeController fadecontroller;
-
-    public void OnClick()
+    public async void ToTitle()
     {
-        
+        await fadeController.FadeOut(animationTime);
+
+        gameSceneManager.LoadTitle();
     }
 }
