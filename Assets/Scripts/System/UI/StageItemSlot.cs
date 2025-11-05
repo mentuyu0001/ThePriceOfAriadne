@@ -50,7 +50,7 @@ public class StageItemSlot : Button
         UpdateIcon();
     }
 
-    protected void Start()
+    protected void Awake()
     {
         stageInventoryData = GameObject.Find("StageInventoryData").GetComponent<StageInventoryData>();
         iconImage = GetComponentsInChildren<Image>(true)
@@ -201,5 +201,10 @@ public class StageItemSlot : Button
         Debug.Log("ReturnSelectedButton lastSelectedButton: " + lastSelectedButton);
         selectedButtonManager.ReturnSelectedButton();
         ButtonsSetFalse();
+    }
+
+    protected void OnEnable()
+    {
+        UpdateIcon();
     }
 }

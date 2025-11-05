@@ -1,5 +1,6 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using Unity.VisualScripting;
 
 public class GameClearManager : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class GameClearManager : MonoBehaviour
     [SerializeField] private PlayerAnimationManager playerAnimationManager;
     [SerializeField] private GameObject GoalObg;
     [SerializeField] private GameSceneManager gameSceneManager;
+    [SerializeField] private ItemManager itemManager;
+    [SerializeField] private GameDataManager gameDataManager;
+    private StageNumber stageNumber;
 
     // プレイヤーの速度(単位はs)
     private float dashTime = 2.0f;
@@ -19,8 +23,19 @@ public class GameClearManager : MonoBehaviour
     // 一度だけ実行するためのフラグ（目印）
     private bool hasTriggered = false;
 
+    void Start()
+    {
+        stageNumber = GameObject.Find("StageNumber").GetComponent<StageNumber>();
+    }
     private async void OnTriggerEnter2D(Collider2D other)
     {
+        // 初期化
+        stageNumber.SetCurrentStage(stageNumber.GetCurrentStage() + 1);
+        itemManager.SyncStageToInventory();
+        gameDataManager.SaveItemData();
+
+        // オートセーブ
+        gameDataManager.SaveGame(1);
 
         if (other.gameObject.tag == "Player" && !hasTriggered)
         {
@@ -42,13 +57,13 @@ public class GameClearManager : MonoBehaviour
             {
                 SoundManager.Instance.PlaySE(6, true);
             }
-        
+
             controller.StartAndGoalSetFrictionZero();
 
             controller.StartAndGoalVelocity();
 
             await UniTask.Delay((int)(dashTime * 1000));
-        
+
             controller.StartAndGoalSetFrictionAdd();
             playerAnimationManager.AniWalkFalse();
 
@@ -60,7 +75,7 @@ public class GameClearManager : MonoBehaviour
             {
                 SoundManager.Instance.StopSE();
             }
-        
+
 
             // スタートに障害物を置く
             GoalObg.SetActive(true);

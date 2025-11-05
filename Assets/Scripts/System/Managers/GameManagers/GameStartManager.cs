@@ -13,6 +13,10 @@ public class GameStartManager : MonoBehaviour
     [SerializeField] private PlayerAnimationManager playerAnimationManager;
     [SerializeField] private GameObject startObg;
 
+    [SerializeField] private ItemManager itemManager;
+    [SerializeField] private MenuStatusDisplay menuStatus;
+    [SerializeField] private GameDataManager gameDataManager;
+
     // プレイヤーの速度(単位はs)
     private float dashTime = 2.0f;
     private float stopTime = 1.0f;
@@ -22,6 +26,11 @@ public class GameStartManager : MonoBehaviour
 
     async UniTaskVoid Start()
     {
+        // 初期化
+        gameDataManager.LoadItemData();
+        itemManager.SyncInventoryToStage();
+        menuStatus.DisplayStatus();
+
         if (SoundManager.Instance != null)
         {
             SoundManager.Instance.PlaySE(6, true);
