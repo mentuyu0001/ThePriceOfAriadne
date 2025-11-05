@@ -12,18 +12,16 @@ public class FadeController : MonoBehaviour
     {
         // fadeImageのコンポーネントを取得
         fadeImage = GetComponent<Image>();
-        // コンポーネントがアタッチされているかチェック
+        
         if (fadeImage == null)
         {
             Debug.LogError("FadeController: fadeImage cannot found.");
+            return;
         }
-        // アタッチされている場合
-        else
-        {
-            Debug.Log("FadeController: fadeImage found.");
-            // fadeImageの色を黒にする
-            fadeImage.color = Color.black;
-        }
+        
+        Debug.Log("FadeController: fadeImage found.");
+        // 初期状態: 黒で完全に透明に設定
+        fadeImage.color = new Color(0, 0, 0, 0);
     }
 
     // フェードインを実行する関数
