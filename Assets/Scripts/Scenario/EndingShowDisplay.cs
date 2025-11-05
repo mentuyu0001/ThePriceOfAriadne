@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using VContainer;
 using Parts.Types;
 using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
 
 public class EndingShowDisplay : MonoBehaviour
 {
@@ -44,6 +45,9 @@ public class EndingShowDisplay : MonoBehaviour
     [SerializeField]
     private GameObject whiteBackground;  // 白背景
 
+    [SerializeField]
+    private FadeController fadeController;
+
     [Inject]
     private PlayerPartsRatio partsRatio;
 
@@ -53,6 +57,9 @@ public class EndingShowDisplay : MonoBehaviour
     private InputAction nextLineAction;
     private Sprite selectedEndingImage;
     private bool isTextCompleted = false;
+    private bool isIllustrationShown = false;
+
+    private GameSceneManager sceneManager;
 
     [Inject]
     public void Initialize(PlayerPartsRatio ratio)
@@ -80,6 +87,8 @@ public class EndingShowDisplay : MonoBehaviour
 
     private void Start()
     {
+        sceneManager = FindObjectOfType<GameSceneManager>();
+
         // 初期設定
         if (endingIllustration != null)
         {
@@ -139,6 +148,13 @@ public class EndingShowDisplay : MonoBehaviour
     {
         if (textLines == null) return;
 
+        if (isIllustrationShown)
+        {
+            UnityEngine.Debug.Log("Ending display completed. Transitioning to title.");
+            FadeOutAndLoadTitle();
+            return;
+        }
+
         if (!isTextCompleted && currentLine + 1 < textLines.Length)
         {
             currentLine++;
@@ -166,5 +182,16 @@ public class EndingShowDisplay : MonoBehaviour
             endingIllustration.gameObject.SetActive(true);
             endingIllustration.sprite = selectedEndingImage;
         }
+
+        isIllustrationShown = true;
+    }
+
+    private async void FadeOutAndLoadTitle()
+    {
+        fadeController.FadeOut(2.0f).Forget();
+        await UniTask.Delay(3000); // フェードアウトの完了を待つ 
+        sceneManager.LoadTitle();
+        
+        
     }
 }
