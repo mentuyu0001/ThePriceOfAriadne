@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class ToTitle : Button
 {
-    public async void ToTitle()
+    [SerializeField] private ToTitleConfirmation confirmation;
+    public override void OnClick()
     {
-        await fadeController.FadeOut(animationTime);
-
-        gameSceneManager.LoadTitle();
+        base.OnClick(); // 決定音を鳴らす
+        confirmation.ShowConfirmationDialog();
     }
 }

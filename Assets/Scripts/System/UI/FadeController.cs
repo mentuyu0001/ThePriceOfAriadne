@@ -34,7 +34,7 @@ public class FadeController : MonoBehaviour
             Debug.Log("FadeController: Start Fade-in");
             // fadeImageの透明度をduration秒かけて0にする
             await fadeImage.DOFade(0.0f, duration)
-                .Play();
+                .Play().SetUpdate(true);
             Debug.Log("FadeController: Finish Fade-in");
         }
     }
@@ -47,7 +47,7 @@ public class FadeController : MonoBehaviour
             Debug.Log("FadeController: Start Fade-out");
             // fadeImageの透明度をduration秒かけて1にする
             await fadeImage.DOFade(1.0f, duration)
-                .Play();
+                .Play().SetUpdate(true);
             Debug.Log("FadeController: Finish Fade-out");
         }
     }

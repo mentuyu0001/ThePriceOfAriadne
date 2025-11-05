@@ -8,11 +8,11 @@ using System.Collections.Generic;
 using System;
 using UnityEngine.EventSystems;
 
-public class ItemSlot : Button
+public class StageItemSlot : Button
 {
     [SerializeField] int itemID;
     [SerializeField] ItemData itemData;
-    [SerializeField] InventoryData inventoryData;
+    [SerializeField] StageInventoryData stageInventoryData;
     [SerializeField] SelectFirstButton uiController; 
     [SerializeField] TextMeshProUGUI itemText;
     [SerializeField] PlayerPartsRatio partsRatio;
@@ -30,7 +30,7 @@ public class ItemSlot : Button
 
     public string ItemName => itemData.GetItemNameByID(itemID);
     public string ItemText => itemData.GetItemTextByID(itemID);
-    public bool IsObtained => inventoryData.GetItemObtained(itemID);
+    public bool IsObtained => stageInventoryData.GetItemObtained(itemID);
 
     public void Initialize()
     {
@@ -52,7 +52,7 @@ public class ItemSlot : Button
 
     protected void Start()
     {
-        inventoryData = GameObject.Find("InventoryData").GetComponent<InventoryData>();
+        stageInventoryData = GameObject.Find("StageInventoryData").GetComponent<StageInventoryData>();
         iconImage = GetComponentsInChildren<Image>(true)
             .FirstOrDefault(img => img.gameObject.name == "IconImage");
 

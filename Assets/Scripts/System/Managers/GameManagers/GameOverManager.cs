@@ -1,14 +1,20 @@
+using Cysharp.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 using VContainer;
+using System;
 
 public class GameOverManager : MonoBehaviour
 {
     [SerializeField] private GameObject gameOverEffect;
     [SerializeField] private GameObject player;
     [SerializeField] private GameSceneManager gameSceneManager;
+    [SerializeField] private FadeController fadeController;
+    [SerializeField] private GameDataManager gameDataManager;
 
-    public void GameOver()
+    private float animationTime = 3.0f;
+
+    public async void GameOver()
     {
         Debug.Log("Game Over");
         if (gameOverEffect != null && player != null)
@@ -24,7 +30,13 @@ public class GameOverManager : MonoBehaviour
         {
             SoundManager.Instance.PlaySE(0); // 0はゲームオーバーサウンドのインデックス
         }
-        Destroy(player);
-        gameSceneManager.LoadStage2();
+        
+        player.SetActive(false);
+
+        fadeController.FadeOut(animationTime).Forget();
+        await UniTask.Delay(TimeSpan.FromSeconds(animationTime), ignoreTimeScale: true);
+
+        // オートセーブを読み込む
+        gameDataManager.LoadGame(1);
     }
 }
