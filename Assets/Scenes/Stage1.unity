@@ -3289,9 +3289,9 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 1440481705}
+    m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 1083382745}
-    m_SelectOnLeft: {fileID: 845802165}
+    m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 1083382745}
   m_Transition: 1
   m_Colors:
