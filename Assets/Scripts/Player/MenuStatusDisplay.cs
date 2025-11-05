@@ -13,7 +13,7 @@ public class MenuStatusDisplay : MonoBehaviour
     [SerializeField] private PartsData partsData;
 
     // プレイヤーのパーツ情報の参照
-    [Inject] private PlayerParts playerParts;
+    private PlayerParts playerParts;
 
     // パーツの情報を表示するテキストの参照
     [Header("パーツの名前を表示するテキスト")]
@@ -30,6 +30,8 @@ public class MenuStatusDisplay : MonoBehaviour
 
     void Start()
     {
+        playerParts = GameObject.Find ("PlayerParts").GetComponent<PlayerParts>();
+
         // コンポーネントの確認
         if (partsData == null)
         {
@@ -46,7 +48,7 @@ public class MenuStatusDisplay : MonoBehaviour
     }
 
     // プレイヤーのパーツを表示する関数
-    void DisplayStatus()
+    public void DisplayStatus()
     {
         // 左腕の形容詞と説明を表示
         PartsInfo leftArmInfo = partsData.GetPartsInfoByPartsChara(playerParts.LeftArm);
@@ -69,6 +71,7 @@ public class MenuStatusDisplay : MonoBehaviour
         rightLegDescription.text = rightLegInfo.descriptionLeg;
     }
 
+    
     // VContainerの注入完了時に呼ばれるメソッド
     [Inject]
     public void Construct(PlayerParts injectedPlayerParts)
@@ -93,5 +96,5 @@ public class MenuStatusDisplay : MonoBehaviour
             DisplayStatus();
         }
     }
-
+    
 }

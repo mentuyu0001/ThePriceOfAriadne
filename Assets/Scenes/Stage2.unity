@@ -13603,7 +13603,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec5a0d777f91f434db80b1c7da0ee1ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerParts: {fileID: 1872299853}
   NormalArmL:
   - {fileID: 1979229732}
   - {fileID: 1979229730}
@@ -35950,7 +35949,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec5a0d777f91f434db80b1c7da0ee1ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerParts: {fileID: 1872299853}
   NormalArmL:
   - {fileID: 2124103286}
   - {fileID: 539534501}
@@ -37478,7 +37476,7 @@ Transform:
   m_GameObject: {fileID: 1586923810}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40.71257, y: 4.251869, z: -10}
+  m_LocalPosition: {x: -40.713226, y: 4.251869, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -45575,6 +45573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a010000a43a574a5c9e2bd4f0c23d877, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statusDisplay: {fileID: 1571884626}
   playerVisualCustomizer: {fileID: 1191101982}
 --- !u!1001 &2044491623
 PrefabInstance:

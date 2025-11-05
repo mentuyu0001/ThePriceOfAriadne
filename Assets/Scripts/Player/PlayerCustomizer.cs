@@ -9,8 +9,9 @@ using VContainer;
 public class PlayerCustomizer : MonoBehaviour
 {
     // シングルトンの取得
-    [Inject] private PlayerParts playerParts;
+    private PlayerParts playerParts;
     [Inject] private PlayerStatus playerStatus;
+    [SerializeField] private MenuStatusDisplay statusDisplay;
 
     // Controllerの取得
     [Inject] private Controller controller;
@@ -26,6 +27,7 @@ public class PlayerCustomizer : MonoBehaviour
 
     private void Awake()
     {
+        playerParts = GameObject.Find ("PlayerParts").GetComponent<PlayerParts>();
         ChangePlayerStatus();
         controller.SetStatus();
     }
@@ -237,6 +239,9 @@ public class PlayerCustomizer : MonoBehaviour
 
             // マップ上のパーツの見た目も変更する
             mapPartsVisualCustomizer.ChangeVisual(slot, chara, befChara);
+
+            // ステータス画面のテキストを変える
+            statusDisplay.DisplayStatus();
 
             Debug.Log("交換後のプレイヤーパーツの種類: LeftArm -> " + playerParts.LeftArm
              + ", RightArm -> " + playerParts.RightArm + ", LeftLeg -> "

@@ -11,7 +11,7 @@ using Unity.VisualScripting;
 public class PlayerVisualCustomizer : MonoBehaviour
 {
     // シングルトンの取得
-    [SerializeField] private PlayerParts playerParts;
+    private PlayerParts playerParts;
 
     // 主人公パーツの参照
     [SerializeField] private List<GameObject> NormalArmL;
@@ -45,6 +45,7 @@ public class PlayerVisualCustomizer : MonoBehaviour
 
     public void Awake()
     {
+        playerParts = GameObject.Find ("PlayerParts").GetComponent<PlayerParts>();
         visuallizePlayerParts();
     }
     
