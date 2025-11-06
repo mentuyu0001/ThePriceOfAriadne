@@ -17,17 +17,24 @@ public class ItemResetConfirmation : MonoBehaviour
     [SerializeField] private GameObject noButton;
 
     // InventoryDataの参照
-    [SerializeField] private InventoryData inventoryData;
+    private InventoryData inventoryData;
     // StageInventoryDataの参照
-    [SerializeField] private StageInventoryData stageInventoryData;
+    private StageInventoryData stageInventoryData;
     // ItemSlotの配列
-    [SerializeField] private ItemSlot[] itemSlots;  
+    [SerializeField] private ItemSlot[] itemSlots;
 
     // ダイアログを開く直前に選択されていたボタンを記憶しておく変数
     private GameObject lastSelectedButton;
 
+    // ゲームデータマネージャーの取得
+    private GameDataManager gameDataManager;
+
     void Start()
     {
+        gameDataManager = GameObject.Find("GameDataManager").GetComponent<GameDataManager>();
+        inventoryData = GameObject.Find("InventoryData").GetComponent<InventoryData>();
+        stageInventoryData = GameObject.Find("StageInventoryData").GetComponent<StageInventoryData>();
+
         // 最初は非表示にしておく
         confirmationDialogPanel.SetActive(false);
     }
@@ -51,6 +58,8 @@ public class ItemResetConfirmation : MonoBehaviour
         // ここで実際のアイテムリセット処理を呼び出す
         inventoryData.ResetAllItems();
         stageInventoryData.ResetAllItems();
+        gameDataManager.SaveItemData();
+        gameDataManager.LoadItemData();
 
         // 全てのItemSlotのアイコンを更新
         foreach (var slot in itemSlots)

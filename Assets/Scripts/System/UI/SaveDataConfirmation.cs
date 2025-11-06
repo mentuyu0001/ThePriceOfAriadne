@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using VContainer;
+using TMPro;
 public class SaveDataConfirmation : MonoBehaviour
 {
     /// <summary>
@@ -22,6 +23,8 @@ public class SaveDataConfirmation : MonoBehaviour
 
     // セーブするスロット
     private int saveCurrentSlot;
+    // テキスト
+    [SerializeField] private TextMeshProUGUI text;
 
     void Start()
     {
@@ -33,6 +36,14 @@ public class SaveDataConfirmation : MonoBehaviour
     // 各セーブスロットのボタンからこのメソッドを呼び出す
     public void ShowConfirmationDialog(int slotId)
     {
+        if (slotId == 1)
+        {
+            text.text = "オートセーブを\nロードしますか？";    
+        }
+        else
+        {
+            text.text = "セーブデータ" + slotId + "を\nロードしますか？";
+        }
         // 現在選択されているUI要素を記憶する
         lastSelectedButton = EventSystem.current.currentSelectedGameObject;
         // slotIDを記憶する
@@ -47,7 +58,7 @@ public class SaveDataConfirmation : MonoBehaviour
     {
         Debug.Log("セーブを実行します。");
         // ここで実際のセーブ処理を呼び出す
-        SoundManager.Instance.PlaySE(11); // 11はUI決定音のインデックス
+        SoundManager.Instance.PlaySE(14); // 11はUI決定音のインデックス
         gameDataManager.SetCurrentSlot(saveCurrentSlot);
         gameDataManager.SaveGame(saveCurrentSlot);
         itemManager.SyncStageToInventory(); // ステージのアイテムシングルトンとタイトル用のシングルトンを同期
@@ -63,7 +74,7 @@ public class SaveDataConfirmation : MonoBehaviour
         Debug.Log($"ItemManager: {itemManager != null}");
         Debug.Log($"CurrentSlot: {saveCurrentSlot}");
         // ここで実際のロード処理を呼び出す
-        SoundManager.Instance.PlaySE(11); // 11はUI決定音のインデックス
+        SoundManager.Instance.PlaySE(14); // 11はUI決定音のインデックス
         gameDataManager.SetCurrentSlot(saveCurrentSlot);
         gameDataManager.LoadGame(saveCurrentSlot);
         CloseDialog(); // 実際は閉じずにゲームを起動する
@@ -73,7 +84,7 @@ public class SaveDataConfirmation : MonoBehaviour
     public void OnNoButtonClicked()
     {
         Debug.Log("セーブをキャンセルしました。");
-        SoundManager.Instance.PlaySE(11); // 11はUI決定音のインデックス
+        SoundManager.Instance.PlaySE(14); // 11はUI決定音のインデックス
         CloseDialog();
     }
 
@@ -83,7 +94,6 @@ public class SaveDataConfirmation : MonoBehaviour
         confirmationDialogPanel.SetActive(false);
 
         //  記憶しておいたボタンにフォーカスを戻す
-        SoundManager.Instance.PlaySE(11); // 11はUI決定音のインデックス
         EventSystem.current.SetSelectedGameObject(lastSelectedButton);
     }
 }

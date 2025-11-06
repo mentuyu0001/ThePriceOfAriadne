@@ -60,8 +60,10 @@ public class GameDataManager : MonoBehaviour
             Debug.LogError("GameDataManager: 必要な依存関係が注入されていません");
             return;
         }
-        
+
         isInitialized = true;
+
+        LoadItemData();
     }
 
     // スロット番号をセットするメソッド
