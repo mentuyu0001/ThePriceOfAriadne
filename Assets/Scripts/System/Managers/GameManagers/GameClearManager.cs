@@ -29,6 +29,57 @@ public class GameClearManager : MonoBehaviour
     }
     private async void OnTriggerEnter2D(Collider2D other)
     {
+        if (stageNumber.GetCurrentStage() == 5)
+        {
+            // 初期化
+            itemManager.SyncStageToInventory();
+            gameDataManager.SaveItemData();
+
+            if (other.gameObject.tag == "Player" && !hasTriggered)
+            {
+                hasTriggered = true;
+
+                GoalObg.SetActive(false);
+
+                animationTime = dashTime + stopTime;
+
+                // 黒画像をフェードアウトさせる
+                fadeController.FadeOut(animationTime).Forget();
+
+                // 入力を止める
+                controller.isStartGoal = true;
+
+                // プレイヤーを動かす
+                playerAnimationManager.AniWalkTrue();
+                if (SoundManager.Instance != null)
+                {
+                    SoundManager.Instance.PlaySE(6, true);
+                }
+
+                controller.StartAndGoalSetFrictionZero();
+
+                controller.StartAndGoalVelocity();
+
+                await UniTask.Delay((int)(dashTime * 1000));
+
+                controller.StartAndGoalSetFrictionAdd();
+                playerAnimationManager.AniWalkFalse();
+
+
+                await UniTask.Delay((int)(stopTime * 1000));
+
+                // プレイヤーを止める
+                if (SoundManager.Instance != null)
+                {
+                    SoundManager.Instance.StopSE();
+                }
+            }
+
+            UnityEngine.Debug.Log("エンディングシーンへ移動します");
+            // エンディングシーンへ移動
+            gameSceneManager.LoadEpilogue();
+            return;
+        }
         // 初期化
         stageNumber.SetCurrentStage(stageNumber.GetCurrentStage() + 1);
         itemManager.SyncStageToInventory();

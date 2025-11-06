@@ -371,7 +371,7 @@ public class TitleLifeTiimeScope : LifetimeScope
             Debug.LogError("アドレス 'ObjectTextData' のObjectTextDataアセットが見つかりません。");
         }
 
-        // EndingShowDisplayを登録
+        // EndingShowDisplayを登録（オプショナル）
         var endingShowDisplay = Object.FindAnyObjectByType<EndingShowDisplay>();
         if (endingShowDisplay != null)
         {
@@ -384,7 +384,7 @@ public class TitleLifeTiimeScope : LifetimeScope
         }
         else
         {
-            Debug.LogError("EndingShowDisplayコンポーネントが見つかりません");
+            Debug.LogWarning("EndingShowDisplayコンポーネントが見つかりません（オプショナル）");
         }
     }
 }

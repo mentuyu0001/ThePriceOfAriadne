@@ -6217,6 +6217,8 @@ MonoBehaviour:
   blackBackground: {fileID: 683214464}
   whiteBackground: {fileID: 376426433}
   fadeController: {fileID: 386483624}
+  letterDelay: 0.05
+  partsRatio: {fileID: 182030136}
 --- !u!1 &717040068
 GameObject:
   m_ObjectHideFlags: 0
@@ -15905,6 +15907,7 @@ MonoBehaviour:
   noButton: {fileID: 346363752}
   gameDataManager: {fileID: 1812892550}
   itemManager: {fileID: 1107110901}
+  saveSlots: []
   text: {fileID: 0}
 --- !u!1 &1950702109
 GameObject:

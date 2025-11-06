@@ -7270,7 +7270,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 182447305}
         m_TargetAssemblyTypeName: GameSceneManager, Assembly-CSharp
-        m_MethodName: LoadStage2
+        m_MethodName: LoadPlorogue
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -18127,7 +18127,7 @@ MonoBehaviour:
   noButton: {fileID: 346363752}
   gameDataManager: {fileID: 1812892550}
   itemManager: {fileID: 1107110901}
-  fadeController: {fileID: 1262164434}
+main
   saveSlots: []
   text: {fileID: 1862811737}
 --- !u!1 &1950702109
