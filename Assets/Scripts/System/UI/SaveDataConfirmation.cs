@@ -38,11 +38,11 @@ public class SaveDataConfirmation : MonoBehaviour
     {
         if (slotId == 1)
         {
-            text.text = "オートセーブを\nロードしますか？";    
+            if (text != null) text.text = "オートセーブを\nロードしますか？";    
         }
         else
         {
-            text.text = "セーブデータ" + slotId + "を\nロードしますか？";
+            if (text != null) text.text = "セーブデータ" + slotId + "を\nロードしますか？";
         }
         // 現在選択されているUI要素を記憶する
         lastSelectedButton = EventSystem.current.currentSelectedGameObject;
