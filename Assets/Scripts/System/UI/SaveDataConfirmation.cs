@@ -48,7 +48,7 @@ public class SaveDataConfirmation : MonoBehaviour
         }
         else
         {
-            if (text != null) text.text = "セーブデータ" + slotId + "を\nロードしますか？";
+            if (text != null) text.text = "セーブデータ" + (slotId-1) + "を\nロードしますか？";
         }
         // 現在選択されているUI要素を記憶する
         lastSelectedButton = EventSystem.current.currentSelectedGameObject;
@@ -68,7 +68,7 @@ public class SaveDataConfirmation : MonoBehaviour
         }
         else
         {
-            if (text != null) text.text = "セーブデータ" + slotId + "に\nセーブしますか？";
+            if (text != null) text.text = "セーブデータ" + (slotId-1) + "に\nセーブしますか？";
         }
         // 現在選択されているUI要素を記憶する
         lastSelectedButton = EventSystem.current.currentSelectedGameObject;
