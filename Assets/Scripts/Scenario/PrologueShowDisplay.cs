@@ -19,6 +19,9 @@ public class PrologueShowDisplay : MonoBehaviour
 
     [SerializeField] float letterDelay = 0.05f; // 1文字ごとの表示遅延時間
 
+    [SerializeField]
+    private FadeController fadeController;
+
     private string[] textLines;
     private int currentLine = 0;
 
@@ -85,6 +88,8 @@ public class PrologueShowDisplay : MonoBehaviour
         else if (currentLine + 1 >= textLines.Length) // 最後の行が表示されている状態
         {
             // ステージ1へ移行
+            fadeController.FadeOut(2.0f).Forget();
+            await UniTask.Delay(2000); // フェードアウトの完了を待つ 
             gameSceneManager.LoadStage(1);  // 変更
         }
     }
