@@ -90,7 +90,7 @@ public class PrologueShowDisplay : MonoBehaviour
             // ステージ1へ移行
             fadeController.FadeOut(2.0f).Forget();
             await UniTask.Delay(2000); // フェードアウトの完了を待つ 
-            gameSceneManager.LoadStage(1);  // 変更
+            gameSceneManager.LoadPlorogueToStage1();  // プロローグからステージ1へ移行
         }
     }
 

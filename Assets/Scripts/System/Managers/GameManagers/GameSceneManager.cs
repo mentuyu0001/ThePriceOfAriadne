@@ -10,7 +10,7 @@ public class GameSceneManager : MonoBehaviour
 
     private async UniTask LoadStageWithBGMFadeOut(string sceneName)
     {
-        soundManager.StopBGMFadeOut(2.0f).Forget();
+        soundManager.StopBGMFadeOut(1.0f).Forget();
         await UniTask.Delay(3000);
         SceneManager.LoadScene(sceneName);
     }
@@ -43,6 +43,10 @@ public class GameSceneManager : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
+    public void LoadPlorogueToStage1()
+    {
+        SceneManager.LoadScene("Stage1");
+    }
     public void LoadPlorogue()
     {
         SceneManager.LoadScene("Prologue");
