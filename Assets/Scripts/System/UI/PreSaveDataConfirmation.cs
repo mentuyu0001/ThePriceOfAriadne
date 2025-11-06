@@ -25,9 +25,9 @@ public class PreSaveDataConfirmation : MonoBehaviour
     // Noボタンが押されたとき
     public void OnNoButtonClicked()
     {
-        if (confirmationPanel != null)
-            confirmationPanel.SetActive(false); // 確認パネル非表示
-
+        //if (confirmationPanel != null)
+            //confirmationPanel.SetActive(false); // 確認パネル非表示
+        EventSystem.current.SetSelectedGameObject(null);
         // 次のステージへ遷移 
     }
 }

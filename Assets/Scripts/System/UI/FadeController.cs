@@ -29,6 +29,7 @@ public class FadeController : MonoBehaviour
     {
         if (fadeImage != null)
         {
+            fadeImage.color = new Color(0, 0, 0, 1);
             Debug.Log("FadeController: Start Fade-in");
             // fadeImageの透明度をduration秒かけて0にする
             await fadeImage.DOFade(0.0f, duration)
@@ -42,6 +43,7 @@ public class FadeController : MonoBehaviour
     {
         if (fadeImage != null)
         {
+            fadeImage.color = new Color(0, 0, 0, 0);
             Debug.Log("FadeController: Start Fade-out");
             // fadeImageの透明度をduration秒かけて1にする
             await fadeImage.DOFade(1.0f, duration)

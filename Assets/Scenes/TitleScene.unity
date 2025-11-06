@@ -5028,7 +5028,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmSource: {fileID: 338781348}
-  bgmClips: []
+  bgmClips:
+  - {fileID: 8300000, guid: 37e88a97d016e4e4b9dfc3c40d2e1326, type: 3}
+  - {fileID: 8300000, guid: c47c9d516902f4e29a0593f4ac78364e, type: 3}
+  - {fileID: 8300000, guid: 27c8e2dd8bb0c424787c8ccb3144f24b, type: 3}
   seSource: {fileID: 2024405745}
   seSourceLoop: {fileID: 1658714481}
   seSourceLoop2: {fileID: 0}
@@ -13701,6 +13704,7 @@ MonoBehaviour:
   - {fileID: 2023745613}
   - {fileID: 1575488626}
   - {fileID: 775919702}
+  stageItemSlots: []
 --- !u!1 &1639112299
 GameObject:
   m_ObjectHideFlags: 0

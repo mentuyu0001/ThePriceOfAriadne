@@ -340,11 +340,11 @@ MonoBehaviour:
   playerVisualCustomizer: {fileID: 0}
   menuStatusDisplay: {fileID: 0}
   playerStatusDisplay: {fileID: 0}
-  stage1Sprite: {fileID: 21300000, guid: d396aec88d31fd7469ad206d96b1418d, type: 3}
-  stage2Sprite: {fileID: 21300000, guid: 655795dbd44b0cd49b7e2fceb5901189, type: 3}
-  stage3Sprite: {fileID: 21300000, guid: d91a5e9f1a6450543867192b1cb25872, type: 3}
-  stage4Sprite: {fileID: 21300000, guid: e56f4fc28c534b94fa54d2dcae3d843c, type: 3}
-  stage5Sprite: {fileID: 21300000, guid: db27e14017a6d1544a40849a9d3c8762, type: 3}
+  stage1Sprite: {fileID: 21300000, guid: f3177eff8996955438d52fc8d0eeb3b4, type: 3}
+  stage2Sprite: {fileID: 21300000, guid: 95ddf787225b3eb4ea8572bb4a5ec158, type: 3}
+  stage3Sprite: {fileID: 21300000, guid: d0952713dedbd0f4bb856f27742d0bb7, type: 3}
+  stage4Sprite: {fileID: 21300000, guid: 2975bd13afa09dd4795624b3f33a083e, type: 3}
+  stage5Sprite: {fileID: 21300000, guid: 70bdc8eab02169f41b08fa4cddeea6c2, type: 3}
 --- !u!225 &7312283972503374060
 CanvasGroup:
   m_ObjectHideFlags: 0
