@@ -4,6 +4,8 @@ using UnityEngine.EventSystems;
 using VContainer;
 using TMPro;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
+using System;
 public class SaveDataConfirmation : MonoBehaviour
 {
     /// <summary>
@@ -18,6 +20,7 @@ public class SaveDataConfirmation : MonoBehaviour
 
     [SerializeField] private GameDataManager gameDataManager;
     [SerializeField] private ItemManager itemManager;
+    [SerializeField] private FadeController fadeController;
 
     [SerializeField] private List<SaveSlot> saveSlots; // セーブスロットのリスト
 
@@ -45,7 +48,7 @@ public class SaveDataConfirmation : MonoBehaviour
         }
         else
         {
-            if (text != null) text.text = "セーブデータ" + slotId + "を\nロードしますか？";
+            if (text != null) text.text = "セーブデータ" + (slotId-1) + "を\nロードしますか？";
         }
         // 現在選択されているUI要素を記憶する
         lastSelectedButton = EventSystem.current.currentSelectedGameObject;
@@ -65,7 +68,7 @@ public class SaveDataConfirmation : MonoBehaviour
         }
         else
         {
-            if (text != null) text.text = "セーブデータ" + slotId + "に\nセーブしますか？";
+            if (text != null) text.text = "セーブデータ" + (slotId-1) + "に\nセーブしますか？";
         }
         // 現在選択されているUI要素を記憶する
         lastSelectedButton = EventSystem.current.currentSelectedGameObject;
@@ -100,8 +103,12 @@ public class SaveDataConfirmation : MonoBehaviour
         // シーンの遷移
     }
 
-    public void OnYesButtonClickedLoad()
+    public async void OnYesButtonClickedLoad()
     {
+        EventSystem.current.SetSelectedGameObject(null);
+        fadeController.FadeOut(3.0f).Forget();
+        await UniTask.Delay(TimeSpan.FromSeconds(3.0f));
+
         Debug.Log("ロードを実行します。");
         Debug.Log($"GameDataManager: {gameDataManager != null}");
         Debug.Log($"ItemManager: {itemManager != null}");
