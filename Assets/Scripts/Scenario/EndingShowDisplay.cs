@@ -51,6 +51,8 @@ public class EndingShowDisplay : MonoBehaviour
     [SerializeField]
     private FadeController fadeController;
 
+    [SerializeField] float fadeDelay = 3.0f; // フェードイン・アウトの時間
+
     [SerializeField] float letterDelay = 0.05f; // 1文字ごとの表示遅延時間
 
     [SerializeField]
@@ -190,6 +192,8 @@ public class EndingShowDisplay : MonoBehaviour
 
     private void ShowEndingIllustration()
     {
+        fadeController.FadeIn(fadeDelay).Forget();
+
         // テキストを非表示
         displayText.gameObject.SetActive(false);
         
