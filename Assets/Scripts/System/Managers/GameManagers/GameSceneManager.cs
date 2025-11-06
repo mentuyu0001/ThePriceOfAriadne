@@ -23,13 +23,23 @@ public class GameSceneManager : MonoBehaviour
 
     public void LoadSaveScene(int currentStage)
     {
-        if(currentStage < 1 || currentStage > 5)
+        if (currentStage < 1 || currentStage > 5)
         {
             UnityEngine.Debug.LogError("現在のステージ番号が不正です: " + currentStage);
             return;
         }
         string sceneName = $"Save{currentStage}to{currentStage + 1}";
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void LoadPlorogue()
+    {
+        SceneManager.LoadScene("Prologue");
+    }
+    
+    public void LoadEpilogue()
+    {
+        SceneManager.LoadScene("Epilogue");
     }
     public void QuitGame()
     {

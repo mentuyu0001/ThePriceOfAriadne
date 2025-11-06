@@ -8,6 +8,9 @@ using System.Threading;
 
 public class PrologueShowDisplay : MonoBehaviour
 {
+    [SerializeField]
+    private GameSceneManager gameSceneManager;
+
     [SerializeField, TextArea(3, 10)]
     private string inputText;
 
@@ -78,6 +81,11 @@ public class PrologueShowDisplay : MonoBehaviour
         {
             currentLine++;
             await ShowLineLetterByLetter(textLines[currentLine], cts.Token).SuppressCancellationThrow();
+        }
+        else if (currentLine + 1 >= textLines.Length) // 最後の行が表示されている状態
+        {
+            // ステージ1へ移行
+            gameSceneManager.LoadStage(1);  // 変更
         }
     }
 

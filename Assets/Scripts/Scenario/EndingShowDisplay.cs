@@ -53,7 +53,7 @@ public class EndingShowDisplay : MonoBehaviour
 
     [SerializeField] float letterDelay = 0.05f; // 1文字ごとの表示遅延時間
 
-    [Inject]
+    [SerializeField]
     private PlayerPartsRatio partsRatio;
 
     private string inputText;
