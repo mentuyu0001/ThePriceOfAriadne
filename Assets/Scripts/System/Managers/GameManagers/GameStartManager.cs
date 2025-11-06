@@ -27,6 +27,7 @@ public class GameStartManager : MonoBehaviour
     async UniTaskVoid Start()
     {
         // 初期化
+        gameDataManager.SaveGame(1);
         gameDataManager.LoadItemData();
         itemManager.SyncInventoryToStage();
         menuStatus.DisplayStatus();

@@ -22,6 +22,7 @@ public class ItemResetConfirmation : MonoBehaviour
     private StageInventoryData stageInventoryData;
     // ItemSlotの配列
     [SerializeField] private ItemSlot[] itemSlots;
+    [SerializeField] private StageItemSlot[] stageItemSlots;
 
     // ダイアログを開く直前に選択されていたボタンを記憶しておく変数
     private GameObject lastSelectedButton;
@@ -63,6 +64,14 @@ public class ItemResetConfirmation : MonoBehaviour
 
         // 全てのItemSlotのアイコンを更新
         foreach (var slot in itemSlots)
+        {
+            if (slot != null)
+            {
+                slot.UpdateIcon();
+                UnityEngine.Debug.Log($"ItemSlot {slot.name} のアイコン{slot.iconImage.enabled}");
+            }
+        }
+        foreach (var slot in stageItemSlots)
         {
             if (slot != null)
             {

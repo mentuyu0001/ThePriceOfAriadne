@@ -16446,19 +16446,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   confirmationDialogPanel: {fileID: 731289816}
   noButton: {fileID: 944760493}
-  inventoryData: {fileID: 2114878911}
-  stageInventoryData: {fileID: 2008658590}
-  itemSlots:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  itemSlots: []
+  stageItemSlots:
+  - {fileID: 1083382748}
+  - {fileID: 407402484}
+  - {fileID: 1709231560}
+  - {fileID: 2105978966}
+  - {fileID: 595481779}
+  - {fileID: 1350848923}
+  - {fileID: 799180266}
+  - {fileID: 1440481709}
+  - {fileID: 1306586380}
+  - {fileID: 845802167}
 --- !u!114 &731289819
 MonoBehaviour:
   m_ObjectHideFlags: 0
