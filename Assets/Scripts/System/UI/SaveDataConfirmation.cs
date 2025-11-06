@@ -53,6 +53,26 @@ public class SaveDataConfirmation : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(noButton);
     }
 
+
+    public void ShowConfirmationSaveDialog(int slotId)
+    {
+        if (slotId == 1)
+        {
+            if (text != null) text.text = "オートセーブに\nセーブしますか？";    
+        }
+        else
+        {
+            if (text != null) text.text = "セーブデータ" + slotId + "に\nセーブしますか？";
+        }
+        // 現在選択されているUI要素を記憶する
+        lastSelectedButton = EventSystem.current.currentSelectedGameObject;
+        // slotIDを記憶する
+        saveCurrentSlot = slotId;
+        confirmationDialogPanel.SetActive(true);
+        // フォーカスを強制的に「いいえ」ボタンに移す
+        EventSystem.current.SetSelectedGameObject(noButton);
+    }
+
     // 「はい」ボタンが押された時の処理
     public void OnYesButtonClickedSave()
     {

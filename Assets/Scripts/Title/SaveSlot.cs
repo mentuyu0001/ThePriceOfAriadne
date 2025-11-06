@@ -113,6 +113,13 @@ public class SaveSlot : Button
         confirmation.ShowConfirmationDialog(saveDataNum);
     }
 
+    public void SaveOnClick()
+    {
+        base.OnClick(); // 決定音を鳴らす
+        Debug.Log("ファイル" + saveDataNum + "の確認画面");
+        confirmation.ShowConfirmationSaveDialog(saveDataNum);
+    }
+
     protected override void TriggerSelectionEffects()
     {
         updatePlayerStatusDisplay();
