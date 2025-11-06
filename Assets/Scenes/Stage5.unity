@@ -12084,7 +12084,7 @@ Transform:
   m_GameObject: {fileID: 358127351}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 88.87, y: 46.15, z: 0.50026137}
+  m_LocalPosition: {x: 77.87, y: 46.15, z: 0.50026137}
   m_LocalScale: {x: 1, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12109,6 +12109,7 @@ MonoBehaviour:
   gameSceneManager: {fileID: 1480997590}
   itemManager: {fileID: 1113016527}
   gameDataManager: {fileID: 1559244142}
+  soundManager: {fileID: 0}
 --- !u!1 &360644856 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6155022801611536632, guid: 8d8a3be38d6d94d3aa7f65477c67d3b0, type: 3}
@@ -12628,10 +12629,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 2
   itemData: {fileID: 11400000, guid: 8f498dc0dcede4b43ad4a60cd99e33b4, type: 2}
-  stageInventoryData: {fileID: 0}
+  stageInventoryData: {fileID: 2008658590}
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
-  partsRatio: {fileID: 1261370578}
+  itemText2: {fileID: 931091174}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -14983,10 +14984,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 5
   itemData: {fileID: 11400000, guid: 8f498dc0dcede4b43ad4a60cd99e33b4, type: 2}
-  stageInventoryData: {fileID: 0}
+  stageInventoryData: {fileID: 2008658590}
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
-  partsRatio: {fileID: 1261370578}
+  itemText2: {fileID: 931091174}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -15047,6 +15048,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmSlider: {fileID: 775953728}
   seSlider: {fileID: 1325690122}
+  bgmSource: {fileID: 0}
 --- !u!1 &608393485
 GameObject:
   m_ObjectHideFlags: 0
@@ -16750,6 +16752,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameSceneManager: {fileID: 1480997590}
   fadeController: {fileID: 1827676353}
+  soundManager: {fileID: 0}
   confirmationDialogPanel: {fileID: 772708243}
   noButton: {fileID: 1144307155}
 --- !u!114 &772708246
@@ -17233,10 +17236,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 7
   itemData: {fileID: 11400000, guid: 8f498dc0dcede4b43ad4a60cd99e33b4, type: 2}
-  stageInventoryData: {fileID: 0}
+  stageInventoryData: {fileID: 2008658590}
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
-  partsRatio: {fileID: 1261370578}
+  itemText2: {fileID: 931091174}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -23366,10 +23369,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 10
   itemData: {fileID: 11400000, guid: 8f498dc0dcede4b43ad4a60cd99e33b4, type: 2}
-  stageInventoryData: {fileID: 0}
+  stageInventoryData: {fileID: 2008658590}
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
-  partsRatio: {fileID: 1261370578}
+  itemText2: {fileID: 931091174}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -24192,6 +24195,142 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: -7329347651890724881, guid: 8d8a3be38d6d94d3aa7f65477c67d3b0, type: 3}
   m_PrefabInstance: {fileID: 1272001097}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &931091172
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 931091173}
+  - component: {fileID: 931091175}
+  - component: {fileID: 931091174}
+  m_Layer: 5
+  m_Name: ItemText2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &931091173
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 931091172}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1377503087}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -16, y: 52}
+  m_SizeDelta: {x: 800, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &931091174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 931091172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 34529fac9dfd1441abbe58c253cdbe08, type: 2}
+  m_sharedMaterial: {fileID: 5998509935022975256, guid: 34529fac9dfd1441abbe58c253cdbe08, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 32
+  m_fontSizeBase: 32
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: -31.870789, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &931091175
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 931091172}
+  m_CullTransparentMesh: 1
 --- !u!1 &936729494
 GameObject:
   m_ObjectHideFlags: 0
@@ -30086,9 +30225,25 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4076350072892404869, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
+      propertyPath: textPanel
+      value: 
+      objectReference: {fileID: 1530278121}
+    - target: {fileID: 4076350072892404869, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
+      propertyPath: messageText1
+      value: 
+      objectReference: {fileID: 537243318}
+    - target: {fileID: 4076350072892404869, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
+      propertyPath: messageText2
+      value: 
+      objectReference: {fileID: 1481834969}
+    - target: {fileID: 4076350072892404869, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
       propertyPath: spriteRenderer
       value: 
       objectReference: {fileID: 1038395872}
+    - target: {fileID: 4076350072892404869, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
+      propertyPath: textBackground
+      value: 
+      objectReference: {fileID: 700321889}
     - target: {fileID: 4098165119675267606, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.5
@@ -61955,10 +62110,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 1
   itemData: {fileID: 11400000, guid: 8f498dc0dcede4b43ad4a60cd99e33b4, type: 2}
-  stageInventoryData: {fileID: 0}
+  stageInventoryData: {fileID: 2008658590}
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
-  partsRatio: {fileID: 1261370578}
+  itemText2: {fileID: 931091174}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -63878,10 +64033,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 9
   itemData: {fileID: 11400000, guid: 8f498dc0dcede4b43ad4a60cd99e33b4, type: 2}
-  stageInventoryData: {fileID: 0}
+  stageInventoryData: {fileID: 2008658590}
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
-  partsRatio: {fileID: 1261370578}
+  itemText2: {fileID: 931091174}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -64646,10 +64801,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 6
   itemData: {fileID: 11400000, guid: 8f498dc0dcede4b43ad4a60cd99e33b4, type: 2}
-  stageInventoryData: {fileID: 0}
+  stageInventoryData: {fileID: 2008658590}
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
-  partsRatio: {fileID: 1261370578}
+  itemText2: {fileID: 931091174}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -64986,6 +65141,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 608393488}
+  - {fileID: 931091173}
   m_Father: {fileID: 1170487270}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -71033,10 +71189,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 8
   itemData: {fileID: 11400000, guid: 8f498dc0dcede4b43ad4a60cd99e33b4, type: 2}
-  stageInventoryData: {fileID: 0}
+  stageInventoryData: {fileID: 2008658590}
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
-  partsRatio: {fileID: 1261370578}
+  itemText2: {fileID: 931091174}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -71348,6 +71504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dae8b6730a9fe4459a416dc4152b63f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundManager: {fileID: 0}
 --- !u!4 &1480997591
 Transform:
   m_ObjectHideFlags: 0
@@ -73555,6 +73712,22 @@ PrefabInstance:
       propertyPath: itemID
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 3902119580893684253, guid: bff5a2d0d813a4d468e8ac4f9ff6d0be, type: 3}
+      propertyPath: textPanel
+      value: 
+      objectReference: {fileID: 1530278121}
+    - target: {fileID: 3902119580893684253, guid: bff5a2d0d813a4d468e8ac4f9ff6d0be, type: 3}
+      propertyPath: messageText1
+      value: 
+      objectReference: {fileID: 537243318}
+    - target: {fileID: 3902119580893684253, guid: bff5a2d0d813a4d468e8ac4f9ff6d0be, type: 3}
+      propertyPath: messageText2
+      value: 
+      objectReference: {fileID: 1481834969}
+    - target: {fileID: 3902119580893684253, guid: bff5a2d0d813a4d468e8ac4f9ff6d0be, type: 3}
+      propertyPath: textBackground
+      value: 
+      objectReference: {fileID: 700321889}
     - target: {fileID: 5088852703727870341, guid: bff5a2d0d813a4d468e8ac4f9ff6d0be, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.5
@@ -73904,10 +74077,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 3
   itemData: {fileID: 11400000, guid: 8f498dc0dcede4b43ad4a60cd99e33b4, type: 2}
-  stageInventoryData: {fileID: 0}
+  stageInventoryData: {fileID: 2008658590}
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
-  partsRatio: {fileID: 1261370578}
+  itemText2: {fileID: 931091174}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -77578,10 +77751,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 4
   itemData: {fileID: 11400000, guid: 8f498dc0dcede4b43ad4a60cd99e33b4, type: 2}
-  stageInventoryData: {fileID: 0}
+  stageInventoryData: {fileID: 2008658590}
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
-  partsRatio: {fileID: 1261370578}
+  itemText2: {fileID: 931091174}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}

@@ -2359,6 +2359,7 @@ MonoBehaviour:
   gameSceneManager: {fileID: 1480997590}
   itemManager: {fileID: 1113016527}
   gameDataManager: {fileID: 1559244142}
+  soundManager: {fileID: 0}
 --- !u!1 &360644856 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6155022801611536632, guid: 8d8a3be38d6d94d3aa7f65477c67d3b0, type: 3}
@@ -2970,7 +2971,6 @@ MonoBehaviour:
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
   itemText2: {fileID: 1705526062}
-  partsRatio: {fileID: 1261370578}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -5052,7 +5052,6 @@ MonoBehaviour:
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
   itemText2: {fileID: 1705526062}
-  partsRatio: {fileID: 1261370578}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -5113,6 +5112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmSlider: {fileID: 775953728}
   seSlider: {fileID: 1325690122}
+  bgmSource: {fileID: 0}
 --- !u!1 &608393485
 GameObject:
   m_ObjectHideFlags: 0
@@ -16771,6 +16771,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameSceneManager: {fileID: 1480997590}
   fadeController: {fileID: 1827676353}
+  soundManager: {fileID: 0}
   confirmationDialogPanel: {fileID: 772708243}
   noButton: {fileID: 1144307155}
 --- !u!114 &772708246
@@ -17258,7 +17259,6 @@ MonoBehaviour:
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
   itemText2: {fileID: 1705526062}
-  partsRatio: {fileID: 1261370578}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -18143,7 +18143,6 @@ MonoBehaviour:
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
   itemText2: {fileID: 1705526062}
-  partsRatio: {fileID: 1261370578}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -18274,7 +18273,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1806743567}
   m_Direction: 0
   m_Value: 1
-  m_Size: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -18481,6 +18480,22 @@ PrefabInstance:
       propertyPath: itemID
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3902119580893684253, guid: bff5a2d0d813a4d468e8ac4f9ff6d0be, type: 3}
+      propertyPath: textPanel
+      value: 
+      objectReference: {fileID: 1530278121}
+    - target: {fileID: 3902119580893684253, guid: bff5a2d0d813a4d468e8ac4f9ff6d0be, type: 3}
+      propertyPath: messageText1
+      value: 
+      objectReference: {fileID: 712073578}
+    - target: {fileID: 3902119580893684253, guid: bff5a2d0d813a4d468e8ac4f9ff6d0be, type: 3}
+      propertyPath: messageText2
+      value: 
+      objectReference: {fileID: 1981953491}
+    - target: {fileID: 3902119580893684253, guid: bff5a2d0d813a4d468e8ac4f9ff6d0be, type: 3}
+      propertyPath: textBackground
+      value: 
+      objectReference: {fileID: 748284031}
     - target: {fileID: 5088852703727870341, guid: bff5a2d0d813a4d468e8ac4f9ff6d0be, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -56602,6 +56617,7 @@ RectTransform:
   m_LocalScale: {x: 0.4166731, y: 0.4166731, z: 0.4166731}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1287590619}
   - {fileID: 2017868553}
   - {fileID: 342617367}
   - {fileID: 2062895759}
@@ -56902,7 +56918,6 @@ MonoBehaviour:
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
   itemText2: {fileID: 1705526062}
-  partsRatio: {fileID: 1261370578}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -58321,9 +58336,25 @@ PrefabInstance:
       value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4076350072892404869, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
+      propertyPath: textPanel
+      value: 
+      objectReference: {fileID: 1530278121}
+    - target: {fileID: 4076350072892404869, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
+      propertyPath: messageText1
+      value: 
+      objectReference: {fileID: 537243318}
+    - target: {fileID: 4076350072892404869, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
+      propertyPath: messageText2
+      value: 
+      objectReference: {fileID: 1481834969}
+    - target: {fileID: 4076350072892404869, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
       propertyPath: spriteRenderer
       value: 
       objectReference: {fileID: 1264694194}
+    - target: {fileID: 4076350072892404869, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
+      propertyPath: textBackground
+      value: 
+      objectReference: {fileID: 700321889}
     - target: {fileID: 4076350072892404869, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
       propertyPath: textDisplayDuration
       value: 1
@@ -58727,6 +58758,142 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
+--- !u!1 &1287590618
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1287590619}
+  - component: {fileID: 1287590621}
+  - component: {fileID: 1287590620}
+  m_Layer: 5
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1287590619
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287590618}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2.504849, y: 3.2563004, z: 2.504849}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1063366498}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -472, y: -410}
+  m_SizeDelta: {x: 700, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1287590620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287590618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: "\u30A8\u30F3\u30BF\u30AD\u30FC\u3067\u8A73\u7D30\u3092\u78BA\u8A8D"
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 34529fac9dfd1441abbe58c253cdbe08, type: 2}
+  m_sharedMaterial: {fileID: 5998509935022975256, guid: 34529fac9dfd1441abbe58c253cdbe08, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 17
+  m_fontSizeBase: 17
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: -50
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1287590621
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287590618}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1304292603
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -59048,7 +59215,6 @@ MonoBehaviour:
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
   itemText2: {fileID: 1705526062}
-  partsRatio: {fileID: 1261370578}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -59861,7 +60027,6 @@ MonoBehaviour:
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
   itemText2: {fileID: 1705526062}
-  partsRatio: {fileID: 1261370578}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -60760,7 +60925,6 @@ MonoBehaviour:
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
   itemText2: {fileID: 1705526062}
-  partsRatio: {fileID: 1261370578}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -60978,6 +61142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dae8b6730a9fe4459a416dc4152b63f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundManager: {fileID: 0}
 --- !u!4 &1480997591
 Transform:
   m_ObjectHideFlags: 0
@@ -68182,7 +68347,6 @@ MonoBehaviour:
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
   itemText2: {fileID: 1705526062}
-  partsRatio: {fileID: 1261370578}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -68945,7 +69109,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1189984668}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.000000059604645, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -72071,7 +72235,6 @@ MonoBehaviour:
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
   itemText2: {fileID: 1705526062}
-  partsRatio: {fileID: 1261370578}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}

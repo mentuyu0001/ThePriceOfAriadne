@@ -107,16 +107,32 @@ public class CollectibleItem : MonoBehaviour
 
             spriteRenderer.enabled = false; // アイテムのスプライトを非表示にする
 
+            UnityEngine.Debug.Log("dominantParts.Coount: " + dominantParts.Count);
             // 全て25%のとき
             if (dominantParts.Count == 4)
             {
                 if (gameTextDisplay != null)
                 {
-                    await ShowTextsSequentiallyFromItemData(
+                    var allQuartersText = itemData.GetAllQuartersTone(itemID);
+                    
+                    // パネルとバックグラウンドを表示
+                    textPanel.SetActive(true);
+                    textBackground.SetActive(true);
+
+                    // キメラ状態用の特別なテキストを表示
+                    await ShowTextsSequentially(
                         gameTextDisplay,
-                        new List<PartsChara> { PartsChara.Normal }, // キメラ状態用の特別なテキストは1つだけ
-                        2f
+                        new List<string> { allQuartersText },
+                        2f,
+                        true 
                     );
+
+                    // 表示時間待機
+                    await UniTask.Delay(System.TimeSpan.FromSeconds(textDisplayDuration));
+
+                    // テキストをクリアして非表示
+                    textPanel.SetActive(false);
+                    textBackground.SetActive(false);
                 }
                 CollectItem();
                 Destroy(gameObject);
