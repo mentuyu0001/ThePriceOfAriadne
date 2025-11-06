@@ -15095,7 +15095,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmSource: {fileID: 1994769638}
-  bgmClips: []
+  bgmClips:
+  - {fileID: 8300000, guid: 37e88a97d016e4e4b9dfc3c40d2e1326, type: 3}
+  - {fileID: 8300000, guid: c47c9d516902f4e29a0593f4ac78364e, type: 3}
+  - {fileID: 8300000, guid: 27c8e2dd8bb0c424787c8ccb3144f24b, type: 3}
   seSource: {fileID: 212070737}
   seSourceLoop: {fileID: 1730931874}
   seSourceLoop2: {fileID: 0}
@@ -15113,6 +15116,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3b467cc77ed544a11b592ea44681af1c, type: 3}
   - {fileID: 8300000, guid: c44bd05ded12f3c40b4dc011065a0d71, type: 3}
   - {fileID: 8300000, guid: c0e7bcf235030bb48b1c67807b79caa3, type: 3}
+  - {fileID: 8300000, guid: 0fbe1c8ce86a64b54870a77d77f177c0, type: 3}
+  - {fileID: 8300000, guid: b424935f99ec646ceabfd0f9550019d2, type: 3}
 --- !u!1001 &2018833913
 PrefabInstance:
   m_ObjectHideFlags: 0
