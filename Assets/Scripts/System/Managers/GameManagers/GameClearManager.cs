@@ -103,7 +103,7 @@ public class GameClearManager : MonoBehaviour
             fadeController.FadeOut(animationTime).Forget();
 
             // BGMをフェードアウトさせる
-            soundManager.StopBGMFadeOut(animationTime - 0.5f).Forget();
+            soundManager.StopBGMFadeOut(animationTime - 1.5f).Forget();
 
             // 入力を止める
             controller.isStartGoal = true;
