@@ -13,9 +13,10 @@ public class StageItemSlot : Button
     [SerializeField] int itemID;
     [SerializeField] ItemData itemData;
     [SerializeField] StageInventoryData stageInventoryData;
-    [SerializeField] SelectFirstButton uiController; 
+    [SerializeField] SelectFirstButton uiController;
     [SerializeField] TextMeshProUGUI itemText;
-    [SerializeField] PlayerPartsRatio partsRatio;
+    [SerializeField] TextMeshProUGUI itemText2;
+    private PlayerPartsRatio partsRatio;
     [SerializeField] GameObject rightButton;
     [SerializeField] GameObject buttons;
     [SerializeField] SelectedButtonManager selectedButtonManager;
@@ -38,13 +39,23 @@ public class StageItemSlot : Button
     public string ItemName => itemData.GetItemNameByID(itemID);
     public string ItemText => itemData.GetItemTextByID(itemID);
     public bool IsObtained => stageInventoryData.GetItemObtained(itemID);
+    private bool isInitialized = false;
 
     public void Initialize()
     {
+        if (partsRatio == null)
+        {
+            //Debug.LogError("PlayerPartsRatio: PlayerPartsが注入されていません");
+            return;
+        }
+        isInitialized = true;
+
         iconImage = GetComponentsInChildren<Image>(true)
             .FirstOrDefault(img => img.gameObject.name == "IconImage");
         itemText = GetComponentsInChildren<TextMeshProUGUI>(true)
             .FirstOrDefault(txt => txt.gameObject.name == "ItemText");
+        itemText2 = GetComponentsInChildren<TextMeshProUGUI>(true)
+            .FirstOrDefault(txt => txt.gameObject.name == "ItemText2");
 
         if (iconImage == null)
         {
@@ -56,7 +67,10 @@ public class StageItemSlot : Button
         }
         UpdateIcon();
     }
-
+    public void Start()
+    {
+        partsRatio = GameObject.Find("PlayerPartsRatio").GetComponent<PlayerPartsRatio>();
+    }
     protected void Awake()
     {
         ImageFalse();
@@ -136,15 +150,59 @@ public class StageItemSlot : Button
 
     public void ShowFlervorText()
     {
+        // nullチェックとデバッグログを追加
+        if (itemText == null) Debug.LogError($"{gameObject.name}: itemTextがnullです");
+        if (itemText2 == null) Debug.LogError($"{gameObject.name}: itemText2がnullです");
+        if (partsRatio == null) Debug.LogError($"{gameObject.name}: partsRatioがnullです");
+
         itemText.enabled = true;
-        if (IsObtained)
-        {
-            itemText.text = itemData.GetAllQuartersTone(itemID);
-        }
-        else
+        itemText2.enabled = true;
+
+        if (!IsObtained)
         {
             itemText.text = "???";
+            itemText2.text = "";
+            return;
         }
+
+        // パーツ比率の取得
+        var ratios = partsRatio.GetAllRatios();
+        var orderedRatios = ratios.OrderByDescending(x => x.Value).ToList();
+        UnityEngine.Debug.Log("Parts Ratios: " + string.Join(", ", orderedRatios.Select(r => $"{r.Key}: {r.Value}%")));
+
+        // アイテムの所有者タイプを取得
+        var itemOwner = itemData.GetItemByID(itemID).ownerType;
+        var dominantParts = partsRatio.GetDominantParts();
+
+        // パーツが100%で、アイテムの所有者と一致する場合
+        if (partsRatio.HasFullRatioParts())
+        {
+            UnityEngine.Debug.Log("100%の口調表示");
+            var fullParts = partsRatio.GetFullRatioParts();
+            if (itemOwner.ToString() == fullParts.ToString() ||
+                (itemOwner == ItemOwnerType.Fire && fullParts == PartsChara.Fire))
+            {
+                itemText.text = itemData.GetOwnFullTone(itemID);
+                itemText2.text = "";
+                return;
+            }
+        }
+
+        // 50-50の場合
+        if (orderedRatios.Count >= 2 &&
+            Mathf.Approximately(orderedRatios[0].Value, 50f) &&
+            Mathf.Approximately(orderedRatios[1].Value, 50f))
+        {
+            UnityEngine.Debug.Log("50-50の口調表示");
+            itemText.text = itemData.GetToneTextByPartsChara(itemID, orderedRatios[0].Key);
+            itemText2.text = itemData.GetToneTextByPartsChara(itemID, orderedRatios[1].Key);
+            return;
+        }
+
+        // それ以外の場合は最も比率の高いパーツの口調を表示
+        UnityEngine.Debug.Log("通常の口調表示");
+        itemText.text = itemData.GetToneTextByPartsChara(itemID, dominantParts);
+        itemText2.text = "";
     }
 
     public void ShowPagedText(string rawText)

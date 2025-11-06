@@ -5,6 +5,7 @@ using Parts.Types;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using TMPro; 
 public class CollectibleItem : MonoBehaviour
 {
     /// <summary>
@@ -21,10 +22,13 @@ public class CollectibleItem : MonoBehaviour
     [Inject] private ItemManager itemManager;
     // ItemDataの参照 
     [Inject] private ItemData itemData;
-    // PlayerPartsRatioの参照
-    [Inject] private PlayerPartsRatio partsRatio;
+
     // GameTextDisplayの参照
     [Inject] private GameTextDisplay gameTextDisplay;
+    [SerializeField] private GameObject textPanel;
+    [SerializeField] private TextMeshProUGUI messageText1;
+    [SerializeField] private TextMeshProUGUI messageText2;
+    [SerializeField] private GameObject textBackground; 
 
     // アイテム名
     private string itemName;
@@ -35,6 +39,13 @@ public class CollectibleItem : MonoBehaviour
 
     // アイテム獲得フラグ
     private bool isCollected = false;
+
+    private PlayerPartsRatio partsRatio;
+
+    private void Start()
+    {
+        partsRatio = GameObject.Find("PlayerPartsRatio").GetComponent<PlayerPartsRatio>();
+    }
 
     // アイテムを取得情報をインベントリに保存するメソッド
     public void CollectItem()
@@ -101,9 +112,9 @@ public class CollectibleItem : MonoBehaviour
             {
                 if (gameTextDisplay != null)
                 {
-                    await ShowTextsSequentiallyFromTextList(
+                    await ShowTextsSequentiallyFromItemData(
                         gameTextDisplay,
-                        new List<string> { descriptions.allQuartersTone },
+                        new List<PartsChara> { PartsChara.Normal }, // キメラ状態用の特別なテキストは1つだけ
                         2f
                     );
                 }
@@ -142,9 +153,9 @@ public class CollectibleItem : MonoBehaviour
             {
                 if (gameTextDisplay != null)
                 {
-                    await ShowTextsSequentiallyFromTextList(
+                    await ShowTextsSequentiallyFromItemData(
                         gameTextDisplay,
-                        new List<string> { descriptions.ownFullTone },
+                        new List<PartsChara> { dominantParts[0] },
                         2f
                     );
                 }
@@ -209,66 +220,49 @@ public class CollectibleItem : MonoBehaviour
         var textList = new List<string>();
         foreach (var chara in charaList)
         {
-            switch (chara)
+            string text = itemData.GetToneTextByPartsChara(itemID, chara);
+            if (!string.IsNullOrEmpty(text))
             {
-                case PartsChara.Normal:
-                    textList.Add(descriptions.playerTone);
-                    break;
-                case PartsChara.Thief:
-                    textList.Add(descriptions.theifTone);
-                    break;
-                case PartsChara.Muscle:
-                    textList.Add(descriptions.muscleTone);
-                    break;
-                case PartsChara.Fire:
-                    textList.Add(descriptions.fireTone);
-                    break;
-                case PartsChara.Assassin:
-                    textList.Add(descriptions.assassinTone);
-                    break;
+                textList.Add(text);
             }
         }
         textList = textList.Distinct().ToList();
 
-        for (int i = 0; i < textList.Count; i++)
-        {
-            if (showDebugLogs) Debug.Log($"表示するテキスト ({i + 1}/{textList.Count}):\n{textList[i]}");
-            await textDisplay.ShowText(textList[i]);
-            // フェードインが完了するまで待機
-            await UniTask.WaitUntil(() => !textDisplay.IsFading);
-            // 表示秒数だけ待機
-            await UniTask.Delay(System.TimeSpan.FromSeconds(textDisplayDuration));
-            // テキストを非表示
-            textDisplay.HideText();
-            // フェードアウトが完了するまで待機（最後以外）
-            if (i < textList.Count - 1)
-            {
-                await UniTask.WaitUntil(() => !textDisplay.IsFading);
-                // テキスト間のディレイ
-                // await UniTask.Delay(System.TimeSpan.FromSeconds(delayBetweenTexts));
-            }
-        }
+        // パネルとバックグラウンドを表示
+        textPanel.SetActive(true);
+        textBackground.SetActive(true);
+
+        // ShowTextsSequentiallyを使用してテキストを表示
+        await ShowTextsSequentially(textDisplay, textList, delayBetweenTexts, showDebugLogs);
+
+        // 表示時間待機
+        await UniTask.Delay(System.TimeSpan.FromSeconds(textDisplayDuration));
+
+        // テキストをクリアして非表示
+        textPanel.SetActive(false);
+        textBackground.SetActive(false);
     }
 
-    private async UniTask ShowTextsSequentiallyFromTextList(
+    
+    // 複数のテキストを順次表示
+    private static async UniTask ShowTextsSequentially(
         GameTextDisplay textDisplay,
         List<string> textList,
-        float delayBetweenTexts = 2f,
-        bool showDebugLogs = false
-    )
+        float delayBetweenTexts,
+        bool showDebugLogs)
     {
-        for (int i = 0; i < textList.Count; i++)
+        if (textList.Count == 1)
         {
-            if (showDebugLogs) Debug.Log($"表示するテキスト ({i + 1}/{textList.Count}):\n{textList[i]}");
-            await textDisplay.ShowText(textList[i]);
-            await UniTask.WaitUntil(() => !textDisplay.IsFading);
-            await UniTask.Delay(System.TimeSpan.FromSeconds(textDisplayDuration));
-            textDisplay.HideText();
-            if (i < textList.Count - 1)
-            {
-                await UniTask.WaitUntil(() => !textDisplay.IsFading);
-                // await UniTask.Delay(System.TimeSpan.FromSeconds(delayBetweenTexts));
-            }
+            // 1つだけの場合は通常表示
+            if (showDebugLogs) Debug.Log($"表示するテキスト:\n{textList[0]}");
+            await textDisplay.ShowText(textList[0]);
+        }
+        else
+        {
+            // 複数ある場合の表示
+            if (showDebugLogs) Debug.Log($"表示するテキスト1:\n{textList[0]}");
+            if (showDebugLogs) Debug.Log($"表示するテキスト2:\n{textList[1]}");
+            await textDisplay.ShowText(textList[0], textList[1]);
         }
     }
 }

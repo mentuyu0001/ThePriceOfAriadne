@@ -15,7 +15,7 @@ public class ItemSlot : Button
     [SerializeField] InventoryData inventoryData;
     [SerializeField] SelectFirstButton uiController; 
     [SerializeField] TextMeshProUGUI itemText;
-    [SerializeField] PlayerPartsRatio partsRatio;
+    private PlayerPartsRatio playerPartsRatio;
     [SerializeField] GameObject rightButton;
     [SerializeField] GameObject buttons;
     [SerializeField] SelectedButtonManager selectedButtonManager;
@@ -59,6 +59,8 @@ public class ItemSlot : Button
     protected void Start()
     {
         ImageFalse();
+
+        playerPartsRatio = GameObject.Find("PlayerPartsRatio").GetComponent<PlayerPartsRatio>();
 
         inventoryData = GameObject.Find("InventoryData").GetComponent<InventoryData>();
         iconImage = GetComponentsInChildren<Image>(true)
