@@ -117,7 +117,7 @@ public class CollectibleItem : MonoBehaviour
                     
                     // パネルとバックグラウンドを表示
                     textPanel.SetActive(true);
-                    textBackground.SetActive(true);
+                    //textBackground.SetActive(true);
 
                     // キメラ状態用の特別なテキストを表示
                     await ShowTextsSequentially(
@@ -132,7 +132,7 @@ public class CollectibleItem : MonoBehaviour
 
                     // テキストをクリアして非表示
                     textPanel.SetActive(false);
-                    textBackground.SetActive(false);
+                    //textBackground.SetActive(false);
                 }
                 CollectItem();
                 Destroy(gameObject);
@@ -246,7 +246,7 @@ public class CollectibleItem : MonoBehaviour
 
         // パネルとバックグラウンドを表示
         textPanel.SetActive(true);
-        textBackground.SetActive(true);
+        //textBackground.SetActive(true);
 
         // ShowTextsSequentiallyを使用してテキストを表示
         await ShowTextsSequentially(textDisplay, textList, delayBetweenTexts, showDebugLogs);
@@ -256,7 +256,7 @@ public class CollectibleItem : MonoBehaviour
 
         // テキストをクリアして非表示
         textPanel.SetActive(false);
-        textBackground.SetActive(false);
+        //textBackground.SetActive(false);
     }
 
     
