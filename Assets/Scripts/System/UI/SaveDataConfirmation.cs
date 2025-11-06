@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using VContainer;
 using TMPro;
+using System.Collections.Generic;
 public class SaveDataConfirmation : MonoBehaviour
 {
     /// <summary>
@@ -17,6 +18,8 @@ public class SaveDataConfirmation : MonoBehaviour
 
     [SerializeField] private GameDataManager gameDataManager;
     [SerializeField] private ItemManager itemManager;
+
+    [SerializeField] private List<SaveSlot> saveSlots; // セーブスロットのリスト
 
     // ダイアログを開く直前に選択されていたボタンを記憶しておく変数
     private GameObject lastSelectedButton;
@@ -83,6 +86,16 @@ public class SaveDataConfirmation : MonoBehaviour
         gameDataManager.SaveGame(saveCurrentSlot);
         itemManager.SyncStageToInventory(); // ステージのアイテムシングルトンとタイトル用のシングルトンを同期
         CloseDialog();
+
+        // セーブスロットの見た目に反映
+        foreach (SaveSlot slot in saveSlots)
+        {
+            if (slot.getSaveDataNum() == saveCurrentSlot)
+            {
+                slot.Reload();
+                break;
+            }
+        }
 
         // シーンの遷移
     }

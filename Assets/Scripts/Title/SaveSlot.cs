@@ -53,6 +53,13 @@ public class SaveSlot : Button
         }
     }
 
+    public void Reload()
+    {
+        saveData = gameDataManager.LoadSaveData(saveDataNum);
+        UpdateSlotUI();
+        updatePlayerStatusDisplay();
+    }
+
     // このセーブ欄のUIを更新するための公開関数
     private void UpdateSlotUI()
     {
@@ -149,5 +156,10 @@ public class SaveSlot : Button
         {
             playerStatusDisplay.SetActive(false);
         }
+    }
+
+    public int getSaveDataNum()
+    {
+        return saveDataNum;
     }
 }
