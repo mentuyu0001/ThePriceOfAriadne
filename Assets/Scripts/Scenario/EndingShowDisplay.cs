@@ -58,6 +58,12 @@ public class EndingShowDisplay : MonoBehaviour
     [SerializeField]
     private PlayerPartsRatio partsRatio;
 
+    [SerializeField]
+    private SoundManager soundManager;
+    [SerializeField] private int bgmIndex;
+
+    [SerializeField] private float fadeInDuration;
+
     private string inputText;
     private string[] textLines;
     private int currentLine = 0;
@@ -186,13 +192,16 @@ public class EndingShowDisplay : MonoBehaviour
         else if (!isTextCompleted && currentLine + 1 >= textLines.Length)
         {
             isTextCompleted = true;
-            ShowEndingIllustration();
+
+            await ShowEndingIllustration(cts.Token).SuppressCancellationThrow();
         }
     }
 
-    private void ShowEndingIllustration()
+    private async UniTask ShowEndingIllustration(CancellationToken token)
     {
         fadeController.FadeIn(fadeDelay).Forget();
+
+        soundManager.PlayBGMFadeIn(2, fadeDelay - 0.5f).Forget();
 
         // テキストを非表示
         displayText.gameObject.SetActive(false);
@@ -200,24 +209,25 @@ public class EndingShowDisplay : MonoBehaviour
         // 背景を切り替え
         if (blackBackground != null) blackBackground.SetActive(false);
         if (whiteBackground != null) whiteBackground.SetActive(true);
-        
+
         // エンディングイラストを表示
         if (endingIllustration != null && selectedEndingImage != null)
         {
             endingIllustration.gameObject.SetActive(true);
             endingIllustration.sprite = selectedEndingImage;
         }
-
         isIllustrationShown = true;
+        // BGMフェードイン
+        await soundManager.PlayBGMFadeIn(bgmIndex, fadeInDuration, token, true);
     }
 
     private async void FadeOutAndLoadTitle()
     {
+        cts.Cancel(); // もし何か処理中ならキャンセル
         fadeController.FadeOut(2.0f).Forget();
+        soundManager.StopBGMFadeOut(1.5f).Forget();
         await UniTask.Delay(3000); // フェードアウトの完了を待つ 
         sceneManager.LoadTitle();
-
-
     }
     
     private async UniTask ShowLineLetterByLetter(string line, CancellationToken token)

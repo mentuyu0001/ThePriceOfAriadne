@@ -2681,6 +2681,7 @@ MonoBehaviour:
   gameSceneManager: {fileID: 1480997590}
   itemManager: {fileID: 1113016527}
   gameDataManager: {fileID: 1559244142}
+  soundManager: {fileID: 2017757929}
 --- !u!1 &360644856 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6155022801611536632, guid: 8d8a3be38d6d94d3aa7f65477c67d3b0, type: 3}
@@ -3164,7 +3165,6 @@ MonoBehaviour:
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
   itemText2: {fileID: 677991874}
-  partsRatio: {fileID: 1261370578}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -5302,7 +5302,6 @@ MonoBehaviour:
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
   itemText2: {fileID: 677991874}
-  partsRatio: {fileID: 1261370578}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -5363,6 +5362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmSlider: {fileID: 775953728}
   seSlider: {fileID: 1325690122}
+  bgmSource: {fileID: 1994769638}
 --- !u!1001 &603110367
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7232,6 +7232,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameSceneManager: {fileID: 1480997590}
   fadeController: {fileID: 1827676353}
+  soundManager: {fileID: 2017757929}
   confirmationDialogPanel: {fileID: 772708243}
   noButton: {fileID: 1144307155}
 --- !u!114 &772708246
@@ -7811,7 +7812,6 @@ MonoBehaviour:
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
   itemText2: {fileID: 677991874}
-  partsRatio: {fileID: 1261370578}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -8696,7 +8696,6 @@ MonoBehaviour:
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
   itemText2: {fileID: 677991874}
-  partsRatio: {fileID: 1261370578}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -17572,7 +17571,6 @@ MonoBehaviour:
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
   itemText2: {fileID: 677991874}
-  partsRatio: {fileID: 1261370578}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -22566,7 +22564,6 @@ MonoBehaviour:
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
   itemText2: {fileID: 677991874}
-  partsRatio: {fileID: 1261370578}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -23258,7 +23255,6 @@ MonoBehaviour:
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
   itemText2: {fileID: 677991874}
-  partsRatio: {fileID: 1261370578}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -24375,7 +24371,6 @@ MonoBehaviour:
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
   itemText2: {fileID: 677991874}
-  partsRatio: {fileID: 1261370578}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -24598,6 +24593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dae8b6730a9fe4459a416dc4152b63f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundManager: {fileID: 2017757929}
 --- !u!4 &1480997591
 Transform:
   m_ObjectHideFlags: 0
@@ -24808,6 +24804,7 @@ Transform:
   - {fileID: 1517298004}
   - {fileID: 1994769639}
   - {fileID: 2017757928}
+  - {fileID: 2061265633}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1517298003
@@ -25829,7 +25826,7 @@ Transform:
   m_GameObject: {fileID: 1586923810}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40.705917, y: 4.251869, z: -10}
+  m_LocalPosition: {x: -40.72003, y: 4.251869, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -26585,7 +26582,6 @@ MonoBehaviour:
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
   itemText2: {fileID: 677991874}
-  partsRatio: {fileID: 1261370578}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
@@ -45582,7 +45578,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 27c8e2dd8bb0c424787c8ccb3144f24b, type: 3}
   seSource: {fileID: 212070737}
   seSourceLoop: {fileID: 1730931874}
-  seSourceLoop2: {fileID: 0}
+  seSourceLoop2: {fileID: 1517298005}
   seClips:
   - {fileID: 8300000, guid: 819924234c91d4506a159f0930e57701, type: 3}
   - {fileID: 8300000, guid: 14b0f5538d3f24e95b28362d62903600, type: 3}
@@ -45924,6 +45920,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 317b847aed2c84116804a8d503629822, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2061265632
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2061265633}
+  - component: {fileID: 2061265634}
+  m_Layer: 0
+  m_Name: BGMStarter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2061265633
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061265632}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1513220229}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2061265634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061265632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e38f04e0d80a40698009dbc94384028, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundManager: {fileID: 2017757929}
+  bgmIndex: 1
+  doFadein: 1
+  fadeInDuration: 3
 --- !u!1 &2062895758
 GameObject:
   m_ObjectHideFlags: 0
@@ -46486,7 +46530,6 @@ MonoBehaviour:
   uiController: {fileID: 2017868552}
   itemText: {fileID: 608393486}
   itemText2: {fileID: 677991874}
-  partsRatio: {fileID: 1261370578}
   rightButton: {fileID: 1531279426}
   buttons: {fileID: 965425181}
   selectedButtonManager: {fileID: 1141532740}
