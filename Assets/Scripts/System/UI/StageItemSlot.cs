@@ -165,6 +165,17 @@ public class StageItemSlot : Button
             return;
         }
 
+        // パーツ比率の取得前にパーツ比率を再計算
+        partsRatio.CalculatePartsRatio();
+
+        // パーツ比率のログを表示（PlayerPartsRatioのLogPartsRatio()を呼び出し）
+        Debug.Log("=== フレーバーテキスト表示時のパーツ占有率 ===");
+        foreach (var ratio in partsRatio.GetAllRatios())
+        {
+            var state = partsRatio.GetPartsRatioState(ratio.Key);
+            Debug.Log($"{ratio.Key}: {ratio.Value}% ({state})");
+        }
+
         // パーツ比率の取得
         var ratios = partsRatio.GetAllRatios();
         var orderedRatios = ratios.OrderByDescending(x => x.Value).ToList();
