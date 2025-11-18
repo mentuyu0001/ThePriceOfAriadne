@@ -15613,6 +15613,7 @@ GameObject:
   - component: {fileID: 944760497}
   - component: {fileID: 944760496}
   - component: {fileID: 944760495}
+  - component: {fileID: 944760498}
   m_Layer: 5
   m_Name: No
   m_TagString: Untagged
@@ -15696,6 +15697,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 944760498}
+        m_TargetAssemblyTypeName: ButtonSound, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &944760496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15731,6 +15744,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 944760493}
   m_CullTransparentMesh: 1
+--- !u!114 &944760498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944760493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29094631a11658a45b3b6f5b5aee888b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &953594075
 GameObject:
   m_ObjectHideFlags: 0
@@ -25073,6 +25098,7 @@ GameObject:
   - component: {fileID: 1616515027}
   - component: {fileID: 1616515026}
   - component: {fileID: 1616515025}
+  - component: {fileID: 1616515029}
   m_Layer: 5
   m_Name: Yes
   m_TagString: Untagged
@@ -25127,6 +25153,18 @@ MonoBehaviour:
       - m_Target: {fileID: 731289818}
         m_TargetAssemblyTypeName: ItemResetConfirmation, Assembly-CSharp
         m_MethodName: OnYesButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1616515029}
+        m_TargetAssemblyTypeName: ButtonSound, Assembly-CSharp
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -25191,6 +25229,18 @@ RectTransform:
   m_AnchoredPosition: {x: -200, y: -100}
   m_SizeDelta: {x: 512, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1616515029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616515024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29094631a11658a45b3b6f5b5aee888b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1636606866 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7401840070312773038, guid: 8d8a3be38d6d94d3aa7f65477c67d3b0, type: 3}
@@ -26584,7 +26634,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u306F\u3044"
+  m_text: "\u3044\u3044\u3048"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 34529fac9dfd1441abbe58c253cdbe08, type: 2}
   m_sharedMaterial: {fileID: 5998509935022975256, guid: 34529fac9dfd1441abbe58c253cdbe08, type: 2}
