@@ -78,6 +78,8 @@ public class EndingShowDisplay : MonoBehaviour
 
     private GameSceneManager sceneManager;
 
+    private bool isFading = false;
+
     [Inject]
     public void Initialize(PlayerPartsRatio ratio)
     {
@@ -201,7 +203,7 @@ public class EndingShowDisplay : MonoBehaviour
     {
         fadeController.FadeIn(fadeDelay).Forget();
 
-        soundManager.PlayBGMFadeIn(2, fadeDelay - 0.5f).Forget();
+        // soundManager.PlayBGMFadeIn(2, fadeDelay - 0.5f).Forget();
 
         // テキストを非表示
         displayText.gameObject.SetActive(false);
@@ -223,6 +225,8 @@ public class EndingShowDisplay : MonoBehaviour
 
     private async void FadeOutAndLoadTitle()
     {
+        if (isFading) return;
+        isFading = true;
         cts.Cancel(); // もし何か処理中ならキャンセル
         fadeController.FadeOut(2.0f).Forget();
         soundManager.StopBGMFadeOut(1.5f).Forget();

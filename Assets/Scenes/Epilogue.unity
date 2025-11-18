@@ -6230,12 +6230,12 @@ MonoBehaviour:
   blackBackground: {fileID: 683214464}
   whiteBackground: {fileID: 376426433}
   fadeController: {fileID: 386483624}
-  fadeDelay: 3
+  fadeDelay: 5
   letterDelay: 0.05
   partsRatio: {fileID: 182030136}
   soundManager: {fileID: 545712040}
-  bgmIndex: 0
-  fadeInDuration: 0
+  bgmIndex: 2
+  fadeInDuration: 2
 --- !u!1 &717040068
 GameObject:
   m_ObjectHideFlags: 0
@@ -15903,6 +15903,7 @@ MonoBehaviour:
   - {fileID: 1738467551}
   - {fileID: 1544226393}
   - {fileID: 1190524753}
+  clickable: {fileID: 0}
   text: {fileID: 1862811737}
 --- !u!1 &1950702109
 GameObject:
