@@ -24,6 +24,8 @@ public class SaveDataConfirmation : MonoBehaviour
 
     [SerializeField] private List<SaveSlot> saveSlots; // セーブスロットのリスト
 
+    [SerializeField] private Clickable clickable; // シーン遷移時に他ボタンを押せなくするオブジェクト
+
     // ダイアログを開く直前に選択されていたボタンを記憶しておく変数
     private GameObject lastSelectedButton;
 
@@ -106,6 +108,7 @@ public class SaveDataConfirmation : MonoBehaviour
     public async void OnYesButtonClickedLoad()
     {
         EventSystem.current.SetSelectedGameObject(null);
+        clickable.DisClickable();
         fadeController.FadeOut(3.0f).Forget();
         await UniTask.Delay(TimeSpan.FromSeconds(3.0f));
 

@@ -9,6 +9,7 @@ public class LoadSceneManagere : MonoBehaviour
 {
     [SerializeField] private GameSceneManager gameSceneManager;
     [SerializeField] private FadeController fadeController;
+    [SerializeField] private Clickable clickable;
 
     async void Start()
     {
@@ -17,6 +18,7 @@ public class LoadSceneManagere : MonoBehaviour
     public async void GameLoad(int stage)
     {
         EventSystem.current.SetSelectedGameObject(null);
+        clickable.DisClickable();
         await fadeController.FadeOut(3.0f);
         await UniTask.Delay(TimeSpan.FromSeconds(3.0f));
         gameSceneManager.LoadStage(stage);
