@@ -20,6 +20,9 @@ public class ToTitleConfirmation : MonoBehaviour
     // Yesボタンの取得
     [SerializeField] private GameObject noButton;
 
+    // シーン遷移次に他ボタンを押せなくする
+    [SerializeField] private Clickable clickable;
+
     // ダイアログを開く直前に選択されていたボタンを記憶しておく変数
     private GameObject lastSelectedButton;
 
@@ -47,7 +50,7 @@ public class ToTitleConfirmation : MonoBehaviour
     {
         EventSystem.current.SetSelectedGameObject(null);
         
-        Debug.Log("アイテムリセットを実行します。");
+        clickable.DisClickable();
         SoundManager.Instance.PlaySE(14); // 14はUI決定音のインデックス
 
         fadeController.FadeOut(fadeAnimation).Forget();
