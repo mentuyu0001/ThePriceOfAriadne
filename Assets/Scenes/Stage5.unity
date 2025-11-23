@@ -12158,6 +12158,7 @@ MonoBehaviour:
   itemManager: {fileID: 1113016527}
   gameDataManager: {fileID: 1559244142}
   soundManager: {fileID: 2017757929}
+  playerInput: {fileID: 1886981974}
 --- !u!1 &360644856 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6155022801611536632, guid: 8d8a3be38d6d94d3aa7f65477c67d3b0, type: 3}
@@ -14565,6 +14566,7 @@ MonoBehaviour:
   itemManager: {fileID: 1113016527}
   menuStatus: {fileID: 1571884626}
   gameDataManager: {fileID: 1559244142}
+  playerInput: {fileID: 1886981974}
 --- !u!1 &577565191
 GameObject:
   m_ObjectHideFlags: 0
@@ -76509,6 +76511,7 @@ MonoBehaviour:
   itemManager: {fileID: 0}
   menuStatus: {fileID: 0}
   gameDataManager: {fileID: 0}
+  playerInput: {fileID: 0}
 --- !u!4 &1974069034
 Transform:
   m_ObjectHideFlags: 0

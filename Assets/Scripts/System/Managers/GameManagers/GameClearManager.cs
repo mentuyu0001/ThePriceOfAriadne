@@ -1,6 +1,7 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using Unity.VisualScripting;
+using UnityEngine.InputSystem;
 
 public class GameClearManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GameClearManager : MonoBehaviour
     [SerializeField] private GameDataManager gameDataManager;
 
     [SerializeField] private SoundManager soundManager;
+    [SerializeField] private PlayerInput playerInput;
 
     private StageNumber stageNumber;
 
@@ -34,12 +36,13 @@ public class GameClearManager : MonoBehaviour
     {
         if (stageNumber.GetCurrentStage() == 5)
         {
-            // 初期化
-            itemManager.SyncStageToInventory();
-            gameDataManager.SaveItemData();
-
             if (other.gameObject.tag == "Player" && !hasTriggered)
             {
+                // 初期化
+                itemManager.SyncStageToInventory();
+                gameDataManager.SaveItemData();
+
+
                 hasTriggered = true;
 
                 GoalObg.SetActive(false);
@@ -47,6 +50,7 @@ public class GameClearManager : MonoBehaviour
                 animationTime = dashTime + stopTime;
 
                 // 入力を止める
+                playerInput.SwitchCurrentActionMap("UI");
                 controller.isStartGoal = true;
 
                 // プレイヤーを動かす
@@ -62,6 +66,7 @@ public class GameClearManager : MonoBehaviour
 
                 // エンディングシーンへ移動
                 gameSceneManager.LoadEpilogue();
+                
 
                 await UniTask.Delay((int)(dashTime * 1000));
 
@@ -79,16 +84,17 @@ public class GameClearManager : MonoBehaviour
             }
             return;
         }
-        // 初期化
-        stageNumber.SetCurrentStage(stageNumber.GetCurrentStage() + 1);
-        itemManager.SyncStageToInventory();
-        gameDataManager.SaveItemData();
-
-        // オートセーブ
-        gameDataManager.SaveGame(1);
 
         if (other.gameObject.tag == "Player" && !hasTriggered)
         {
+            // 初期化
+            stageNumber.SetCurrentStage(stageNumber.GetCurrentStage() + 1);
+            itemManager.SyncStageToInventory();
+            gameDataManager.SaveItemData();
+
+            // オートセーブ
+            gameDataManager.SaveGame(1);
+
             hasTriggered = true;
 
             GoalObg.SetActive(false);
@@ -96,6 +102,7 @@ public class GameClearManager : MonoBehaviour
             animationTime = dashTime + stopTime;
 
             // 入力を止める
+            playerInput.SwitchCurrentActionMap("UI");
             controller.isStartGoal = true;
 
             // プレイヤーを動かす
@@ -111,7 +118,6 @@ public class GameClearManager : MonoBehaviour
 
             // セーブシーンへ移動
             gameSceneManager.LoadSaveScene(stageNumber.GetCurrentStage()-1);
-
             await UniTask.Delay((int)(dashTime * 1000));
 
             controller.StartAndGoalSetFrictionAdd();
