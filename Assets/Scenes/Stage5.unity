@@ -11575,6 +11575,7 @@ MonoBehaviour:
   pauseMenuUIScript: {fileID: 540018747}
   playerVisualCustomizer: {fileID: 1502089846}
   textPanel: {fileID: 1530278121}
+  soundManager: {fileID: 2017757929}
 --- !u!4 &283318550
 Transform:
   m_ObjectHideFlags: 0

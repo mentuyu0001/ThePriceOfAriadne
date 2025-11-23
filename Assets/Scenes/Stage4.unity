@@ -1718,6 +1718,7 @@ MonoBehaviour:
   pauseMenuUIScript: {fileID: 540018747}
   playerVisualCustomizer: {fileID: 1502089846}
   textPanel: {fileID: 1530278121}
+  soundManager: {fileID: 2017757929}
 --- !u!4 &283318550
 Transform:
   m_ObjectHideFlags: 0
@@ -46953,7 +46954,7 @@ Transform:
   m_GameObject: {fileID: 1586923810}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40.71301, y: 15.589998, z: -10}
+  m_LocalPosition: {x: -40.71301, y: 15.490014, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -59019,7 +59020,7 @@ Transform:
   m_GameObject: {fileID: 1891891972}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -63.38, y: 15.59, z: -10}
+  m_LocalPosition: {x: -63.38, y: 15.49001, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -59769,7 +59770,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1948155234025144373, guid: 16536c3107ae5472eb1befe2a870ba33, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15.59
+      value: 15.49001
       objectReference: {fileID: 0}
     - target: {fileID: 1948155234025144373, guid: 16536c3107ae5472eb1befe2a870ba33, type: 3}
       propertyPath: m_LocalPosition.z
