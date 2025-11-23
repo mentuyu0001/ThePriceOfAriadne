@@ -19,8 +19,6 @@ public class LoadSceneManagere : MonoBehaviour
     {
         EventSystem.current.SetSelectedGameObject(null);
         clickable.DisClickable();
-        await fadeController.FadeOut(3.0f);
-        await UniTask.Delay(TimeSpan.FromSeconds(3.0f));
         gameSceneManager.LoadStage(stage);
     }
 }

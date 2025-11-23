@@ -46,9 +46,6 @@ public class GameClearManager : MonoBehaviour
 
                 animationTime = dashTime + stopTime;
 
-                // 黒画像をフェードアウトさせる
-                fadeController.FadeOut(animationTime).Forget();
-
                 // 入力を止める
                 controller.isStartGoal = true;
 
@@ -62,6 +59,9 @@ public class GameClearManager : MonoBehaviour
                 controller.StartAndGoalSetFrictionZero();
 
                 controller.StartAndGoalVelocity();
+
+                // エンディングシーンへ移動
+                gameSceneManager.LoadEpilogue();
 
                 await UniTask.Delay((int)(dashTime * 1000));
 
@@ -77,10 +77,6 @@ public class GameClearManager : MonoBehaviour
                     SoundManager.Instance.StopSE();
                 }
             }
-
-            UnityEngine.Debug.Log("エンディングシーンへ移動します");
-            // エンディングシーンへ移動
-            gameSceneManager.LoadEpilogue();
             return;
         }
         // 初期化
@@ -89,7 +85,7 @@ public class GameClearManager : MonoBehaviour
         gameDataManager.SaveItemData();
 
         // オートセーブ
-        if (stageNumber.GetCurrentStage() != 5) gameDataManager.SaveGame(1);
+        gameDataManager.SaveGame(1);
 
         if (other.gameObject.tag == "Player" && !hasTriggered)
         {
@@ -98,12 +94,6 @@ public class GameClearManager : MonoBehaviour
             GoalObg.SetActive(false);
 
             animationTime = dashTime + stopTime;
-
-            // 黒画像をフェードアウトさせる
-            fadeController.FadeOut(animationTime).Forget();
-
-            // BGMをフェードアウトさせる
-            soundManager.StopBGMFadeOut(animationTime - 1.5f).Forget();
 
             // 入力を止める
             controller.isStartGoal = true;
@@ -119,6 +109,9 @@ public class GameClearManager : MonoBehaviour
 
             controller.StartAndGoalVelocity();
 
+            // セーブシーンへ移動
+            gameSceneManager.LoadSaveScene(stageNumber.GetCurrentStage()-1);
+
             await UniTask.Delay((int)(dashTime * 1000));
 
             controller.StartAndGoalSetFrictionAdd();
@@ -132,16 +125,6 @@ public class GameClearManager : MonoBehaviour
             {
                 SoundManager.Instance.StopSE();
             }
-
-
-            // スタートに障害物を置く
-            GoalObg.SetActive(true);
-
-            // 入力を再開する
-            controller.isStartGoal = false;
         }
-
-        // セーブシーンへ移動
-        gameSceneManager.LoadSaveScene(stageNumber.GetCurrentStage()-1);
     }
 }

@@ -1,35 +1,53 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameSceneManager : MonoBehaviour
 {
     [SerializeField] private SoundManager soundManager;
+    [SerializeField] private FadeController fadeController;
 
-    private async UniTask LoadStageWithBGMFadeOut(string sceneName)
+    float fadeDuration = 3.0f;
+
+    private static bool isLoading = false;
+
+    private async UniTask LoadStageAsync(string sceneName)
     {
-        soundManager.StopBGMFadeOut(1.0f).Forget();
-        await UniTask.Delay(3000);
-        SceneManager.LoadScene(sceneName);
+        if (isLoading) return;
+
+        isLoading = true;
+        var op = SceneManager.LoadSceneAsync(sceneName);
+        op.allowSceneActivation = false;
+
+        var bgmFadeTask = soundManager.StopBGMFadeOut(fadeDuration);
+        var visualFadeTask = fadeController.FadeOut(fadeDuration);
+
+        await UniTask.WhenAll(bgmFadeTask, visualFadeTask);
+
+        await UniTask.WaitUntil(() => op.progress >= 0.9f);
+
+        op.allowSceneActivation = true;
+        isLoading = false;
     }
 
     public void LoadStage2()
     {
-        LoadStageWithBGMFadeOut("Stage2");
+        LoadStageAsync("Stage2").Forget();
     }
 
     // 指定したステージに遷移
     public void LoadStage(int stageNumber)
     {
-        string sceneName = $"{"Stage"}{stageNumber}";
+        string sceneName = $"Stage{stageNumber}";
         UnityEngine.Debug.Log(sceneName + "に遷移します");
-        LoadStageWithBGMFadeOut(sceneName);
+        LoadStageAsync(sceneName).Forget();
     }
     public void LoadTitle()
     {
-        SceneManager.LoadScene("TitleScene");
+        LoadStageAsync("TitleScene").Forget();
     }
 
     public void LoadSaveScene(int currentStage)
@@ -40,21 +58,21 @@ public class GameSceneManager : MonoBehaviour
             return;
         }
         string sceneName = $"Save{currentStage}to{currentStage + 1}";
-        SceneManager.LoadScene(sceneName);
+        LoadStageAsync(sceneName).Forget();
     }
 
     public void LoadPlorogueToStage1()
     {
-        SceneManager.LoadScene("Stage1");
+        LoadStageAsync("Stage1").Forget();
     }
     public void LoadPlorogue()
     {
-        SceneManager.LoadScene("Prologue");
+        LoadStageAsync("Prologue").Forget();
     }
     
     public void LoadEpilogue()
     {
-        SceneManager.LoadScene("Epilogue");
+        LoadStageAsync("Epilogue").Forget();
     }
     public void QuitGame()
     {

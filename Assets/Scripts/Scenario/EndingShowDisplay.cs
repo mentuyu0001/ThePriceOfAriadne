@@ -228,9 +228,6 @@ public class EndingShowDisplay : MonoBehaviour
         if (isFading) return;
         isFading = true;
         cts.Cancel(); // もし何か処理中ならキャンセル
-        fadeController.FadeOut(fadeDelay).Forget();
-        soundManager.StopBGMFadeOut(1.5f).Forget();
-        await UniTask.Delay(3000); // フェードアウトの完了を待つ 
         sceneManager.LoadTitle();
     }
     

@@ -53,10 +53,6 @@ public class ToTitleConfirmation : MonoBehaviour
         clickable.DisClickable();
         SoundManager.Instance.PlaySE(14); // 14はUI決定音のインデックス
 
-        fadeController.FadeOut(fadeAnimation).Forget();
-        soundManager.StopBGMFadeOut(fadeAnimation - 1.5f).Forget();
-        await UniTask.Delay(TimeSpan.FromSeconds(fadeAnimation), ignoreTimeScale: true);
-
         gameSceneManager.LoadTitle();
     }
 

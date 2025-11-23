@@ -1880,6 +1880,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundManager: {fileID: 545712040}
+  fadeController: {fileID: 1262164434}
 --- !u!4 &182447306
 Transform:
   m_ObjectHideFlags: 0
@@ -3306,7 +3307,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.98800015
+  m_Volume: 0.9840002
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -10989,6 +10990,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundManager: {fileID: 545712040}
+  fadeController: {fileID: 1262164434}
 --- !u!4 &1202197720
 Transform:
   m_ObjectHideFlags: 0
