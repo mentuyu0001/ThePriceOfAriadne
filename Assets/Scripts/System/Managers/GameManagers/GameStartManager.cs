@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Cysharp.Threading.Tasks.Triggers;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 ///  ステージスタート時に呼び出すスクリプト
@@ -16,6 +17,7 @@ public class GameStartManager : MonoBehaviour
     [SerializeField] private ItemManager itemManager;
     [SerializeField] private MenuStatusDisplay menuStatus;
     [SerializeField] private GameDataManager gameDataManager;
+    [SerializeField] private PlayerInput playerInput;
 
     // プレイヤーの速度(単位はs)
     private float dashTime = 2.0f;
@@ -27,6 +29,7 @@ public class GameStartManager : MonoBehaviour
     async UniTaskVoid Start()
     {
         // 初期化
+        playerInput.SwitchCurrentActionMap("UI");
         gameDataManager.SaveGame(1);
         gameDataManager.LoadItemData();
         itemManager.SyncInventoryToStage();
@@ -74,6 +77,7 @@ public class GameStartManager : MonoBehaviour
         startObg.SetActive(true);
 
         // 入力を再開する
+        playerInput.SwitchCurrentActionMap("Player");
         controller.isStartGoal = false;
     }
 }

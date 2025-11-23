@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -11,7 +12,7 @@ public abstract class Button : MonoBehaviour, ISelectHandler, IPointerEnterHandl
     /// </summary>
 
     // カーソルが入ってるか出ているか判定する変数
-    private bool isPointer = false;
+    private static bool isPointer = false;
 
 
     // 決定時の処理を施す抽象メソッド
@@ -55,6 +56,18 @@ public abstract class Button : MonoBehaviour, ISelectHandler, IPointerEnterHandl
     {
         if (isPointer)
         {
+            isPointer = false;
+
+            if (EventSystem.current.currentSelectedGameObject != this.gameObject)
+            {
+            
+            EventSystem.current.SetSelectedGameObject(null); 
+            
+            EventSystem.current.SetSelectedGameObject(this.gameObject, eventData);
+
+            TriggerSelectionSounds();
+            TriggerSelectionEffects();
+            }
             return;
         }
 
@@ -65,14 +78,18 @@ public abstract class Button : MonoBehaviour, ISelectHandler, IPointerEnterHandl
     // マウスで選択された場合
     public void OnPointerEnter(PointerEventData eventData)
     {
-        // もしこのオブジェクトが既に選択されているなら、何もしない
-        if (EventSystem.current.currentSelectedGameObject == this.gameObject)
-        {
-            return;
-        }
         isPointer = true;
-        TriggerSelectionSounds();
-        TriggerSelectionEffects();
+
+        if (EventSystem.current.currentSelectedGameObject != this.gameObject)
+        {
+            
+            EventSystem.current.SetSelectedGameObject(null); 
+            
+            EventSystem.current.SetSelectedGameObject(this.gameObject, eventData);
+
+            TriggerSelectionSounds();
+            TriggerSelectionEffects();
+        }
 
     }
 
@@ -80,5 +97,11 @@ public abstract class Button : MonoBehaviour, ISelectHandler, IPointerEnterHandl
     public void OnPointerExit(PointerEventData eventData)
     {
         isPointer = false;
+
+        if (EventSystem.current.currentSelectedGameObject == this.gameObject)
+        {
+             EventSystem.current.SetSelectedGameObject(null);
+        }
+        
     }
 }

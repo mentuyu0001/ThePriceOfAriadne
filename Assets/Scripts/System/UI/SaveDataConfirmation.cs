@@ -109,18 +109,15 @@ public class SaveDataConfirmation : MonoBehaviour
     {
         EventSystem.current.SetSelectedGameObject(null);
         clickable.DisClickable();
-        fadeController.FadeOut(3.0f).Forget();
-        await UniTask.Delay(TimeSpan.FromSeconds(3.0f));
 
         Debug.Log("ロードを実行します。");
         Debug.Log($"GameDataManager: {gameDataManager != null}");
         Debug.Log($"ItemManager: {itemManager != null}");
         Debug.Log($"CurrentSlot: {saveCurrentSlot}");
         // ここで実際のロード処理を呼び出す
-        SoundManager.Instance.PlaySE(14); // 11はUI決定音のインデックス
+        //SoundManager.Instance.PlaySE(14); // 11はUI決定音のインデックス
         gameDataManager.SetCurrentSlot(saveCurrentSlot);
         gameDataManager.LoadGame(saveCurrentSlot);
-        CloseDialog(); // 実際は閉じずにゲームを起動する
     }
 
     // 「いいえ」ボタンが押された時の処理

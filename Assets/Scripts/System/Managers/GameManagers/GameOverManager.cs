@@ -33,9 +33,6 @@ public class GameOverManager : MonoBehaviour
         
         player.SetActive(false);
 
-        fadeController.FadeOut(animationTime).Forget();
-        await UniTask.Delay(TimeSpan.FromSeconds(animationTime), ignoreTimeScale: true);
-
         // オートセーブを読み込む
         gameDataManager.LoadGame(1);
     }

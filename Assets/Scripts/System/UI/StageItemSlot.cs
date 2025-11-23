@@ -69,7 +69,7 @@ public class StageItemSlot : Button
     }
     public void Start()
     {
-        partsRatio = GameObject.Find("PlayerPartsRatio").GetComponent<PlayerPartsRatio>();
+        
     }
     protected void Awake()
     {
@@ -84,6 +84,8 @@ public class StageItemSlot : Button
             Debug.LogError("IconImageが見つかりません。ItemSlotの子にIconImageという名前のImageを配置してください。");
         }
         UpdateIcon();
+
+        partsRatio = GameObject.Find("PlayerPartsRatio").GetComponent<PlayerPartsRatio>();
     }
 
     public void UpdateIcon()

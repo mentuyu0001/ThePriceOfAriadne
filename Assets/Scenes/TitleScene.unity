@@ -1880,6 +1880,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundManager: {fileID: 545712040}
+  fadeController: {fileID: 1262164434}
 --- !u!4 &182447306
 Transform:
   m_ObjectHideFlags: 0
@@ -3306,7 +3307,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.98800015
+  m_Volume: 0.9840002
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -6965,19 +6966,7 @@ MonoBehaviour:
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 752088187}
-        m_TargetAssemblyTypeName: ButtonSound, Assembly-CSharp
-        m_MethodName: OnClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &752088187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6987,7 +6976,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 752088183}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29094631a11658a45b3b6f5b5aee888b, type: 3}
+  m_Script: {fileID: 11500000, guid: d4ce6e1fa4afa63419d1b9aaab5d944d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &753823722
@@ -10989,6 +10978,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundManager: {fileID: 545712040}
+  fadeController: {fileID: 1262164434}
 --- !u!4 &1202197720
 Transform:
   m_ObjectHideFlags: 0
@@ -11232,19 +11222,7 @@ MonoBehaviour:
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1217656772}
-        m_TargetAssemblyTypeName: ButtonSound, Assembly-CSharp
-        m_MethodName: OnClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1217656771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11274,7 +11252,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1217656768}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29094631a11658a45b3b6f5b5aee888b, type: 3}
+  m_Script: {fileID: 11500000, guid: d4ce6e1fa4afa63419d1b9aaab5d944d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1259106618 stripped

@@ -1541,6 +1541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundManager: {fileID: 545712040}
+  fadeController: {fileID: 386483624}
 --- !u!4 &182447306
 Transform:
   m_ObjectHideFlags: 0

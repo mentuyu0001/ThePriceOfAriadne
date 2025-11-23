@@ -15,10 +15,6 @@ public class TitleLoder : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
         clickable.DisClickable();
 
-        soundManager.StopBGMFadeOut(2.5f).Forget();
-        await fadeController.FadeOut(3.0f);
-        await UniTask.Delay(TimeSpan.FromSeconds(3.0f));
-
         gameSceneManager.LoadPlorogue();
     }
 }

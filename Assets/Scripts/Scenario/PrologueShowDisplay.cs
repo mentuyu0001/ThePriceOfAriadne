@@ -87,9 +87,6 @@ public class PrologueShowDisplay : MonoBehaviour
         }
         else if (currentLine + 1 >= textLines.Length) // 最後の行が表示されている状態
         {
-            // ステージ1へ移行
-            fadeController.FadeOut(2.0f).Forget();
-            await UniTask.Delay(2000); // フェードアウトの完了を待つ 
             gameSceneManager.LoadPlorogueToStage1();  // プロローグからステージ1へ移行
         }
     }

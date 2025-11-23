@@ -1541,6 +1541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundManager: {fileID: 545712040}
+  fadeController: {fileID: 1468353104}
 --- !u!4 &182447306
 Transform:
   m_ObjectHideFlags: 0
@@ -15573,6 +15574,7 @@ MonoBehaviour:
   itemManager: {fileID: 1107110901}
   fadeController: {fileID: 0}
   saveSlots: []
+  clickable: {fileID: 0}
   text: {fileID: 0}
 --- !u!1 &1950702109
 GameObject:

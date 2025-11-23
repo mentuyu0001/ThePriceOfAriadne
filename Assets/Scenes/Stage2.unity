@@ -2008,6 +2008,7 @@ MonoBehaviour:
   pauseMenuUIScript: {fileID: 540018747}
   playerVisualCustomizer: {fileID: 1502089846}
   textPanel: {fileID: 1530278121}
+  soundManager: {fileID: 2017757929}
 --- !u!4 &283318550
 Transform:
   m_ObjectHideFlags: 0
@@ -2682,6 +2683,7 @@ MonoBehaviour:
   itemManager: {fileID: 1113016527}
   gameDataManager: {fileID: 1559244142}
   soundManager: {fileID: 2017757929}
+  playerInput: {fileID: 1886981974}
 --- !u!1 &360644856 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6155022801611536632, guid: 8d8a3be38d6d94d3aa7f65477c67d3b0, type: 3}
@@ -3270,6 +3272,55 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fec5a3ad630a147fd9db9847dddb54dd, type: 3}
+--- !u!1 &431640120
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 431640121}
+  - component: {fileID: 431640122}
+  m_Layer: 5
+  m_Name: InitialItemText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &431640121
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431640120}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1063366498}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.00010681035, y: -0.000076292774}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &431640122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431640120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd8fc8eaa9583a54391c1149f285fa90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemSlot: {fileID: 1083382748}
 --- !u!1 &453128423
 GameObject:
   m_ObjectHideFlags: 0
@@ -4730,6 +4781,7 @@ MonoBehaviour:
   itemManager: {fileID: 1113016527}
   menuStatus: {fileID: 1571884626}
   gameDataManager: {fileID: 1559244142}
+  playerInput: {fileID: 1886981974}
 --- !u!1 &572544983
 GameObject:
   m_ObjectHideFlags: 0
@@ -7412,19 +7464,7 @@ MonoBehaviour:
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 775953730}
-        m_TargetAssemblyTypeName: ButtonSound, Assembly-CSharp
-        m_MethodName: OnClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!224 &775953729
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7457,7 +7497,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 775953726}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29094631a11658a45b3b6f5b5aee888b, type: 3}
+  m_Script: {fileID: 11500000, guid: d4ce6e1fa4afa63419d1b9aaab5d944d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &786248697
@@ -17386,6 +17426,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2017868553}
+  - {fileID: 431640121}
   - {fileID: 342617367}
   - {fileID: 2062895759}
   - {fileID: 614452562}
@@ -23062,19 +23103,7 @@ MonoBehaviour:
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1325690123}
-        m_TargetAssemblyTypeName: ButtonSound, Assembly-CSharp
-        m_MethodName: OnClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1325690123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23084,7 +23113,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1325690119}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29094631a11658a45b3b6f5b5aee888b, type: 3}
+  m_Script: {fileID: 11500000, guid: d4ce6e1fa4afa63419d1b9aaab5d944d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1326868141 stripped
@@ -24708,6 +24737,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundManager: {fileID: 2017757929}
+  fadeController: {fileID: 1827676353}
 --- !u!4 &1480997591
 Transform:
   m_ObjectHideFlags: 0
@@ -25940,7 +25970,7 @@ Transform:
   m_GameObject: {fileID: 1586923810}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40.70724, y: 4.251869, z: -10}
+  m_LocalPosition: {x: -40.712982, y: 4.251869, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44935,6 +44965,7 @@ MonoBehaviour:
   itemManager: {fileID: 0}
   menuStatus: {fileID: 0}
   gameDataManager: {fileID: 0}
+  playerInput: {fileID: 0}
 --- !u!4 &1974069034
 Transform:
   m_ObjectHideFlags: 0

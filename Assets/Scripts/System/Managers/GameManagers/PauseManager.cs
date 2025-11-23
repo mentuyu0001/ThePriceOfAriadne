@@ -17,6 +17,9 @@ public class PauseManager : MonoBehaviour
     // テキストパネルの参照
     [SerializeField] private GameObject textPanel;
 
+    // 音を追加する
+    [SerializeField] private SoundManager soundManager;
+
     // 現在ポーズ中かどうかを保持するフラグ
     private bool isPaused = false;
 
@@ -60,6 +63,7 @@ public class PauseManager : MonoBehaviour
     // ゲームをポーズするメソッド
     private void Pause()
     {
+        soundManager.PlaySE(14);
         pauseMenuUI.SetActive(true);
         playerVisualCustomizer.visuallizePlayerParts(); // プレイヤーの見た目を反映
         Time.timeScale = 0f; // 時間の流れを止める
