@@ -155,6 +155,7 @@ public class StageItemSlot : Button
         // nullチェックとデバッグログを追加
         if (itemText == null) Debug.LogError($"{gameObject.name}: itemTextがnullです");
         if (itemText2 == null) Debug.LogError($"{gameObject.name}: itemText2がnullです");
+        if (partsRatio == null) partsRatio = GameObject.Find("PlayerPartsRatio").GetComponent<PlayerPartsRatio>();
         if (partsRatio == null) Debug.LogError($"{gameObject.name}: partsRatioがnullです");
 
         itemText.enabled = true;
