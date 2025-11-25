@@ -111,6 +111,7 @@ public class CollectibleItem : MonoBehaviour
             // 全て25%のとき
             if (dominantParts.Count == 4)
             {
+                CollectItem();
                 if (gameTextDisplay != null)
                 {
                     var allQuartersText = itemData.GetAllQuartersTone(itemID);
@@ -134,7 +135,7 @@ public class CollectibleItem : MonoBehaviour
                     textPanel.SetActive(false);
                     //textBackground.SetActive(false);
                 }
-                CollectItem();
+                
                 Destroy(gameObject);
                 return;
             }
@@ -167,6 +168,7 @@ public class CollectibleItem : MonoBehaviour
             // 100%かつアイテム所有者と一致
             else if (Mathf.Approximately(maxRatio, 100f) && dominantParts.Count == 1 && dominantParts[0].ToString() == item.ownerType.ToString())
             {
+                CollectItem();
                 if (gameTextDisplay != null)
                 {
                     textList.Add(descriptions.ownFullTone);
@@ -176,7 +178,6 @@ public class CollectibleItem : MonoBehaviour
                     2f // ディレイ
                 );
                 }
-                CollectItem();
                 Destroy(gameObject);
                 return;
             }
@@ -207,7 +208,7 @@ public class CollectibleItem : MonoBehaviour
                         break;
                 }
             }
-
+            CollectItem();
             // 共通の表示処理
             if (gameTextDisplay != null && textList.Count > 0)
             {
@@ -217,8 +218,6 @@ public class CollectibleItem : MonoBehaviour
                     2f // ディレイ
                 );
             }
-
-            CollectItem();
             Destroy(gameObject);
         }
     }
