@@ -111,6 +111,7 @@ public class CollectibleItem : MonoBehaviour
             // 全て25%のとき
             if (dominantParts.Count == 4)
             {
+                CollectItem();
                 if (gameTextDisplay != null)
                 {
                     var allQuartersText = itemData.GetAllQuartersTone(itemID);
@@ -134,7 +135,7 @@ public class CollectibleItem : MonoBehaviour
                     textPanel.SetActive(false);
                     //textBackground.SetActive(false);
                 }
-                CollectItem();
+                
                 Destroy(gameObject);
                 return;
             }
@@ -167,15 +168,16 @@ public class CollectibleItem : MonoBehaviour
             // 100%かつアイテム所有者と一致
             else if (Mathf.Approximately(maxRatio, 100f) && dominantParts.Count == 1 && dominantParts[0].ToString() == item.ownerType.ToString())
             {
+                CollectItem();
                 if (gameTextDisplay != null)
                 {
-                    await ShowTextsSequentiallyFromItemData(
-                        gameTextDisplay,
-                        new List<PartsChara> { dominantParts[0] },
-                        2f
-                    );
+                    textList.Add(descriptions.ownFullTone);
+                    await ShowOwnTextsSequentiallyFromItemData(
+                    gameTextDisplay,
+                    textList.Select((_, i) => dominantParts.ElementAtOrDefault(i)).ToList(), // charaListは使わないが型合わせ
+                    2f // ディレイ
+                );
                 }
-                CollectItem();
                 Destroy(gameObject);
                 return;
             }
@@ -206,7 +208,7 @@ public class CollectibleItem : MonoBehaviour
                         break;
                 }
             }
-
+            CollectItem();
             // 共通の表示処理
             if (gameTextDisplay != null && textList.Count > 0)
             {
@@ -216,8 +218,6 @@ public class CollectibleItem : MonoBehaviour
                     2f // ディレイ
                 );
             }
-
-            CollectItem();
             Destroy(gameObject);
         }
     }
@@ -237,6 +237,43 @@ public class CollectibleItem : MonoBehaviour
         foreach (var chara in charaList)
         {
             string text = itemData.GetToneTextByPartsChara(itemID, chara);
+            if (!string.IsNullOrEmpty(text))
+            {
+                textList.Add(text);
+            }
+        }
+        textList = textList.Distinct().ToList();
+
+        // パネルとバックグラウンドを表示
+        textPanel.SetActive(true);
+        //textBackground.SetActive(true);
+
+        // ShowTextsSequentiallyを使用してテキストを表示
+        await ShowTextsSequentially(textDisplay, textList, delayBetweenTexts, showDebugLogs);
+
+        // 表示時間待機
+        await UniTask.Delay(System.TimeSpan.FromSeconds(textDisplayDuration));
+
+        // テキストをクリアして非表示
+        textPanel.SetActive(false);
+        //textBackground.SetActive(false);
+    }
+
+    private async UniTask ShowOwnTextsSequentiallyFromItemData(
+        GameTextDisplay textDisplay,
+        List<PartsChara> charaList,
+        float delayBetweenTexts = 0f,
+        bool showDebugLogs = false
+    )
+    {
+        var item = itemData.GetItemByID(itemID);
+        var descriptions = item?.descriptions;
+        if (descriptions == null) return;
+
+        var textList = new List<string>();
+        foreach (var chara in charaList)
+        {
+            string text = itemData.GetOwnFullTone(itemID);
             if (!string.IsNullOrEmpty(text))
             {
                 textList.Add(text);
