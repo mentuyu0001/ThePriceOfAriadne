@@ -93,7 +93,7 @@ public class ItemResetConfirmation : MonoBehaviour
     // ダイアログを閉じる処理を共通化
     private void CloseDialog()
     {
-        SoundManager.Instance.PlaySE(14); // 14はUI決定音のインデックス
+        //SoundManager.Instance.PlaySE(14); // 14はUI決定音のインデックス
         confirmationDialogPanel.SetActive(false);
         //  記憶しておいたボタンにフォーカスを戻す
         EventSystem.current.SetSelectedGameObject(lastSelectedButton);
