@@ -68,7 +68,8 @@ public class LaserTarget : MonoBehaviour
             moveSequence.Append(transform.DOMoveY(bottomPosition, moveDuration).SetEase(easeType))
                       .AppendInterval(delayBetweenMovement)
                       .Append(transform.DOMoveY(topPosition, moveDuration).SetEase(easeType))
-                      .AppendInterval(delayBetweenMovement);
+                      .AppendInterval(delayBetweenMovement)
+                      .SetLink(gameObject);
         }
         else
         {
@@ -76,7 +77,8 @@ public class LaserTarget : MonoBehaviour
             moveSequence.Append(transform.DOMoveY(topPosition, moveDuration).SetEase(easeType))
                       .AppendInterval(delayBetweenMovement)
                       .Append(transform.DOMoveY(bottomPosition, moveDuration).SetEase(easeType))
-                      .AppendInterval(delayBetweenMovement);
+                      .AppendInterval(delayBetweenMovement)
+                      .SetLink(gameObject);
         }
         
         // ループを設定

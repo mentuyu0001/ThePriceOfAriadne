@@ -76,6 +76,8 @@ public class EndingShowDisplay : MonoBehaviour
    
     private CancellationTokenSource cts;
 
+    private CancellationToken dct; // DestroyCancellationToken
+
     private GameSceneManager sceneManager;
 
     private bool isFading = false;
@@ -95,6 +97,9 @@ public class EndingShowDisplay : MonoBehaviour
         nextLineAction.performed += ctx => ShowNextLine();
         
         nextLineAction.Enable();
+
+        // DestroyCancellationTokenの取得 このオブジェクトが破棄されるとキャンセルされる
+        dct = this.GetCancellationTokenOnDestroy();
     }
 
     private void OnDestroy()
@@ -233,13 +238,16 @@ public class EndingShowDisplay : MonoBehaviour
     
     private async UniTask ShowLineLetterByLetter(string line, CancellationToken token)
     {
+        CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(token, dct);
+        CancellationToken linkedToken = linkedCts.Token;
+
         isTextTyping = true;
         int lineLength = line.Length;
         displayText.text = "";
         for (int i = 0; i < lineLength; i++)
         {
             displayText.text += line[i];
-            await UniTask.Delay(TimeSpan.FromSeconds(letterDelay), cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds(letterDelay), cancellationToken: linkedToken);
         }
         isTextTyping = false;
     }

@@ -2,6 +2,7 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine.InputSystem;
+using System.Threading;
 
 public class GameClearManager : MonoBehaviour
 {
@@ -28,10 +29,16 @@ public class GameClearManager : MonoBehaviour
     // 一度だけ実行するためのフラグ（目印）
     private bool hasTriggered = false;
 
+    private CancellationToken dct; // DestroyCancellationToken
+
     void Start()
     {
         stageNumber = GameObject.Find("StageNumber").GetComponent<StageNumber>();
+
+        // DestroyCancellationTokenの取得 このオブジェクトが破棄されるとキャンセルされる
+        dct = this.GetCancellationTokenOnDestroy();
     }
+    
     private async void OnTriggerEnter2D(Collider2D other)
     {
         if (stageNumber.GetCurrentStage() == 5)
@@ -67,20 +74,21 @@ public class GameClearManager : MonoBehaviour
                 // エンディングシーンへ移動
                 gameSceneManager.LoadEpilogue();
                 
-
-                await UniTask.Delay((int)(dashTime * 1000));
+                /*
+                await UniTask.Delay((int)(dashTime * 1000), cancellationToken: dct);
 
                 controller.StartAndGoalSetFrictionAdd();
                 playerAnimationManager.AniWalkFalse();
 
 
-                await UniTask.Delay((int)(stopTime * 1000));
+                await UniTask.Delay((int)(stopTime * 1000), cancellationToken: dct);
 
                 // プレイヤーを止める
                 if (SoundManager.Instance != null)
                 {
                     SoundManager.Instance.StopSE();
                 }
+                */
             }
             return;
         }
@@ -118,19 +126,21 @@ public class GameClearManager : MonoBehaviour
 
             // セーブシーンへ移動
             gameSceneManager.LoadSaveScene(stageNumber.GetCurrentStage()-1);
-            await UniTask.Delay((int)(dashTime * 1000));
+            /*
+            await UniTask.Delay((int)(dashTime * 1000), cancellationToken: dct);
 
             controller.StartAndGoalSetFrictionAdd();
             playerAnimationManager.AniWalkFalse();
 
 
-            await UniTask.Delay((int)(stopTime * 1000));
+            await UniTask.Delay((int)(stopTime * 1000), cancellationToken: dct);
 
             // プレイヤーを止める
             if (SoundManager.Instance != null)
             {
                 SoundManager.Instance.StopSE();
             }
+            */
         }
     }
 }

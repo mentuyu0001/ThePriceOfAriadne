@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using TMPro; 
+using System.Threading;
+
 public class CollectibleItem : MonoBehaviour
 {
     /// <summary>
@@ -42,9 +44,14 @@ public class CollectibleItem : MonoBehaviour
 
     private PlayerPartsRatio partsRatio;
 
+    private CancellationToken dct; // DestroyCancellationToken
+
     private void Start()
     {
         partsRatio = GameObject.Find("PlayerPartsRatio").GetComponent<PlayerPartsRatio>();
+
+        // DestroyCancellationTokenの取得 このオブジェクトが破棄されるとキャンセルされる
+        dct = this.GetCancellationTokenOnDestroy();
     }
 
     // アイテムを取得情報をインベントリに保存するメソッド
@@ -129,7 +136,7 @@ public class CollectibleItem : MonoBehaviour
                     );
 
                     // 表示時間待機
-                    await UniTask.Delay(System.TimeSpan.FromSeconds(textDisplayDuration));
+                    await UniTask.Delay(System.TimeSpan.FromSeconds(textDisplayDuration), cancellationToken: dct);
 
                     // テキストをクリアして非表示
                     textPanel.SetActive(false);
@@ -252,7 +259,7 @@ public class CollectibleItem : MonoBehaviour
         await ShowTextsSequentially(textDisplay, textList, delayBetweenTexts, showDebugLogs);
 
         // 表示時間待機
-        await UniTask.Delay(System.TimeSpan.FromSeconds(textDisplayDuration));
+        await UniTask.Delay(System.TimeSpan.FromSeconds(textDisplayDuration), cancellationToken: dct);
 
         // テキストをクリアして非表示
         textPanel.SetActive(false);
@@ -289,7 +296,7 @@ public class CollectibleItem : MonoBehaviour
         await ShowTextsSequentially(textDisplay, textList, delayBetweenTexts, showDebugLogs);
 
         // 表示時間待機
-        await UniTask.Delay(System.TimeSpan.FromSeconds(textDisplayDuration));
+        await UniTask.Delay(System.TimeSpan.FromSeconds(textDisplayDuration), cancellationToken: dct);
 
         // テキストをクリアして非表示
         textPanel.SetActive(false);

@@ -1,5 +1,7 @@
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 /// <summary>
 /// チュートリアル用の文章を出す
@@ -10,14 +12,21 @@ public class HideTutorial : MonoBehaviour
 
     private bool isText = false;
 
-    async Task OnTriggerStay2D(Collider2D other)
+    private CancellationToken dct; // DestroyCancellationToken
+
+    void Start()
+    {
+        dct = this.GetCancellationTokenOnDestroy();
+    }
+
+    async void OnTriggerEnter2D(Collider2D other)
     {
         if (!isText)
         {
             if (other.gameObject.tag == "Player")
             {
                 isText = true;
-                gameTextDisplay.HideText();
+                gameTextDisplay.HideText(dct).Forget();
             }
         }
     }

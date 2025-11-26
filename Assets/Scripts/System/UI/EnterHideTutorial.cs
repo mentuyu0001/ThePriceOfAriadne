@@ -1,6 +1,6 @@
-using System.Threading.Tasks;
-using NUnit.Framework;
 using UnityEngine;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 
 /// <summary>
 /// チュートリアル用の文章を出す
@@ -11,7 +11,15 @@ public class EnterHideTutorial : MonoBehaviour
 
     private bool isText = false;
 
-    async Task OnTriggerStay2D(Collider2D other)
+    private CancellationToken dct; // DestroyCancellationToken
+
+    void Start()
+    {
+        // DestroyCancellationTokenの取得 このオブジェクトが破棄されるとキャンセルされる
+        dct = this.GetCancellationTokenOnDestroy();
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (!isText)
         {
@@ -22,11 +30,14 @@ public class EnterHideTutorial : MonoBehaviour
         }
     }
 
-    public void HideText()
+    public async UniTask HideText(CancellationToken token)
     {
+        using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(token, dct);
+        CancellationToken linkedToken = linkedCts.Token;
+
         if (isText)
         {
-            gameTextDisplay.HideText();
+            gameTextDisplay.HideText(linkedToken).Forget();
         }
     }
 }

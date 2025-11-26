@@ -1,5 +1,6 @@
 using UnityEngine;
 using VContainer;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 
 /// <summary>
@@ -25,6 +26,8 @@ public class FireCheckZone : MonoBehaviour
     
     private bool isPlayerInZone = false;
     private bool hasShownText = false; // テキストを表示済みかどうか
+
+    private CancellationToken dct; // DestroyCancellationToken
     
     private void Start()
     {
@@ -33,6 +36,9 @@ public class FireCheckZone : MonoBehaviour
             fireFieldCollider.enabled = !playerStatus.CanWalkOnFire;
             fireFieldColliderOpposite.enabled = !playerStatus.CanWalkOnFire;
         }
+
+        // DestroyCancellationTokenの取得 このオブジェクトが破棄されるとキャンセルされる
+        dct = this.GetCancellationTokenOnDestroy();
     }
     
     private void OnTriggerEnter2D(Collider2D collision)
@@ -91,7 +97,7 @@ public class FireCheckZone : MonoBehaviour
             // テキストを閉じる
             if (textDisplay != null && textDisplay.IsDisplaying)
             {
-                textDisplay.HideText();
+                textDisplay.HideText(dct).Forget();
             }
         }
     }
@@ -103,8 +109,9 @@ public class FireCheckZone : MonoBehaviour
             partsRatio,
             objectTextData,
             emberFireID,
+            dct,
             delayBetweenTexts,
             showDebugLogs
-        );
+        ).Forget();
     }
 }

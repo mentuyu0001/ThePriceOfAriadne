@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer;
+using System.Threading;
 
 public class ThrowKnifeController : MonoBehaviour
 {
@@ -18,6 +19,14 @@ public class ThrowKnifeController : MonoBehaviour
     [Inject] private PlayerRunTimeStatus runTimeStatus;
     [Inject] private PlayerStatus playerStatus;
 
+    private CancellationToken dct; // DestroyCancellationToken
+
+    void Start()
+    {
+        // DestroyCancellationTokenの取得 このオブジェクトが破棄されるとキャンセルされる
+        dct = this.GetCancellationTokenOnDestroy();
+    }
+
     public async UniTaskVoid ThrowKnife()
     {
         if (playerStatus.CanThrowKnife && runTimeStatus.CanThrowKnife)
@@ -25,7 +34,7 @@ public class ThrowKnifeController : MonoBehaviour
             runTimeStatus.CanThrowKnife = false; // ナイフを投げたら連続で投げれないようにfalseにする
 
             // waitKnife秒待機
-            await UniTask.Delay((int)(waitKnife * 1000));
+            await UniTask.Delay((int)(waitKnife * 1000), cancellationToken: dct);
     
             // プレイヤーの向きに応じてナイフの発生位置のX座標のプラスマイナスを変更する
             float direction = 1f; // まず右向き(1)で初期化
@@ -78,7 +87,7 @@ public class ThrowKnifeController : MonoBehaviour
                     knifeRb.AddForce(forceVector, ForceMode2D.Impulse);
 
                     // 1秒まってから次のナイフが投げれるようにする
-                    await UniTask.Delay(throwCoolTime);
+                    await UniTask.Delay(throwCoolTime, cancellationToken: dct);
                     runTimeStatus.CanThrowKnife = true;
                 }
             }

@@ -20,7 +20,7 @@ public class SoundManager : MonoBehaviour
 
     public float SEVolume => seSource != null ? seSource.volume : 0f;
 
-    private CancellationTokenSource cts = new CancellationTokenSource();
+    private CancellationToken dct; // DestroyCancellationToken
 
     private void Awake()
     {
@@ -33,6 +33,9 @@ public class SoundManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        // DestroyCancellationTokenの取得 このオブジェクトが破棄されるとキャンセルされる
+        dct = this.GetCancellationTokenOnDestroy();
     }
 
     // BGM再生（ループ指定可能）
@@ -48,7 +51,7 @@ public class SoundManager : MonoBehaviour
     }
 
     // フェードインしながらBGM再生（ループ指定可能）
-    public async UniTask PlayBGMFadeIn(int index, float duration, CancellationToken token = default, bool loop = true)
+    public async UniTask PlayBGMFadeIn(int index, float duration, CancellationToken token, bool loop = true)
     {
         if (bgmClips != null && index >= 0 && index < bgmClips.Length)
         {
@@ -57,12 +60,15 @@ public class SoundManager : MonoBehaviour
             bgmSource.volume = 0f;
             bgmSource.Play();
 
+            using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(token, dct);
+            CancellationToken linkedToken = linkedCts.Token;
+
             float dt = 0.01f;
             float volumeStep = VolumeData.Instance.bgmVolume / duration * dt;
-            while (bgmSource.volume < VolumeData.Instance.bgmVolume)
+            while (bgmSource.volume < VolumeData.Instance.bgmVolume && !linkedToken.IsCancellationRequested)
             {
                 bgmSource.volume += volumeStep;
-                await UniTask.Delay(TimeSpan.FromSeconds(dt), cancellationToken: token);
+                await UniTask.Delay(TimeSpan.FromSeconds(dt), cancellationToken: linkedToken);
             }
         }
     }
@@ -77,16 +83,19 @@ public class SoundManager : MonoBehaviour
     }
 
     // フェードアウトしながらBGM停止
-    public async UniTask StopBGMFadeOut(float duration)
+    public async UniTask StopBGMFadeOut(float duration, CancellationToken token)
     {
         if (bgmSource != null && bgmSource.isPlaying)
         {
+            using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(token, dct);
+            CancellationToken linkedToken = linkedCts.Token;
+
             float dt = 0.01f;
             float volumeStep = bgmSource.volume / duration * dt;
-            while (bgmSource.volume > 0f)
+            while (bgmSource.volume > 0f && !linkedToken.IsCancellationRequested)
             {
                 bgmSource.volume -= volumeStep;
-                await UniTask.Delay(TimeSpan.FromSeconds(dt), cancellationToken: cts.Token, ignoreTimeScale: true);
+                await UniTask.Delay(TimeSpan.FromSeconds(dt), cancellationToken: linkedToken, ignoreTimeScale: true);
             }
 
             bgmSource.Stop();
@@ -150,12 +159,12 @@ public class SoundManager : MonoBehaviour
     public void PlayLoopSE2(int index)
     {
         UnityEngine.Debug.Log("PlaySE called with index: " + index);
-        if (seClips != null && index >= 0 && index < seClips.Length)
-
+        if (seClips != null && index >= 0 && index < seClips.Length) {
             seSourceLoop2.clip = seClips[index];
-        seSourceLoop2.loop = true;
-        seSourceLoop2.volume = VolumeData.Instance.seVolume;
-        seSourceLoop2.Play();
+            seSourceLoop2.loop = true;
+            seSourceLoop2.volume = VolumeData.Instance.seVolume;
+            seSourceLoop2.Play();
+        }
     }
 
     public void StopLoopSE2()

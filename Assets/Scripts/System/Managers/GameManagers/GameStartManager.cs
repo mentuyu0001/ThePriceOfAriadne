@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Cysharp.Threading.Tasks.Triggers;
 using UnityEngine;
@@ -25,6 +25,8 @@ public class GameStartManager : MonoBehaviour
 
     // アニメーション時間
     private float animationTime;
+
+    private CancellationToken dct; // DestroyCancellationToken
 
     async UniTaskVoid Start()
     {
@@ -58,26 +60,36 @@ public class GameStartManager : MonoBehaviour
 
         controller.StartAndGoalVelocity();
 
-        await UniTask.Delay((int)(dashTime * 1000));
+        dct = this.GetCancellationTokenOnDestroy();
 
-        controller.StartAndGoalSetFrictionAdd();
-        playerAnimationManager.AniWalkFalse();
+        try{
+            await UniTask.Delay((int)(dashTime * 1000), cancellationToken: dct);
 
-        if (SoundManager.Instance != null)
+            controller.StartAndGoalSetFrictionAdd();
+            playerAnimationManager.AniWalkFalse();
+
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.StopSE();
+            }
+
+
+            await UniTask.Delay((int)(stopTime * 1000), cancellationToken: dct);
+
+            // プレイヤーを止める
+
+            // スタートに障害物を置く
+            startObg.SetActive(true);
+
+            // 入力を再開する
+            playerInput.SwitchCurrentActionMap("Player");
+            controller.isStartGoal = false;
+        } finally
         {
-            SoundManager.Instance.StopSE();
+            if (SoundManager.Instance != null)
+            {
+                SoundManager.Instance.StopSE();
+            }
         }
-
-
-        await UniTask.Delay((int)(stopTime * 1000));
-
-        // プレイヤーを止める
-
-        // スタートに障害物を置く
-        startObg.SetActive(true);
-
-        // 入力を再開する
-        playerInput.SwitchCurrentActionMap("Player");
-        controller.isStartGoal = false;
     }
 }

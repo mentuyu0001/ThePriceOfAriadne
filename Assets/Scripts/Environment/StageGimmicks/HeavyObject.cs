@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using VContainer;
 using Unity.VisualScripting;
 using System;
+using System.Threading;
 
 /// <summary>
 /// プレイヤーが重いものを押すためのスクリプト
@@ -46,6 +47,8 @@ public class HeavyObject : MonoBehaviour
     // 非同期操作をキャンセルするためのトークン
     private System.Threading.CancellationTokenSource moveCts;
 
+    private CancellationToken dct; // DestroyCancellationToken
+
     // デバッグ用
     private bool isLoopRunning = false;
 
@@ -86,6 +89,9 @@ public class HeavyObject : MonoBehaviour
         {
             Debug.LogWarning("SpriteRendererが見つかりませんでした。distanceThresholdをデフォルト値に設定します。");
         }
+
+        // DestroyCancellationTokenの取得 このオブジェクトが破棄されるとキャンセルされる
+        dct = this.GetCancellationTokenOnDestroy();
     }
     
     private void OnCollisionEnter2D(Collision2D collision)
@@ -182,7 +188,7 @@ public class HeavyObject : MonoBehaviour
             
             if (textDisplay != null && textDisplay.IsDisplaying)
             {
-                textDisplay.HideText();
+                textDisplay.HideText(dct).Forget();
             }
         }
     }
@@ -194,13 +200,17 @@ public class HeavyObject : MonoBehaviour
             partsRatio,
             objectTextData,
             heavyObjectID,
+            dct,
             delayBetweenTexts,
             showDebugLogs
-        );
+        ).Forget();
     }
     
     private async UniTaskVoid MoveLoop(System.Threading.CancellationToken cancellationToken)
     {
+        using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, dct);
+        CancellationToken linkedToken = linkedCts.Token;
+
         if (isLoopRunning)
         {
             if (showDebugLogs) Debug.LogWarning("MoveLoop: すでに実行中のループがあります");
@@ -215,7 +225,7 @@ public class HeavyObject : MonoBehaviour
         
         try
         {
-            while (isPushing && !cancellationToken.IsCancellationRequested)
+            while (isPushing && !linkedToken.IsCancellationRequested)
             {
                 if (rb != null && playerRb != null)
                 {
@@ -245,7 +255,7 @@ public class HeavyObject : MonoBehaviour
                         rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
                         
                         StopPushing();
-                        ResetCanPushAgain().Forget();
+                        ResetCanPushAgain(linkedToken).Forget();
                         break;
                     }
                     else
@@ -259,7 +269,7 @@ public class HeavyObject : MonoBehaviour
                     }
                 }
                 
-                await UniTask.Yield(PlayerLoopTiming.FixedUpdate, cancellationToken);
+                await UniTask.Yield(PlayerLoopTiming.FixedUpdate, linkedToken);
             }
         }
         catch (System.OperationCanceledException)
@@ -274,9 +284,12 @@ public class HeavyObject : MonoBehaviour
     }
     
     // 一定時間後にcanPushAgainをリセットする
-    private async UniTaskVoid ResetCanPushAgain()
+    private async UniTaskVoid ResetCanPushAgain(CancellationToken token)
     {
-        await UniTask.Delay(1000); // 1秒待機
+        using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(token, dct);
+        CancellationToken linkedToken = linkedCts.Token;
+        
+        await UniTask.Delay(1000, cancellationToken: linkedToken); // 1秒待機
         canPushAgain = true;
     }
 
