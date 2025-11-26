@@ -1,6 +1,7 @@
 using UnityEngine;
 using VContainer;
 using Cysharp.Threading.Tasks;
+using System.Threading;
 
 /// <summary>
 /// 鍵のかかったドアのスクリプト
@@ -26,6 +27,8 @@ public class LockedDoor : MonoBehaviour
     private bool isPlayerInContact = false;
     private bool hasShownText = false; // テキストを表示済みかどうか
 
+    private CancellationToken dct; // DestroyCancellationToken
+
     void Start()
     {
         // 注入されたコンポーネントの確認
@@ -45,6 +48,9 @@ public class LockedDoor : MonoBehaviour
         {
             Debug.LogError("Player GameObject is not assigned.");
         }
+
+        // DestroyCancellationTokenの取得 このオブジェクトが破棄されるとキャンセルされる
+        dct = this.GetCancellationTokenOnDestroy();
     }
 
     // ドアを開く関数
@@ -71,7 +77,7 @@ public class LockedDoor : MonoBehaviour
             // テキストを閉じる
             if (textDisplay != null && textDisplay.IsDisplaying)
             {
-                textDisplay.HideText();
+                textDisplay.HideText(dct).Forget();
             }
             hasShownText = false;
         }
@@ -119,7 +125,7 @@ public class LockedDoor : MonoBehaviour
             // テキストを閉じる
             if (textDisplay != null && textDisplay.IsDisplaying)
             {
-                textDisplay.HideText();
+                textDisplay.HideText(dct).Forget();
             }
         }
     }
@@ -142,8 +148,9 @@ public class LockedDoor : MonoBehaviour
             partsRatio,
             objectTextData,
             lockedDoorID,
+            dct,
             delayBetweenTexts,
             showDebugLogs
-        );
+        ).Forget();
     }
 }

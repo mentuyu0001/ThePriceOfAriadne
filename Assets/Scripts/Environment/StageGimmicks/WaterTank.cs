@@ -1,6 +1,7 @@
 using UnityEngine;
 using VContainer;
 using Cysharp.Threading.Tasks;
+using System.Threading;
 
 /// <summary>
 /// 水をチャージするためのクラス
@@ -24,6 +25,14 @@ public class WaterTank : MonoBehaviour
     
     private bool isPlayerInZone = false;
     private bool hasShownText = false; // テキストを表示済みかどうか
+
+    private CancellationToken dct; // DestroyCancellationToken
+
+    void Start()
+    {
+        // DestroyCancellationTokenの取得 このオブジェクトが破棄されるとキャンセルされる
+        dct = this.GetCancellationTokenOnDestroy();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -66,7 +75,7 @@ public class WaterTank : MonoBehaviour
             // テキストを閉じる
             if (textDisplay != null && textDisplay.IsDisplaying)
             {
-                textDisplay.HideText();
+                textDisplay.HideText(dct).Forget();
             }
         }
     }
@@ -97,9 +106,10 @@ public class WaterTank : MonoBehaviour
             partsRatio,
             objectTextData,
             waterTankID,
+            dct,
             delayBetweenTexts,
             showDebugLogs
-        );
+        ).Forget();
     }
     
     private void PlayChargeEffect()

@@ -32,6 +32,7 @@ public class GameTextDisplay : MonoBehaviour
     private bool isDisplaying = false;
     private bool isFading = false;
     private CancellationTokenSource currentCts;
+    private CancellationToken dct; // DestroyCancellationToken
     private bool isDestroyed = false;
 
     private void Awake()
@@ -84,11 +85,14 @@ public class GameTextDisplay : MonoBehaviour
         {
             Debug.LogWarning("⚠️ textBackgroundが設定されていません");
         }
+
+        // DestroyCancellationTokenの取得 このオブジェクトが破棄されるとキャンセルされる
+        dct = this.GetCancellationTokenOnDestroy();
         
         HideImmediate();
     }
 
-    public async UniTask ShowText(string message1, string message2 = "")
+    public async UniTask ShowText(string message1, string message2 = "", CancellationToken token = default)
     {
         if (isDestroyed || this == null) return;
         
@@ -113,8 +117,12 @@ public class GameTextDisplay : MonoBehaviour
         }
 
         currentCts = new CancellationTokenSource();
+        CancellationToken currentCt = currentCts.Token;
         isDisplaying = true;
         // isFading = true; // フェード開始
+
+        using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(token, currentCt, dct);
+        CancellationToken linkedToken = linkedCts.Token;
 
         try
         {
@@ -133,7 +141,7 @@ public class GameTextDisplay : MonoBehaviour
             }
             
             // フェードイン
-            await FadeIn(currentCts.Token);
+            await FadeIn(linkedToken);
             
             // isFading = false; // フェードイン完了
             
@@ -156,7 +164,7 @@ public class GameTextDisplay : MonoBehaviour
         }
     }
 
-    public async void HideText()
+    public async UniTaskVoid HideText(CancellationToken token)
     {
         if (!isDisplaying || isDestroyed || this == null) return;
         
@@ -174,10 +182,13 @@ public class GameTextDisplay : MonoBehaviour
         currentCts?.Dispose();
         currentCts = null;
 
+        using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(token, dct);
+        CancellationToken linkedToken = linkedCts.Token;
+
         try
         {
             // フェードアウト
-            await FadeOut(CancellationToken.None);
+            await FadeOut(linkedToken);
             
             if (textPanel != null && !isDestroyed && this != null)
             {
@@ -201,10 +212,13 @@ public class GameTextDisplay : MonoBehaviour
     private async UniTask ShowTextGradually(string fullText, CancellationToken token)
     {
         if (messageText1 == null || isDestroyed || this == null) return;
+
+        using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(token, dct);
+        CancellationToken linkedToken = linkedCts.Token;
         
         for (int i = 0; i <= fullText.Length; i++)
         {
-            if (messageText1 == null || isDestroyed || this == null || token.IsCancellationRequested)
+            if (messageText1 == null || isDestroyed || this == null || linkedToken.IsCancellationRequested)
             {
                 return;
             }
@@ -215,7 +229,7 @@ public class GameTextDisplay : MonoBehaviour
             {
                 await UniTask.Delay(
                     System.TimeSpan.FromSeconds(characterDisplayInterval),
-                    cancellationToken: token
+                    cancellationToken: linkedToken
                 );
             }
             catch (System.OperationCanceledException)
@@ -264,10 +278,13 @@ public class GameTextDisplay : MonoBehaviour
     {
         if (canvasGroup == null || isDestroyed || this == null) return;
 
+        using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(token, dct);
+        CancellationToken linkedToken = linkedCts.Token;
+
         float elapsed = 0f;
-        while (elapsed < fadeInDuration)
+        while (elapsed < fadeInDuration && !linkedToken.IsCancellationRequested)
         {
-            if (canvasGroup == null || isDestroyed || this == null || token.IsCancellationRequested)
+            if (canvasGroup == null || isDestroyed || this == null || linkedToken.IsCancellationRequested)
             {
                 return;
             }
@@ -291,7 +308,7 @@ public class GameTextDisplay : MonoBehaviour
             
             try
             {
-                await UniTask.Yield(token);
+                await UniTask.Yield(linkedToken);
             }
             catch (System.OperationCanceledException)
             {
@@ -319,11 +336,14 @@ public class GameTextDisplay : MonoBehaviour
     {
         if (canvasGroup == null || isDestroyed || this == null) return;
 
+        using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(token, dct);
+        CancellationToken linkedToken = linkedCts.Token;
+
         float elapsed = 0f;
         float startAlpha = canvasGroup.alpha;
-        while (elapsed < fadeOutDuration)
+        while (elapsed < fadeOutDuration && !linkedToken.IsCancellationRequested)
         {
-            if (canvasGroup == null || isDestroyed || this == null || token.IsCancellationRequested)
+            if (canvasGroup == null || isDestroyed || this == null || linkedToken.IsCancellationRequested)
             {
                 return;
             }
@@ -347,7 +367,7 @@ public class GameTextDisplay : MonoBehaviour
             
             try
             {
-                await UniTask.Yield(token);
+                await UniTask.Yield(linkedToken);
             }
             catch (System.OperationCanceledException)
             {
@@ -389,6 +409,7 @@ public static class GameTextDisplayExtensions
         PlayerPartsRatio partsRatio,
         ObjectTextData objectTextData,
         int objectID,
+        CancellationToken token,
         float delayBetweenTexts = 1.5f,
         bool showDebugLogs = false)
     {
@@ -475,13 +496,14 @@ public static class GameTextDisplayExtensions
                 textDisplay,
                 new List<string> { allQuartersText },
                 delayBetweenTexts,
-                showDebugLogs
+                showDebugLogs,
+                token
             );
             return;
         }
         
         // テキストを順次表示
-        await ShowTextsSequentially(textDisplay, textList, delayBetweenTexts, showDebugLogs);
+        await ShowTextsSequentially(textDisplay, textList, delayBetweenTexts, showDebugLogs, token);
     }
     
     // 複数のテキストを順次表示
@@ -489,20 +511,21 @@ public static class GameTextDisplayExtensions
         GameTextDisplay textDisplay,
         List<string> textList,
         float delayBetweenTexts,
-        bool showDebugLogs)
+        bool showDebugLogs,
+        CancellationToken token)
     {
         if (textList.Count == 1)
         {
             // 1つだけの場合は通常表示
             if (showDebugLogs) Debug.Log($"表示するテキスト:\n{textList[0]}");
-            await textDisplay.ShowText(textList[0]);
+            await textDisplay.ShowText(textList[0], token: token);
         }
         else
         {
             // 複数ある場合の表示
             if (showDebugLogs) Debug.Log($"表示するテキスト1:\n{textList[0]}");
             if (showDebugLogs) Debug.Log($"表示するテキスト2:\n{textList[1]}");
-            await textDisplay.ShowText(textList[0], textList[1]);
+            await textDisplay.ShowText(textList[0], textList[1], token);
         }
     }
 }

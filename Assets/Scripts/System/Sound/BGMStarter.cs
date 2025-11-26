@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using System.Threading;
 
 public class BGMStarter : MonoBehaviour
 {
@@ -14,9 +15,11 @@ public class BGMStarter : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        CancellationToken dct = this.GetCancellationTokenOnDestroy();
+
         if (doFadein)
         {
-            soundManager.PlayBGMFadeIn(bgmIndex, fadeInDuration).Forget();
+            soundManager.PlayBGMFadeIn(bgmIndex, fadeInDuration, dct).Forget();
         }
         else
         {

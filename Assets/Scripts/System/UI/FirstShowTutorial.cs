@@ -1,7 +1,7 @@
-using System.Threading.Tasks;
 using UnityEngine;
 using System;
 using Cysharp.Threading.Tasks;
+using System.Threading;
 
 public class FirstShowTutorial : MonoBehaviour
 {
@@ -13,28 +13,36 @@ public class FirstShowTutorial : MonoBehaviour
 
     float secondsToWait = 4.0f;
 
-    async void OnTriggerStay2D(Collider2D other)
+    private CancellationToken dct; // DestroyCancellationToken
+
+    void Start()
+    {
+        // DestroyCancellationTokenの取得 このオブジェクトが破棄されるとキャンセルされる
+        dct = this.GetCancellationTokenOnDestroy();
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (!isText)
         {
             if (other.gameObject.tag == "Player")
             {
                 isText = true;
-                ShowAndHideTexts();
+                ShowAndHideTexts(dct).Forget();
             }
         }
     }
     
-    private async void ShowAndHideTexts()
+    private async UniTask ShowAndHideTexts(CancellationToken token)
     {
-        await gameTextDisplay.ShowText(tutorialText1);
+        await gameTextDisplay.ShowText(tutorialText1, token: dct);
 
-        await UniTask.Delay(TimeSpan.FromSeconds(secondsToWait));
+        await UniTask.Delay(TimeSpan.FromSeconds(secondsToWait), cancellationToken: token);
 
-        gameTextDisplay.HideText();
+        gameTextDisplay.HideText(dct).Forget();
 
-        await UniTask.Delay(TimeSpan.FromSeconds(1.0f));
+        await UniTask.Delay(TimeSpan.FromSeconds(1.0f), cancellationToken: token);
 
-        await gameTextDisplay.ShowText(tutorialText2);
+        await gameTextDisplay.ShowText(tutorialText2, token: dct);
     }
 }

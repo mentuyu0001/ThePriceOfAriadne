@@ -1,5 +1,6 @@
-using System.Threading.Tasks;
 using UnityEngine;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 
 /// <summary>
 /// チュートリアル用の文章を出す
@@ -12,14 +13,22 @@ public class ShowTutorial : MonoBehaviour
 
     private bool isText = false;
 
-    async Task OnTriggerStay2D(Collider2D other)
+    private CancellationToken dct; // DestroyCancellationToken
+
+    void Start()
+    {
+        // DestroyCancellationTokenの取得 このオブジェクトが破棄されるとキャンセルされる
+        dct = this.GetCancellationTokenOnDestroy();
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (!isText)
         {
             if (other.gameObject.tag == "Player")
             {
                 isText = true;
-                await gameTextDisplay.ShowText(tutorialText);   
+                gameTextDisplay.ShowText(tutorialText, token: dct).Forget();   
             }
         }
     }

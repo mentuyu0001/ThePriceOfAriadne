@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using System.Threading.Tasks;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -14,7 +14,15 @@ public class GameSceneManager : MonoBehaviour
 
     private static bool isLoading = false;
 
-    private async UniTask LoadStageAsync(string sceneName)
+    private CancellationToken dct; // DestroyCancellationToken
+
+    void Start()
+    {
+        // DestroyCancellationTokenの取得 このオブジェクトが破棄されるとキャンセルされる
+        dct = this.GetCancellationTokenOnDestroy();
+    }
+
+    private async UniTask LoadStageAsync(string sceneName, CancellationToken token)
     {
         if (isLoading) return;
 
@@ -22,12 +30,12 @@ public class GameSceneManager : MonoBehaviour
         var op = SceneManager.LoadSceneAsync(sceneName);
         op.allowSceneActivation = false;
 
-        var bgmFadeTask = soundManager.StopBGMFadeOut(fadeDuration);
+        var bgmFadeTask = soundManager.StopBGMFadeOut(fadeDuration, token);
         var visualFadeTask = fadeController.FadeOut(fadeDuration);
 
         await UniTask.WhenAll(bgmFadeTask, visualFadeTask);
 
-        await UniTask.WaitUntil(() => op.progress >= 0.9f);
+        await UniTask.WaitUntil(() => op.progress >= 0.9f, cancellationToken: token);
 
         op.allowSceneActivation = true;
         isLoading = false;
@@ -35,7 +43,7 @@ public class GameSceneManager : MonoBehaviour
 
     public void LoadStage2()
     {
-        LoadStageAsync("Stage2").Forget();
+        LoadStageAsync("Stage2", dct).Forget();
     }
 
     // 指定したステージに遷移
@@ -43,11 +51,11 @@ public class GameSceneManager : MonoBehaviour
     {
         string sceneName = $"Stage{stageNumber}";
         UnityEngine.Debug.Log(sceneName + "に遷移します");
-        LoadStageAsync(sceneName).Forget();
+        LoadStageAsync(sceneName, dct).Forget();
     }
     public void LoadTitle()
     {
-        LoadStageAsync("TitleScene").Forget();
+        LoadStageAsync("TitleScene", dct).Forget();
     }
 
     public void LoadSaveScene(int currentStage)
@@ -58,21 +66,21 @@ public class GameSceneManager : MonoBehaviour
             return;
         }
         string sceneName = $"Save{currentStage}to{currentStage + 1}";
-        LoadStageAsync(sceneName).Forget();
+        LoadStageAsync(sceneName, dct).Forget();
     }
 
     public void LoadPlorogueToStage1()
     {
-        LoadStageAsync("Stage1").Forget();
+        LoadStageAsync("Stage1", dct).Forget();
     }
     public void LoadPlorogue()
     {
-        LoadStageAsync("Prologue").Forget();
+        LoadStageAsync("Prologue", dct).Forget();
     }
     
     public void LoadEpilogue()
     {
-        LoadStageAsync("Epilogue").Forget();
+        LoadStageAsync("Epilogue", dct).Forget();
     }
     public void QuitGame()
     {

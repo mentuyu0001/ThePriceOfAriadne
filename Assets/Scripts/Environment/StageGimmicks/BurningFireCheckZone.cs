@@ -2,6 +2,7 @@ using UnityEngine;
 using VContainer;
 using System.Collections;
 using Cysharp.Threading.Tasks;
+using System.Threading;
 
 /// <summary>
 /// 燃え盛る炎を通れない警告するゾーン（常に通り抜けられない）
@@ -32,6 +33,8 @@ public class BurningFireCheckZone : MonoBehaviour
     private bool isPlayerInZone = false;
     private bool hasShownText = false; // テキストを表示済みかどうか
 
+    private CancellationToken dct; // DestroyCancellationToken
+
     private void Start()
     {
         // 初期状態では炎のコライダーを常に有効化
@@ -44,6 +47,9 @@ public class BurningFireCheckZone : MonoBehaviour
         {
             fireFieldColliderOpposite.enabled = true;
         }
+
+        // DestroyCancellationTokenの取得 このオブジェクトが破棄されるとキャンセルされる
+        dct = this.GetCancellationTokenOnDestroy();
     }
     
     private void OnTriggerEnter2D(Collider2D collision)
@@ -102,7 +108,7 @@ public class BurningFireCheckZone : MonoBehaviour
             // テキストを閉じる
             if (textDisplay != null && textDisplay.IsDisplaying)
             {
-                textDisplay.HideText();
+                textDisplay.HideText(dct).Forget();
             }
         }
     }
@@ -114,9 +120,10 @@ public class BurningFireCheckZone : MonoBehaviour
             partsRatio,
             objectTextData,
             burningFireID,
+            dct,
             delayBetweenTexts,
             showDebugLogs
-        );
+        ).Forget();
     }
 
     // 炎が消火された時に呼び出すメソッド
@@ -146,8 +153,11 @@ public class BurningFireCheckZone : MonoBehaviour
     }
 
     // 炎が消火された時に呼び出すメソッド（UniTask版）
-    public async UniTask FireExtinguishedAsync()
+    public async UniTask FireExtinguishedAsync(CancellationToken token)
     {
+        using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(token, dct);
+        CancellationToken linkedToken = linkedCts.Token;
+
         // Playerオブジェクトから水発射コンポーネントを取得と実行
         ShootWaterController shootWater = player.GetComponent<ShootWaterController>();
         shootWater.ShootWater();
@@ -157,16 +167,16 @@ public class BurningFireCheckZone : MonoBehaviour
         extinguishDelay = shootWater.waterDuration;
         
         // 水発射のアニメーション完了まで待機
-        await UniTask.Delay(System.TimeSpan.FromSeconds(fireWait));
+        await UniTask.Delay(System.TimeSpan.FromSeconds(fireWait), cancellationToken: linkedToken);
         
         // ParticleSystemを徐々に消す
         if (fireParticleSystem != null)
         {
-            await FadeOutParticleSystemAsync(fireParticleSystem, fadeOutDuration);
+            await FadeOutParticleSystemAsync(fireParticleSystem, fadeOutDuration, linkedToken);
         }
         
         // 追加の消火待機時間
-        await UniTask.Delay(System.TimeSpan.FromSeconds(extinguishDelay));
+        await UniTask.Delay(System.TimeSpan.FromSeconds(extinguishDelay), cancellationToken: linkedToken);
         
         // 炎オブジェクトを非表示にする（消火完了）
         if (burnibgFire != null)
@@ -191,8 +201,11 @@ public class BurningFireCheckZone : MonoBehaviour
     /// <summary>
     /// ParticleSystemを徐々にフェードアウトさせる(上から下へ消える)
     /// </summary>
-    private async UniTask FadeOutParticleSystemAsync(ParticleSystem ps, float duration)
+    private async UniTask FadeOutParticleSystemAsync(ParticleSystem ps, float duration, CancellationToken token)
     {
+        using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(token, dct);
+        CancellationToken linkedToken = linkedCts.Token;
+
         float elapsed = 0f;
         var main = ps.main;
         var emission = ps.emission;
@@ -206,7 +219,7 @@ public class BurningFireCheckZone : MonoBehaviour
         // パーティクル配列を確保
         ParticleSystem.Particle[] particles = new ParticleSystem.Particle[ps.main.maxParticles];
         
-        while (elapsed < duration)
+        while (elapsed < duration && !linkedToken.IsCancellationRequested)
         {
             elapsed += Time.deltaTime;
             float t = elapsed / duration;
@@ -242,7 +255,7 @@ public class BurningFireCheckZone : MonoBehaviour
             // 変更を適用
             ps.SetParticles(particles, particleCount);
             
-            await UniTask.Yield();
+            await UniTask.Yield(cancellationToken: linkedToken);
         }
         
         // 完全に停止して全てのパーティクルをクリア

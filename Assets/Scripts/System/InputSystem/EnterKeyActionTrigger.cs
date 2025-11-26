@@ -89,6 +89,9 @@ public class EnterKeyActionTrigger : MonoBehaviour
     private bool keepPositionFixed = false;
     private PlayerAirChecker airChecker; // 空中判定のコンポーネント
     private ThrowKnifeController throwKnife; // ナイフを投げるコンポーネント
+
+    private CancellationToken dct; // DestroyCancellationToken
+
     // Unityの初期化処理
     private void Start()
     {
@@ -134,6 +137,8 @@ public class EnterKeyActionTrigger : MonoBehaviour
         // ナイフを投げるコンポーネントを取得と実行
         throwKnife = player.GetComponent<ThrowKnifeController>();
 
+        // DestroyCancellationTokenの取得 このオブジェクトが破棄されるとキャンセルされる
+        dct = this.GetCancellationTokenOnDestroy();
     }
 
     // オブジェクトに干渉する or ナイフを投げるメソッドを実行
@@ -288,7 +293,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
         if (touchingCollision == collision)
         {
             touchingCollision = null;
-            textDisplay.HideText();
+            textDisplay.HideText(dct).Forget();
         }
     }
 
@@ -429,9 +434,10 @@ public class EnterKeyActionTrigger : MonoBehaviour
                 partsRatio,
                 objectTextData,
                 buttonID,
+                dct,
                 delayBetweenTexts,
                 showDebugLogs
-            );
+            ).Forget();
         }
         catch (System.Exception e)
         {
@@ -457,9 +463,10 @@ public class EnterKeyActionTrigger : MonoBehaviour
                         partsRatio,
                         objectTextData,
                         canselWaterTankID,
+                        dct,
                         delayBetweenTexts,
                         showDebugLogs
-                    );
+                    ).Forget();
                 }
 
                 isInteracting = false;
@@ -476,9 +483,10 @@ public class EnterKeyActionTrigger : MonoBehaviour
                 partsRatio,
                 objectTextData,
                 waterTankID,
+                dct,
                 delayBetweenTexts,
                 showDebugLogs
-            );
+            ).Forget();
             
         }
         catch (System.Exception e)
@@ -510,7 +518,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
             
             PrepareForAnimation();
             playerAnimationManager.AniShootWaterTrue();
-            component.FireExtinguishedAsync();
+            component.FireExtinguishedAsync(dct).Forget();
             // 放射のためモーションを待機(1.17秒)
             await WaitForAnimationCompletion(1.17f);
 
@@ -619,10 +627,13 @@ public class EnterKeyActionTrigger : MonoBehaviour
     // アニメーションの完了を待つ非同期メソッド（時間指定版）
     private async UniTask WaitForAnimationCompletion(float duration, CancellationToken cancellationToken = default)
     {
+        CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(dct, cancellationToken);
+        CancellationToken linkedToken = linkedCts.Token;
+
         if (showDebugLogs) Debug.Log($"アニメーション待機開始: {duration}秒間入力を無効化");
         
         // 指定された時間だけ待機
-        await UniTask.Delay(System.TimeSpan.FromSeconds(duration), cancellationToken: cancellationToken);
+        await UniTask.Delay(System.TimeSpan.FromSeconds(duration), cancellationToken: linkedToken);
         
         if (showDebugLogs) Debug.Log($"アニメーション待機完了: {duration}秒経過、入力を再有効化");
     }

@@ -32,6 +32,7 @@ public class GameTutorialTextDisplay : MonoBehaviour
     private bool isDisplaying = false;
     private bool isFading = false;
     private CancellationTokenSource currentCts;
+    private CancellationToken dct; // DestroyCancellationToken
     private bool isDestroyed = false;
 
     private void Awake()
@@ -84,11 +85,14 @@ public class GameTutorialTextDisplay : MonoBehaviour
         {
             Debug.LogWarning("⚠️ textBackgroundが設定されていません");
         }
+
+        // DestroyCancellationTokenの取得 このオブジェクトが破棄されるとキャンセルされる
+        dct = this.GetCancellationTokenOnDestroy();
         
         HideImmediate();
     }
 
-    public async UniTask ShowText(string message1, string message2 = "")
+    public async UniTask ShowText(string message1, string message2 = "", CancellationToken token = default)
     {
         if (isDestroyed || this == null) return;
         
@@ -113,8 +117,12 @@ public class GameTutorialTextDisplay : MonoBehaviour
         }
 
         currentCts = new CancellationTokenSource();
+        CancellationToken currentCt = currentCts.Token;
         isDisplaying = true;
         // isFading = true; // フェード開始
+
+        using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(currentCt, token, dct);
+        CancellationToken linkedToken = linkedCts.Token;
 
         try
         {
@@ -133,7 +141,7 @@ public class GameTutorialTextDisplay : MonoBehaviour
             }
             
             // フェードイン
-            await FadeIn(currentCts.Token);
+            await FadeIn(linkedToken);
             
             // isFading = false; // フェードイン完了
             
@@ -156,7 +164,7 @@ public class GameTutorialTextDisplay : MonoBehaviour
         }
     }
 
-    public async void HideText()
+    public async UniTask HideText(CancellationToken token)
     {
         if (!isDisplaying || isDestroyed || this == null) return;
         
@@ -174,10 +182,13 @@ public class GameTutorialTextDisplay : MonoBehaviour
         currentCts?.Dispose();
         currentCts = null;
 
+        using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(token, dct);
+        CancellationToken linkedToken = linkedCts.Token;
+
         try
         {
             // フェードアウト
-            await FadeOut(CancellationToken.None);
+            await FadeOut(linkedToken);
             
             if (textPanel != null && !isDestroyed && this != null)
             {
@@ -201,10 +212,13 @@ public class GameTutorialTextDisplay : MonoBehaviour
     private async UniTask ShowTextGradually(string fullText, CancellationToken token)
     {
         if (messageText1 == null || isDestroyed || this == null) return;
+
+        using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(token, dct);
+        CancellationToken linkedToken = linkedCts.Token;
         
         for (int i = 0; i <= fullText.Length; i++)
         {
-            if (messageText1 == null || isDestroyed || this == null || token.IsCancellationRequested)
+            if (messageText1 == null || isDestroyed || this == null || linkedToken.IsCancellationRequested)
             {
                 return;
             }
@@ -215,7 +229,7 @@ public class GameTutorialTextDisplay : MonoBehaviour
             {
                 await UniTask.Delay(
                     System.TimeSpan.FromSeconds(characterDisplayInterval),
-                    cancellationToken: token
+                    cancellationToken: linkedToken
                 );
             }
             catch (System.OperationCanceledException)
@@ -264,10 +278,13 @@ public class GameTutorialTextDisplay : MonoBehaviour
     {
         if (canvasGroup == null || isDestroyed || this == null) return;
 
+        using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(token, dct);
+        CancellationToken linkedToken = linkedCts.Token;
+
         float elapsed = 0f;
-        while (elapsed < fadeInDuration)
+        while (elapsed < fadeInDuration && !linkedToken.IsCancellationRequested)
         {
-            if (canvasGroup == null || isDestroyed || this == null || token.IsCancellationRequested)
+            if (canvasGroup == null || isDestroyed || this == null || linkedToken.IsCancellationRequested)
             {
                 return;
             }
@@ -291,7 +308,7 @@ public class GameTutorialTextDisplay : MonoBehaviour
             
             try
             {
-                await UniTask.Yield(token);
+                await UniTask.Yield(linkedToken);
             }
             catch (System.OperationCanceledException)
             {
@@ -319,11 +336,14 @@ public class GameTutorialTextDisplay : MonoBehaviour
     {
         if (canvasGroup == null || isDestroyed || this == null) return;
 
+        using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(token, dct);
+        CancellationToken linkedToken = linkedCts.Token;
+
         float elapsed = 0f;
         float startAlpha = canvasGroup.alpha;
-        while (elapsed < fadeOutDuration)
+        while (elapsed < fadeOutDuration && !linkedToken.IsCancellationRequested)
         {
-            if (canvasGroup == null || isDestroyed || this == null || token.IsCancellationRequested)
+            if (canvasGroup == null || isDestroyed || this == null || linkedToken.IsCancellationRequested)
             {
                 return;
             }
@@ -347,7 +367,7 @@ public class GameTutorialTextDisplay : MonoBehaviour
             
             try
             {
-                await UniTask.Yield(token);
+                await UniTask.Yield(linkedToken);
             }
             catch (System.OperationCanceledException)
             {

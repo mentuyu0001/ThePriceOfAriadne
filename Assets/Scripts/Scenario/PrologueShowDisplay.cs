@@ -31,6 +31,8 @@ public class PrologueShowDisplay : MonoBehaviour
    
     private CancellationTokenSource cts;
 
+    private CancellationToken dct; // DestroyCancellationToken
+
     private void Awake()
     {
         // 入力アクションの設定（interactionsを"tap"に変更）
@@ -40,6 +42,9 @@ public class PrologueShowDisplay : MonoBehaviour
         nextLineAction.performed += ctx => ShowNextLine();
 
         nextLineAction.Enable();
+
+        // DestroyCancellationTokenの取得 このオブジェクトが破棄されるとキャンセルされる
+        dct = this.GetCancellationTokenOnDestroy();
     }
 
     private void OnDestroy()
@@ -93,13 +98,16 @@ public class PrologueShowDisplay : MonoBehaviour
 
     private async UniTask ShowLineLetterByLetter(string line, CancellationToken token)
     {
+        CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(token, dct);
+        CancellationToken linkedToken = linkedCts.Token;
+
         isTextTyping = true;
         int lineLength = line.Length;
         displayText.text = "";
         for (int i = 0; i < lineLength; i++)
         {
             displayText.text += line[i];
-            await UniTask.Delay(TimeSpan.FromSeconds(letterDelay), cancellationToken: token);
+            await UniTask.Delay(TimeSpan.FromSeconds(letterDelay), cancellationToken: linkedToken);
         }
         isTextTyping = false;
     }
