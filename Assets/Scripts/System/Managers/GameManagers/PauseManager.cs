@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem; // 新しいInput Systemを使う場合
 
 public class PauseManager : MonoBehaviour
 {
+    private bool isLoading = false;
+
     // Inspectorからポーズ画面のUIパネルをアタッチする
     [SerializeField] private GameObject pauseMenuUI;
 
@@ -23,6 +26,26 @@ public class PauseManager : MonoBehaviour
     // 現在ポーズ中かどうかを保持するフラグ
     private bool isPaused = false;
 
+    [SerializeField] private Controller controller;
+
+    // Escキーに関する処理
+    [Header("UIをEscキーで消せるようにするために必要なGameObjectの注入")]
+    [SerializeField] private GameObject playMenu;
+    [SerializeField] private GameObject itemInventory;
+    [SerializeField] private GameObject itemResetConfirmation;
+    [SerializeField] private GameObject settings;
+    [SerializeField] private GameObject toTitleConfirmation;
+
+    [Header("Escキーを押した時のReturnボタンのスクリプトの注入")]
+    [SerializeField] private GameObject toTitleReturn;
+    [SerializeField] private GameObject itemReturn;
+    [SerializeField] private GameObject itemResetReturn;
+    [SerializeField] private GameObject settingsReturn;
+
+    [SerializeField] private ButtonSound buttonSound;
+    private UnityEngine.UI.Button targetButton;
+
+
     private void Start()
     {
         // 最初はポーズ画面を非表示にしておく
@@ -32,16 +55,16 @@ public class PauseManager : MonoBehaviour
     // Input Systemから呼び出されるメソッド
     public void OnPause(InputAction.CallbackContext context)
     {
+        if (controller.isStartGoal) return;
+        if (isLoading) return;
+
         // ボタンが押された瞬間だけ実行する
         if (context.performed)
         {
             // isPausedの状態を反転させる
             if (isPaused)
             {
-                if (pauseMenuUI.activeSelf) 
-                {
-                    Resume();
-                }
+                Resume();
             }
             else
             {
@@ -53,11 +76,47 @@ public class PauseManager : MonoBehaviour
     // ゲームを再開するメソッド
     public void Resume()
     {
-        pauseMenuUI.SetActive(false);
-        Time.timeScale = 1f; // 時間の流れを元に戻す
-        playerInput.SwitchCurrentActionMap("Player");
-        isPaused = false;
-        pauseMenuUIScript.ResetLastSelected();
+        if (playMenu.activeSelf)
+        {
+            if (toTitleConfirmation.activeSelf)
+            {
+                targetButton = toTitleReturn.GetComponent<UnityEngine.UI.Button>();
+                targetButton.onClick.Invoke();
+                return;
+            }
+            else
+            {
+                buttonSound.OnClick();
+                pauseMenuUI.SetActive(false);
+                Time.timeScale = 1f; // 時間の流れを元に戻す
+                playerInput.SwitchCurrentActionMap("Player");
+                isPaused = false;
+                pauseMenuUIScript.ResetLastSelected();
+
+                return;
+            }
+        }
+        else if (itemInventory.activeSelf)
+        {
+            if (itemResetConfirmation.activeSelf)
+            {
+                targetButton = itemResetReturn.GetComponent<UnityEngine.UI.Button>();
+                targetButton.onClick.Invoke();
+                return;
+            }
+            else
+            {
+                targetButton = itemReturn.GetComponent<UnityEngine.UI.Button>();
+                targetButton.onClick.Invoke();
+                return;
+            }
+        }
+        else if (settings.activeSelf)
+        {
+            targetButton = settingsReturn.GetComponent<UnityEngine.UI.Button>();
+            targetButton.onClick.Invoke();
+            return;
+        }
     }
 
     // ゲームをポーズするメソッド
@@ -73,5 +132,10 @@ public class PauseManager : MonoBehaviour
         {
             textPanel.SetActive(false);
         }
+    }
+
+    public void ActiveIsLoading()
+    {
+        isLoading = true;
     }
 }
