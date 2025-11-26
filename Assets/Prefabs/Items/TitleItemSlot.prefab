@@ -144,7 +144,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemID: 1
+  itemData: {fileID: 0}
+  inventoryData: {fileID: 0}
+  uiController: {fileID: 0}
+  itemText: {fileID: 0}
+  rightButton: {fileID: 0}
+  buttons: {fileID: 0}
+  selectedButtonManager: {fileID: 0}
   iconImage: {fileID: 7899279995221795610}
+  playerImg: {fileID: 0}
+  theifImg: {fileID: 0}
+  fireImg: {fileID: 0}
+  musuleImg: {fileID: 0}
+  assasinImg: {fileID: 0}
 --- !u!1 &7575875508231018305
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,7 +224,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: ada43657a4bb8d14abdeabd092f8dd6a, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1

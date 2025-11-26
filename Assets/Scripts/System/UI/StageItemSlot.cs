@@ -126,6 +126,9 @@ public class StageItemSlot : Button
         // フォーカスを強制的に「次へ」ボタンに移す
         EventSystem.current.SetSelectedGameObject(rightButton);
         Debug.Log("OnClick ItemSlot: " + ItemName);
+        // 2つ目のフレーバーテキストを非表示
+        itemText2.text = "";
+        // アイテム説明テキストを表示
         ShowItemText();
     }
 
