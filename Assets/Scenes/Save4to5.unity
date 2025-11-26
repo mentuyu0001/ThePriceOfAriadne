@@ -1828,6 +1828,18 @@ MonoBehaviour:
   pauseMenuUIScript: {fileID: 540018747}
   playerVisualCustomizer: {fileID: 1502089846}
   textPanel: {fileID: 1530278121}
+  soundManager: {fileID: 0}
+  controller: {fileID: 0}
+  playMenu: {fileID: 0}
+  itemInventory: {fileID: 0}
+  itemResetConfirmation: {fileID: 0}
+  settings: {fileID: 0}
+  toTitleConfirmation: {fileID: 0}
+  toTitleReturn: {fileID: 0}
+  itemReturn: {fileID: 0}
+  itemResetReturn: {fileID: 0}
+  settingsReturn: {fileID: 0}
+  buttonSound: {fileID: 0}
 --- !u!4 &283318550
 Transform:
   m_ObjectHideFlags: 0
@@ -8082,6 +8094,50 @@ MonoBehaviour:
   - {fileID: 1891117430}
   - {fileID: 1891117434}
   - {fileID: 1891117426}
+--- !u!1 &1196814792
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1196814794}
+  - component: {fileID: 1196814793}
+  m_Layer: 0
+  m_Name: MouseCursor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1196814793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196814792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4728886f0519e4f59b946fc8acc2883b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1196814794
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196814792}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 20.497793, y: 22.366953, z: -10.227454}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1226730962
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11514,7 +11570,7 @@ Transform:
   m_GameObject: {fileID: 1586923810}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40.716106, y: 4.251869, z: -10}
+  m_LocalPosition: {x: -40.72183, y: 4.251869, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16283,3 +16339,4 @@ SceneRoots:
   - {fileID: 1513220229}
   - {fileID: 639721755}
   - {fileID: 1480997591}
+  - {fileID: 1196814794}
