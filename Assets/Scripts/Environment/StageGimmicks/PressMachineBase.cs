@@ -116,7 +116,7 @@ public class PressMachineBase : StoppableGimick
         // こちらが指示するまでアニメーションを開始しないようにする
         DOTween.defaultAutoPlay = AutoPlay.None;
         //DOTweenのシーケンスを定義
-        MoveSequence = DOTween.Sequence();
+        MoveSequence = DOTween.Sequence().SetLink(gameObject).SetUpdate(UpdateType.Fixed);
         // シーケンスに動作を追加---------------------------------------------
         // // Plateをスタンバイ位置へ移動
         // MoveSequence.Append(plateRigidBody.DOLocalPath(
@@ -164,7 +164,9 @@ public class PressMachineBase : StoppableGimick
         plateRigidBody.DOLocalPath(
             path: new Vector2[] { posNow, posStart },
             duration: 1.0f
-        ).Play();
+        ).SetLink(gameObject)
+        .SetUpdate(UpdateType.Fixed)
+        .Play();
         Debug.Log("Stopped PressMachine!");
     }
 

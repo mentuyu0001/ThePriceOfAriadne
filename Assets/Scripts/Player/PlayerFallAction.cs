@@ -17,7 +17,7 @@ public class PlayerFallAction : FallingEntity
         else
         {
             gameOverManager = GameObject.Find("GameOverManager").GetComponent<GameOverManager>();
-            if (gameOverManager != null) Debug.LogError("❌ PlayerFallAction: GameOverManager注入失敗 - nullです");
+            if (gameOverManager == null) Debug.LogError("❌ PlayerFallAction: GameOverManager注入失敗 - nullです");
         }
     }
     protected override void FallAction()

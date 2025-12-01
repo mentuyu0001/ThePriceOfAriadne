@@ -37,7 +37,7 @@ public class PlayerAirChecker : MonoBehaviour
         else
         {
             runTimeStatus = GameObject.Find("Singletons/PlayerData/PlayerRunTimeStatus").GetComponent<PlayerRunTimeStatus>();
-            if (runTimeStatus != null) Debug.LogError("❌ PlayerRunTimeStatus注入失敗 - nullです");
+            if (runTimeStatus == null) Debug.LogError("❌ PlayerRunTimeStatus注入失敗 - nullです");
         }
         if (playerStatus != null)
         {
@@ -46,7 +46,7 @@ public class PlayerAirChecker : MonoBehaviour
         else
         {
             playerStatus = GameObject.Find("Singletons/PlayerData/PlayerStatus").GetComponent<PlayerStatus>();
-            if (playerStatus != null) Debug.LogError("❌ PlayerStatus注入失敗 - nullです");
+            if (playerStatus == null) Debug.LogError("❌ PlayerStatus注入失敗 - nullです");
         }
         if (playerAnimationManager != null)
         {
@@ -55,7 +55,7 @@ public class PlayerAirChecker : MonoBehaviour
         else
         {        
             playerAnimationManager = GameObject.Find("PlayerAnimationManager").GetComponent<PlayerAnimationManager>();    
-            if (playerAnimationManager != null) Debug.LogError("❌ PlayerAnimationManager注入失敗 - nullです");
+            if (playerAnimationManager == null) Debug.LogError("❌ PlayerAnimationManager注入失敗 - nullです");
         }          
         // オブジェクトが生きている間に確実に一度呼び出し、トークンをキャッシュする
         this.cancellationTokenOnDestroy = this.GetCancellationTokenOnDestroy();

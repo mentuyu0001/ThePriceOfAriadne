@@ -75,7 +75,7 @@ public class Controller : MonoBehaviour
         else
         {
             playerStatus = GameObject.Find("Singletons/PlayerData/PlayerStatus").GetComponent<PlayerStatus>();
-            if (playerStatus != null) Debug.LogError("❌ PlayerStatus注入失敗 - nullです");
+            if (playerStatus == null) Debug.LogError("❌ PlayerStatus注入失敗 - nullです");
         }
 
         if (playerParts != null)
@@ -84,8 +84,8 @@ public class Controller : MonoBehaviour
         }
         else
         {
-            playerParts = GameObject.Find("Singletons/PlayerData/PlayerParts").GetComponent<PlayerParts>();
-            if (playerParts != null) Debug.LogError("❌ PlayerParts注入失敗 - nullです");
+            playerParts = GameObject.Find("PlayerParts").GetComponent<PlayerParts>();
+            if (playerParts == null) Debug.LogError("❌ ControllerのPlayerParts注入失敗 - nullです");
         }
 
         if (airChecker != null)
@@ -95,7 +95,7 @@ public class Controller : MonoBehaviour
         else
         {
             airChecker = this.gameObject.GetComponent<PlayerAirChecker>();
-            if (airChecker != null) Debug.LogError("❌ PlayerAirChecker注入失敗 - nullです");
+            if (airChecker == null) Debug.LogError("❌ PlayerAirChecker注入失敗 - nullです");
         }
 
         if (runTimeStatus != null)
@@ -105,7 +105,7 @@ public class Controller : MonoBehaviour
         else
         {
             runTimeStatus = GameObject.Find("Singletons/PlayerData/PlayerRunTimeStatus").GetComponent<PlayerRunTimeStatus>();
-            if (runTimeStatus != null) Debug.LogError("❌ PlayerRunTimeStatus注入失敗 - nullです");
+            if (runTimeStatus == null) Debug.LogError("❌ PlayerRunTimeStatus注入失敗 - nullです");
         }
 
         if (playerAnimationManager != null)
@@ -115,7 +115,7 @@ public class Controller : MonoBehaviour
         else
         {
             playerAnimationManager = GameObject.Find("PlayerAnimationManager").GetComponent<PlayerAnimationManager>();
-            if (playerAnimationManager != null) Debug.LogError("❌ PlayerAnimationManager注入失敗 - nullです");
+            if (playerAnimationManager == null) Debug.LogError("❌ PlayerAnimationManager注入失敗 - nullです");
         }
 
         Debug.Log("=== Controller 依存性注入確認完了 ===");

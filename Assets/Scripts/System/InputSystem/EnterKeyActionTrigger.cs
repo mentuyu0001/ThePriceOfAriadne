@@ -105,7 +105,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
         else
         {
             partsManager = GameObject.Find("PartsManager").GetComponent<PartsManager>();
-            if (partsManager != null) Debug.LogError("❌ PartsManager注入失敗 - nullです");
+            if (partsManager == null) Debug.LogError("❌ PartsManager注入失敗 - nullです");
         }
 
         if (player != null)
@@ -115,7 +115,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
         else
         {
             player = GameObject.Find("Player");
-            if (player != null) Debug.LogError("❌ Player注入失敗 - nullです");
+            if (player == null) Debug.LogError("❌ Player注入失敗 - nullです");
         }
 
         if (playerAnimationManager != null)
@@ -125,7 +125,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
         else
         {
             playerAnimationManager = GameObject.Find("PlayerAnimationManager").GetComponent<PlayerAnimationManager>();
-            if (playerAnimationManager != null) Debug.LogError("❌ PlayerAnimationManager注入失敗 - nullです");
+            if (playerAnimationManager == null) Debug.LogError("❌ PlayerAnimationManager注入失敗 - nullです");
         }
         // 起動時に周囲のオブジェクトを確認
         CheckSurroundingObjects();

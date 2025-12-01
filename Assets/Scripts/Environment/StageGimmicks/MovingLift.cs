@@ -61,9 +61,10 @@ public class MovingLift : StoppableGimick
             Vector2 posCurrent = posStart - new Vector2(0, deltaY * Mathf.Sin(initialPhaseDeg / 180 * Mathf.PI));
             posCurrent.y = posCurrent.y + deltaY * Mathf.Sin(value + initialPhaseDeg / 180 * Mathf.PI);
             rigidBody2D.MovePosition(posCurrent);
-        })
+        }).SetLink(gameObject) // オブジェクトが消えたら一緒に消す
         .SetLoops(-1, LoopType.Restart) // 無限ループを設定
-        .SetEase(Ease.Linear);  // イージングはリニア（線形）にする
+        .SetEase(Ease.Linear)  // イージングはリニア（線形）にする
+        .SetUpdate(UpdateType.Fixed); // FixedUpdateのタイミングで動かす
         // -------------------------------------------------------------------
 
         // ゲーム開始時に動かすなら

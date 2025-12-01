@@ -1,6 +1,7 @@
 using UnityEngine;
 using Parts.Types;
 using VContainer;
+using Unity.VisualScripting;
 
 /// <summary>
 /// プレイヤーが装備しているパーツと能力を設定するスクリプト
@@ -27,6 +28,30 @@ public class PlayerCustomizer : MonoBehaviour
 
     private void Awake()
     {
+        if (playerParts == null)
+        {
+            playerParts = GameObject.Find("PlayerParts").GetComponent<PlayerParts>();
+            if (playerParts == null) Debug.LogError("❌ CustomizerのPlayerParts注入失敗 - nullです");
+        }
+        if (playerStatus == null)
+        {
+            playerStatus = GameObject.Find("Singletons/PlayerData/PlayerStatus").GetComponent<PlayerStatus>();
+            if (playerStatus == null) Debug.LogError("❌ PlayerStatus注入失敗 - nullです");
+        }
+        if (controller == null)
+        {
+            controller = GameObject.FindGameObjectWithTag("Player").GetComponent<Controller>();
+            if (controller == null) Debug.LogError("❌ Controller注入失敗 - nullです");
+        }
+        if (statusData == null)
+        {
+            Debug.LogError("❌ StatusData注入失敗 - nullです");
+        }
+        if (runTimeStatus == null)
+        {
+            Debug.LogError("❌ runTimeStatus注入失敗 - nullです");
+        }
+
         playerParts = GameObject.Find ("PlayerParts").GetComponent<PlayerParts>();
         ChangePlayerStatus();
         controller.SetStatus();
@@ -295,12 +320,14 @@ public class PlayerCustomizer : MonoBehaviour
 
             // 能力を変更する
             ChangePlayerStatus();
-
+            Debug.Log("能力変更完了");
             // 変更した能力をコントローラーに反映させる
             controller.SetStatus();
+            Debug.Log("ステータス更新完了");
 
             // 見た目を変更する
             playerVisualCustomizer.ChangeVisual(slot, PartsChara.Normal, chara);
+            Debug.Log("見た目変更完了");
 
             Debug.Log($"パーツロード完了 - {slot}: {chara}");
         }
