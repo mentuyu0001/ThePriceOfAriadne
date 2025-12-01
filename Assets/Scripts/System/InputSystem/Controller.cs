@@ -155,8 +155,12 @@ public class Controller : MonoBehaviour
     {
         if (playerStatus == null)
         {
-            Debug.LogError("SetStatus呼び出し時にPlayerStatusがnullです");
-            return;
+            playerStatus = GameObject.Find("Singletons/PlayerData/PlayerStatus").GetComponent<PlayerStatus>();
+            if (playerStatus == null)
+            {
+                Debug.LogError("SetStatus呼び出し時にPlayerStatusがnullです");
+                return;
+            }
         }
 
         // 移動速度に応じて抵抗を変更する

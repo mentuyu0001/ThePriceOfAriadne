@@ -10872,6 +10872,30 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 04521f90b3ddf4063beac3a5171b8691, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1885310088}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 04521f90b3ddf4063beac3a5171b8691, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1885310096}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 04521f90b3ddf4063beac3a5171b8691, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1885310095}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 04521f90b3ddf4063beac3a5171b8691, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1885310094}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 04521f90b3ddf4063beac3a5171b8691, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1885310093}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 04521f90b3ddf4063beac3a5171b8691, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1885310092}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 04521f90b3ddf4063beac3a5171b8691, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1885310091}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 04521f90b3ddf4063beac3a5171b8691, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1885310098}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 04521f90b3ddf4063beac3a5171b8691, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1885310097}
   m_SourcePrefab: {fileID: 100100000, guid: 04521f90b3ddf4063beac3a5171b8691, type: 3}
 --- !u!1 &1107110900
 GameObject:
@@ -17948,6 +17972,186 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1885310091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885310087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 963cca6775278462290b09d24d510256, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displayDistance: 1.5
+  waterWait: 0.5
+  waterDuration: 2.5
+  playerDirectionRight: 0
+--- !u!114 &1885310092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885310087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb77c8e61cd3a45368b35179c20f388d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnOffsetX: 2
+  throwForce: 20
+  throwCoolTime: 1000
+--- !u!114 &1885310093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885310087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f203e0ae580c45bbafed87acb4f6d1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  sizeModifier: {x: 0.8, y: 0.1}
+  groundCheckBuffer: 0
+  controller: {fileID: 0}
+--- !u!114 &1885310094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885310087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecb7e76ad090d4a898ea03cfd2732e59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partsData: {fileID: 11400000, guid: df8313f7e0b6e4c0d95d0f312e8f45b5, type: 2}
+  partsTag: Parts
+  leverTag: RustyLever
+  stopButtonTag: StopButton
+  waterTankTag: WaterTank
+  burningFireTag: BurningFire
+  interactAnimationDuration: 1.25
+  leverAnimationDuration: 1.5
+  knifeAnimationDuration: 0.5
+  partsGetMessage: "\u30D1\u30FC\u30C4\u3092\u5165\u624B\u3057\u307E\u3057\u305F!"
+  leverUseMessage: "\u30EC\u30D0\u30FC\u3092\u52D5\u304B\u3057\u305F!"
+  buttonUseMessage: "\u30DC\u30BF\u30F3\u3092\u62BC\u3057\u305F!"
+  waterChargeMessage: "\u6C34\u3092\u88DC\u7D66\u3057\u307E\u3057\u305F!"
+  fireExtinguishMessage: "\u706B\u3092\u6D88\u3057\u305F!"
+  noWaterTankMessage: "\u6C34\u30BF\u30F3\u30AF\u304C\u88C5\u5099\u3055\u308C\u3066\u3044\u307E\u305B\u3093"
+  noWaterMessage: "\u6C34\u304C\u3042\u308A\u307E\u305B\u3093"
+  delayBetweenTexts: 2
+  partsID: 0
+  leverID: 1
+  buttonID: 5
+  waterTankID: 6
+  canselWaterTankID: 7
+  fireExtinguishID: 8
+  showDebugLogs: 0
+--- !u!114 &1885310095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885310087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee358b2f9393d41758b529ddd1a33956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1885310096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885310087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9605f502462cd4482ae85351432236a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  sizeModifier: {x: 1, y: 0.1}
+  groundCheckBuffer: 0
+  isInputEnabled: 1
+  isStartGoal: 1
+--- !u!50 &1885310097
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885310087}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 0.0001
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!70 &1885310098
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885310087}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.5, y: 1}
+  m_Direction: 0
 --- !u!1 &1891980745
 GameObject:
   m_ObjectHideFlags: 0
