@@ -4,6 +4,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using VContainer;
 using Parts.Types;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Enteキーで発生するイベントを呼び出すスクリプト
@@ -95,13 +96,16 @@ public class EnterKeyActionTrigger : MonoBehaviour
     // Unityの初期化処理
     private void Start()
     {
+        if (SceneManager.GetActiveScene().name == "TitleScene") return;
+
         if (partsManager != null)
         {
             Debug.Log($"✅ PartsManager注入成功: {partsManager.name}");
         }
         else
         {
-            Debug.LogError("❌ PartsManager注入失敗 - nullです");
+            partsManager = GameObject.Find("PartsManager").GetComponent<PartsManager>();
+            if (partsManager == null) Debug.LogError("❌ PartsManager注入失敗 - nullです");
         }
 
         if (player != null)
@@ -110,7 +114,8 @@ public class EnterKeyActionTrigger : MonoBehaviour
         }
         else
         {
-            Debug.LogError("❌ Player注入失敗 - nullです");
+            player = GameObject.Find("Player");
+            if (player == null) Debug.LogError("❌ Player注入失敗 - nullです");
         }
 
         if (playerAnimationManager != null)
@@ -119,7 +124,8 @@ public class EnterKeyActionTrigger : MonoBehaviour
         }
         else
         {
-            Debug.LogError("❌ PlayerAnimationManager注入失敗 - nullです");
+            playerAnimationManager = GameObject.Find("PlayerAnimationManager").GetComponent<PlayerAnimationManager>();
+            if (playerAnimationManager == null) Debug.LogError("❌ PlayerAnimationManager注入失敗 - nullです");
         }
         // 起動時に周囲のオブジェクトを確認
         CheckSurroundingObjects();

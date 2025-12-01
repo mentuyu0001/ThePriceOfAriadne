@@ -3,14 +3,21 @@ using VContainer;
 using VContainer.Unity;
 using System.Collections.Generic;
 using UnityEngine.AddressableAssets;
+using Cysharp.Threading.Tasks;
+
 /// <summary>
 /// ゲーム全体のライフタイムスコープを設定するクラス
 /// </summary>
 public class GameLifetimeScope : LifetimeScope
 {
     [SerializeField] private bool enableDebugLog = false; // デバッグログの表示制御
+    [SerializeField] private PlayerStatusData statusData;
+    [SerializeField] private ItemData ItemData;
+    [SerializeField] private ObjectTextData objectTextData;
+    [SerializeField] private GameObject knifePrefabGo;
+    [SerializeField] private GameObject waterPrefabGo;
 
-    protected override void Configure(IContainerBuilder builder)
+    protected override async void Configure(IContainerBuilder builder)
     {
         if (enableDebugLog) Debug.Log("GameLifetimeScope 登録開始");
 
@@ -43,8 +50,6 @@ public class GameLifetimeScope : LifetimeScope
         */
         // PlayerStatusDataを自動検索（Addressableから）
         Debug.Log("PlayerStatusData読み込み開始...");
-        var statusDataHandle = Addressables.LoadAssetAsync<PlayerStatusData>("PlayerStatus");
-        var statusData = statusDataHandle.WaitForCompletion();
 
         if (statusData != null)
         {
@@ -61,8 +66,6 @@ public class GameLifetimeScope : LifetimeScope
 
         // ItemDataを自動検索（Addressableから)
         Debug.Log("ItemData読み込み開始...");
-        var ItemDataHandle = Addressables.LoadAssetAsync<ItemData>("ItemData");
-        var ItemData = ItemDataHandle.WaitForCompletion();
         if (ItemData != null)
         {
             Debug.Log($"読み込んだItemData名: {ItemData.name}");
@@ -78,8 +81,7 @@ public class GameLifetimeScope : LifetimeScope
 
         // ObjectTextDataを自動検索（Addressableから)
         Debug.Log("ObjectTextData読み込み開始...");
-        var objectTextDataHandle = Addressables.LoadAssetAsync<ObjectTextData>("ObjectTextData");
-        var objectTextData = objectTextDataHandle.WaitForCompletion();
+       
         if (objectTextData != null)
         {
             Debug.Log($"読み込んだObjectTextData名: {objectTextData.name}");
@@ -95,8 +97,6 @@ public class GameLifetimeScope : LifetimeScope
 
         // KnifePrefabを自動検索（ファクトリーとして登録）
         Debug.Log("KnifePrefab読み込み開始...");
-        var handle = Addressables.LoadAssetAsync<GameObject>("KnifePrefab");
-        var knifePrefabGo = handle.WaitForCompletion();
 
         if (knifePrefabGo != null)
         {
@@ -121,8 +121,6 @@ public class GameLifetimeScope : LifetimeScope
 
         // WaterPrefabを自動検索（ファクトリーとして登録）
         Debug.Log("WaterPrefab読み込み開始...");
-        var waterHandle = Addressables.LoadAssetAsync<GameObject>("WaterPrefab");
-        var waterPrefabGo = waterHandle.WaitForCompletion();
 
         if (waterPrefabGo != null)
         {
