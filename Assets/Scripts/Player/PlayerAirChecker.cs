@@ -2,6 +2,7 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using VContainer;
+using UnityEngine.SceneManagement;
 
 public class PlayerAirChecker : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class PlayerAirChecker : MonoBehaviour
     private CancellationToken cancellationTokenOnDestroy; // キャンセルトークンを保存する変数
 
     private void Start() {
+        if (SceneManager.GetActiveScene().name == "TitleScene") return;
+
         Debug.Log("=== PlayerAirChecker 依存性注入確認 ===");
         // [Inject]による注入の確認
         if (runTimeStatus != null)
@@ -33,7 +36,8 @@ public class PlayerAirChecker : MonoBehaviour
         }
         else
         {
-            Debug.LogError("❌ PlayerRunTimeStatus注入失敗 - nullです");
+            runTimeStatus = GameObject.Find("Singletons/PlayerData/PlayerRunTimeStatus").GetComponent<PlayerRunTimeStatus>();
+            if (runTimeStatus != null) Debug.LogError("❌ PlayerRunTimeStatus注入失敗 - nullです");
         }
         if (playerStatus != null)
         {
@@ -41,15 +45,17 @@ public class PlayerAirChecker : MonoBehaviour
         }
         else
         {
-            Debug.LogError("❌ PlayerStatus注入失敗 - nullです");
+            playerStatus = GameObject.Find("Singletons/PlayerData/PlayerStatus").GetComponent<PlayerStatus>();
+            if (playerStatus != null) Debug.LogError("❌ PlayerStatus注入失敗 - nullです");
         }
         if (playerAnimationManager != null)
         {
             Debug.Log($"✅ PlayerAnimationManager注入成功: {playerAnimationManager.name} (Type: {playerAnimationManager.GetType()})");
         }
         else
-        {            
-            Debug.LogError("❌ PlayerAnimationManager注入失敗 - nullです");
+        {        
+            playerAnimationManager = GameObject.Find("PlayerAnimationManager").GetComponent<PlayerAnimationManager>();    
+            if (playerAnimationManager != null) Debug.LogError("❌ PlayerAnimationManager注入失敗 - nullです");
         }          
         // オブジェクトが生きている間に確実に一度呼び出し、トークンをキャッシュする
         this.cancellationTokenOnDestroy = this.GetCancellationTokenOnDestroy();

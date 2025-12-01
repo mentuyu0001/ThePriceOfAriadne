@@ -25014,8 +25014,7 @@ MonoBehaviour:
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
-  m_Cameras:
-  - {fileID: 235818472}
+  m_Cameras: []
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
@@ -25111,7 +25110,7 @@ Transform:
   m_GameObject: {fileID: 1586923810}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40.718708, y: 4.251869, z: -10}
+  m_LocalPosition: {x: -40.71883, y: 4.251869, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -28497,6 +28496,11 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   enableDebugLog: 0
+  statusData: {fileID: 11400000, guid: 97f2d7b11cda942e3980954cb162c685, type: 2}
+  ItemData: {fileID: 11400000, guid: 8f498dc0dcede4b43ad4a60cd99e33b4, type: 2}
+  objectTextData: {fileID: 11400000, guid: 0363149ac8e714ed69f385c0b18b6c1a, type: 2}
+  knifePrefabGo: {fileID: 6781993412671898257, guid: 548c319fd1c9d4861844c9d8e45005b1, type: 3}
+  waterPrefabGo: {fileID: 2307041901417340544, guid: 0ecc99d951c204588b754f86710420b6, type: 3}
 --- !u!4 &1973402966
 Transform:
   m_ObjectHideFlags: 0

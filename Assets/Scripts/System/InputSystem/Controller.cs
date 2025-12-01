@@ -4,6 +4,8 @@ using Cysharp.Threading.Tasks;
 using Parts.Types;
 using VContainer;
 using System.Threading;
+using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// プレイヤーが操作するコントローラーのスクリプト
@@ -51,6 +53,8 @@ public class Controller : MonoBehaviour
     private bool isWalkSoundPlaying = false;
     private void Awake()
     {
+        if (SceneManager.GetActiveScene().name == "TitleScene") return;
+
         // オブジェクトが破棄されたときにキャンセルされるトークンソースを作成
         cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(this.GetCancellationTokenOnDestroy());
 
@@ -70,7 +74,8 @@ public class Controller : MonoBehaviour
         }
         else
         {
-            Debug.LogError("❌ PlayerStatus注入失敗 - nullです");
+            playerStatus = GameObject.Find("Singletons/PlayerData/PlayerStatus").GetComponent<PlayerStatus>();
+            if (playerStatus != null) Debug.LogError("❌ PlayerStatus注入失敗 - nullです");
         }
 
         if (playerParts != null)
@@ -79,7 +84,8 @@ public class Controller : MonoBehaviour
         }
         else
         {
-            Debug.LogError("❌ PlayerParts注入失敗 - nullです");
+            playerParts = GameObject.Find("Singletons/PlayerData/PlayerParts").GetComponent<PlayerParts>();
+            if (playerParts != null) Debug.LogError("❌ PlayerParts注入失敗 - nullです");
         }
 
         if (airChecker != null)
@@ -88,7 +94,8 @@ public class Controller : MonoBehaviour
         }
         else
         {
-            Debug.LogError("❌ PlayerAirChecker注入失敗 - nullです");
+            airChecker = this.gameObject.GetComponent<PlayerAirChecker>();
+            if (airChecker != null) Debug.LogError("❌ PlayerAirChecker注入失敗 - nullです");
         }
 
         if (runTimeStatus != null)
@@ -97,7 +104,8 @@ public class Controller : MonoBehaviour
         }
         else
         {
-            Debug.LogError("❌ PlayerRunTimeStatus注入失敗 - nullです");
+            runTimeStatus = GameObject.Find("Singletons/PlayerData/PlayerRunTimeStatus").GetComponent<PlayerRunTimeStatus>();
+            if (runTimeStatus != null) Debug.LogError("❌ PlayerRunTimeStatus注入失敗 - nullです");
         }
 
         if (playerAnimationManager != null)
@@ -106,7 +114,8 @@ public class Controller : MonoBehaviour
         }
         else
         {
-            Debug.LogError("❌ PlayerAnimationManager注入失敗 - nullです");
+            playerAnimationManager = GameObject.Find("PlayerAnimationManager").GetComponent<PlayerAnimationManager>();
+            if (playerAnimationManager != null) Debug.LogError("❌ PlayerAnimationManager注入失敗 - nullです");
         }
 
         Debug.Log("=== Controller 依存性注入確認完了 ===");

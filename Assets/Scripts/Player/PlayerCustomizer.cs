@@ -310,4 +310,14 @@ public class PlayerCustomizer : MonoBehaviour
             throw;
         }
     }
+
+    // キャラクターの全能力と見た目をリセットする
+    public void resetCharacter()
+    {
+        playerParts.LeftArm = PartsChara.Normal;
+        playerParts.RightArm = PartsChara.Normal;
+        playerParts.LeftLeg = PartsChara.Normal;
+        playerParts.RightLeg = PartsChara.Normal;
+        resetStatus();
+    }
 }

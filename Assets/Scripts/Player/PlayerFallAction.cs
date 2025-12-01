@@ -1,11 +1,14 @@
 using UnityEngine;
 using VContainer;
+using UnityEngine.SceneManagement;
 public class PlayerFallAction : FallingEntity
 {
     [Inject] private GameOverManager gameOverManager;
     
     private void Start()
     {
+        if (SceneManager.GetActiveScene().name == "TitleScene") return;
+
         // デバッグ用：依存性注入の確認
         if (gameOverManager != null)
         {
@@ -13,7 +16,8 @@ public class PlayerFallAction : FallingEntity
         }
         else
         {
-            Debug.LogError("❌ PlayerFallAction: GameOverManager注入失敗 - nullです");
+            gameOverManager = GameObject.Find("GameOverManager").GetComponent<GameOverManager>();
+            if (gameOverManager != null) Debug.LogError("❌ PlayerFallAction: GameOverManager注入失敗 - nullです");
         }
     }
     protected override void FallAction()

@@ -9,6 +9,10 @@ using UnityEngine.AddressableAssets;
 
 public class TitleLifeTiimeScope : LifetimeScope
 {
+    [SerializeField] private ItemData ItemData;
+    [SerializeField] private PlayerStatusData statusData;
+    [SerializeField] private ObjectTextData objectTextData;
+
     protected override void Configure(IContainerBuilder builder)
     {
         var player = GameObject.FindGameObjectWithTag("Player");
@@ -96,8 +100,6 @@ public class TitleLifeTiimeScope : LifetimeScope
         }
 
         // ItemDataを自動検索（Addressableから)
-        var ItemDataHandle = Addressables.LoadAssetAsync<ItemData>("ItemData");
-        var ItemData = ItemDataHandle.WaitForCompletion();
         if (ItemData != null)
         {
             // ItemDataを登録
@@ -183,8 +185,6 @@ public class TitleLifeTiimeScope : LifetimeScope
 
         // PlayerStatusDataを自動検索（Addressableから）
         Debug.Log("PlayerStatusData読み込み開始...");
-        var statusDataHandle = Addressables.LoadAssetAsync<PlayerStatusData>("PlayerStatus");
-        var statusData = statusDataHandle.WaitForCompletion();
 
         if (statusData != null)
         {
@@ -356,8 +356,7 @@ public class TitleLifeTiimeScope : LifetimeScope
 
         // ObjectTextDataを自動検索（Addressableから)
         Debug.Log("ObjectTextData読み込み開始...");
-        var objectTextDataHandle = Addressables.LoadAssetAsync<ObjectTextData>("ObjectTextData");
-        var objectTextData = objectTextDataHandle.WaitForCompletion();
+
         if (objectTextData != null)
         {
             Debug.Log($"読み込んだObjectTextData名: {objectTextData.name}");
