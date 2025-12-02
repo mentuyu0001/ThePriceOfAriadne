@@ -16,7 +16,7 @@ public class CollectibleItem : MonoBehaviour
 
     //アイテムのID(外部キーの役割)
     [SerializeField] private int itemID;
-    [SerializeField] private float textDisplayDuration = 2f; // テキスト表示秒数
+    private float textDisplayDuration = 0f; // テキスト表示秒数
     // アイテムのスプライトレンダラー
     [SerializeField] private SpriteRenderer spriteRenderer;
 
@@ -124,7 +124,7 @@ public class CollectibleItem : MonoBehaviour
                     var allQuartersText = itemData.GetAllQuartersTone(itemID);
                     
                     // パネルとバックグラウンドを表示
-                    textPanel.SetActive(true);
+                    //textPanel.SetActive(true);
                     //textBackground.SetActive(true);
 
                     // キメラ状態用の特別なテキストを表示
@@ -136,14 +136,15 @@ public class CollectibleItem : MonoBehaviour
                     );
 
                     // 表示時間待機
-                    await UniTask.Delay(System.TimeSpan.FromSeconds(textDisplayDuration), cancellationToken: dct);
+                    await WaitAndDestroy();
 
                     // テキストをクリアして非表示
-                    textPanel.SetActive(false);
+                    //textPanel.SetActive(false);
                     //textBackground.SetActive(false);
+                } else
+                {
+                    Destroy(gameObject);
                 }
-                
-                Destroy(gameObject);
                 return;
             }
             // 50%:50%のとき
@@ -184,8 +185,12 @@ public class CollectibleItem : MonoBehaviour
                     textList.Select((_, i) => dominantParts.ElementAtOrDefault(i)).ToList(), // charaListは使わないが型合わせ
                     2f // ディレイ
                 );
+                await WaitAndDestroy();
                 }
-                Destroy(gameObject);
+                else
+                {
+                    Destroy(gameObject);
+                }
                 return;
             }
             // 通常パターン
@@ -224,9 +229,33 @@ public class CollectibleItem : MonoBehaviour
                     textList.Select((_, i) => dominantParts.ElementAtOrDefault(i)).ToList(), // charaListは使わないが型合わせ
                     2f // ディレイ
                 );
+
+                await WaitAndDestroy();
             }
-            Destroy(gameObject);
+            else
+            {
+                Destroy(gameObject);
+            }
         }
+    }
+
+    private async UniTask WaitAndDestroy()
+    {
+        // もし「最低3秒」よりさらに長く表示させたい場合だけここを使う
+        if (textDisplayDuration > 0)
+        {
+            await UniTask.Delay(System.TimeSpan.FromSeconds(textDisplayDuration), cancellationToken: dct);
+        }
+
+        // GameTextDisplayに「もう隠していいよ」と伝える
+        gameTextDisplay.HideText(dct).Forget();
+
+        // ★ここが大事: GameTextDisplayが「フェードアウト完了して非表示状態(IsDisplaying == false)」になるまで待つ
+        // これを待たずにDestroyすると、GameTextDisplayの処理がキャンセルされてパッと消えてしまう
+        await UniTask.WaitWhile(() => gameTextDisplay.IsDisplaying, cancellationToken: dct);
+
+        // 完全に消えたのを見届けてから、自分を消す
+        Destroy(gameObject);
     }
     
     private async UniTask ShowTextsSequentiallyFromItemData(
@@ -252,17 +281,17 @@ public class CollectibleItem : MonoBehaviour
         textList = textList.Distinct().ToList();
 
         // パネルとバックグラウンドを表示
-        textPanel.SetActive(true);
+        //textPanel.SetActive(true);
         //textBackground.SetActive(true);
 
         // ShowTextsSequentiallyを使用してテキストを表示
         await ShowTextsSequentially(textDisplay, textList, delayBetweenTexts, showDebugLogs);
 
         // 表示時間待機
-        await UniTask.Delay(System.TimeSpan.FromSeconds(textDisplayDuration), cancellationToken: dct);
+        //await UniTask.Delay(System.TimeSpan.FromSeconds(textDisplayDuration), cancellationToken: dct);
 
         // テキストをクリアして非表示
-        textPanel.SetActive(false);
+        //textPanel.SetActive(false);
         //textBackground.SetActive(false);
     }
 
@@ -289,17 +318,17 @@ public class CollectibleItem : MonoBehaviour
         textList = textList.Distinct().ToList();
 
         // パネルとバックグラウンドを表示
-        textPanel.SetActive(true);
+        //textPanel.SetActive(true);
         //textBackground.SetActive(true);
 
         // ShowTextsSequentiallyを使用してテキストを表示
         await ShowTextsSequentially(textDisplay, textList, delayBetweenTexts, showDebugLogs);
 
         // 表示時間待機
-        await UniTask.Delay(System.TimeSpan.FromSeconds(textDisplayDuration), cancellationToken: dct);
+        //await UniTask.Delay(System.TimeSpan.FromSeconds(textDisplayDuration), cancellationToken: dct);
 
         // テキストをクリアして非表示
-        textPanel.SetActive(false);
+        //textPanel.SetActive(false);
         //textBackground.SetActive(false);
     }
 
