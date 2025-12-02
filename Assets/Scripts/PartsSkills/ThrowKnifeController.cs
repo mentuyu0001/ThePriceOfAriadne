@@ -11,7 +11,7 @@ public class ThrowKnifeController : MonoBehaviour
 
     [Inject] private IKnifeFactory knifeFactory; // ファクトリーを注入
     [SerializeField] private float spawnOffsetX = 2.0f; // プレイヤーからどれだけX軸方向に離れてナイフを出すか
-    [SerializeField] private float throwForce = 20.0f;
+    private float throwForce = 21.0f;
     private float waitKnife = 0.2f; // ナイフオブジェクトを表示するまでの待機時間(秒)
     [SerializeField] private int throwCoolTime = 1000; // 次のナイフが投げれるまでのクールタイム(1000ms)
     private float knifePosY = 0.9f;

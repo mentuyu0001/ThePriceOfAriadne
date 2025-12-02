@@ -47276,7 +47276,7 @@ Transform:
   m_GameObject: {fileID: 1586923810}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40.718845, y: 15.490014, z: -10}
+  m_LocalPosition: {x: -40.707474, y: 15.490014, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -60241,7 +60241,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4078478342881044909, guid: 16536c3107ae5472eb1befe2a870ba33, type: 3}
       propertyPath: waterDuration
-      value: 0.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4078478342881044909, guid: 16536c3107ae5472eb1befe2a870ba33, type: 3}
       propertyPath: playerDirectionRight

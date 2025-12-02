@@ -33,6 +33,8 @@ public class BurningFireCheckZone : MonoBehaviour
     private bool isPlayerInZone = false;
     private bool hasShownText = false; // テキストを表示済みかどうか
 
+    private Controller controller;
+
     private CancellationToken dct; // DestroyCancellationToken
 
     private void Start()
@@ -50,6 +52,7 @@ public class BurningFireCheckZone : MonoBehaviour
 
         // DestroyCancellationTokenの取得 このオブジェクトが破棄されるとキャンセルされる
         dct = this.GetCancellationTokenOnDestroy();
+        controller = player.GetComponent<Controller>();
     }
     
     private void OnTriggerEnter2D(Collider2D collision)
@@ -68,7 +71,7 @@ public class BurningFireCheckZone : MonoBehaviour
             if (showDebugLogs) Debug.Log("この炎は消火しないと通れない！");
 
             // テキスト表示（まだ表示していない場合のみ）
-            if (!hasShownText)
+            if (!hasShownText && controller.isInputEnabled)
             {
                 ShowBurningFireWarningText();
                 hasShownText = true;
@@ -176,7 +179,7 @@ public class BurningFireCheckZone : MonoBehaviour
         }
         
         // 追加の消火待機時間
-        await UniTask.Delay(System.TimeSpan.FromSeconds(extinguishDelay), cancellationToken: linkedToken);
+        //await UniTask.Delay(System.TimeSpan.FromSeconds(extinguishDelay), cancellationToken: linkedToken);
         
         // 炎オブジェクトを非表示にする（消火完了）
         if (burnibgFire != null)
