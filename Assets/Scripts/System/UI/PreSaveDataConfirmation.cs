@@ -8,6 +8,7 @@ public class PreSaveDataConfirmation : MonoBehaviour
     [SerializeField] private GameObject confirmationPanel; // 「セーブしますか？」パネル
     [SerializeField] private GameObject firstSelectedButton; // セーブスロットの最初に選択するボタン
     [SerializeField] private GameObject returnButton;
+    [SerializeField] private GameObject characterBackDrop;
 
     // Yesボタンが押されたとき
     public void OnYesButtonClicked()
@@ -15,6 +16,7 @@ public class PreSaveDataConfirmation : MonoBehaviour
         if (saveSlotPanel != null)
             saveSlotPanel.SetActive(true); // セーブスロット表示
             returnButton.SetActive(true);
+            characterBackDrop.SetActive(true);
 
         if (confirmationPanel != null)
             confirmationPanel.SetActive(false); // 確認パネル非表示
