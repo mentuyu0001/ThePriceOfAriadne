@@ -6617,6 +6617,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6944588054713425503, guid: 768bd15565646440a827bc32f351168a, type: 3}
+      propertyPath: m_Mass
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6944588054713425503, guid: 768bd15565646440a827bc32f351168a, type: 3}
+      propertyPath: m_GravityScale
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 7191891986514624527, guid: 768bd15565646440a827bc32f351168a, type: 3}
       propertyPath: m_SortingOrder
       value: 10
