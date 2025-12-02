@@ -43,6 +43,8 @@ public class SaveSlot : Button
     [SerializeField] private Sprite stage4Sprite; // ステージ4用スプライト
     [SerializeField] private Sprite stage5Sprite; // ステージ5用スプライト
 
+    [SerializeField] private TextMeshProUGUI closeSelectSlotText; // 前の画面に戻るテキスト
+
     private void Awake()
     {
         saveData = gameDataManager.LoadSaveData(saveDataNum);
@@ -132,6 +134,9 @@ public class SaveSlot : Button
 
     protected override void TriggerSelectionEffects()
     {
+        // 前の画面に戻るテキストを消去
+        closeSelectSlotText.text = "";
+
         updatePlayerStatusDisplay();
     }
 
