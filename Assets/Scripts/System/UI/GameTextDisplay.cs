@@ -5,7 +5,8 @@ using Cysharp.Threading.Tasks;
 using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
-using Parts.Types; // 追加
+using Parts.Types;
+using System;
 
 /// <summary>
 /// ゲーム中にテキストを表示するシステム
@@ -31,9 +32,12 @@ public class GameTextDisplay : MonoBehaviour
     private CanvasGroup textCanvasGroup; // テキスト用のCanvasGroup
     private bool isDisplaying = false;
     private bool isFading = false;
+    private bool isFaded = false;
     private CancellationTokenSource currentCts;
     private CancellationToken dct; // DestroyCancellationToken
     private bool isDestroyed = false;
+    private float minDisplayDuration = 3.0f;
+    private float displayCompleteTime = 0f;
 
     private void Awake()
     {
@@ -95,14 +99,24 @@ public class GameTextDisplay : MonoBehaviour
     public async UniTask ShowText(string message1, string message2 = "", CancellationToken token = default)
     {
         if (isDestroyed || this == null) return;
-        
+   
         // フェード中(フェードイン・フェードアウト問わず)は新しいテキストを表示できない
         if (isFading)
         {
             if (showDebugLogs) Debug.Log("⚠️ フェード中のため表示をスキップ");
             return;
         }
-        
+
+        // 現在フェード中かを見る
+        if (!isFaded)
+        {
+            isFaded = true;
+        }
+        else 
+        {
+            return;
+        }
+
         // 表示中の場合も新規表示をブロック
         if (isDisplaying)
         {
@@ -119,7 +133,7 @@ public class GameTextDisplay : MonoBehaviour
         currentCts = new CancellationTokenSource();
         CancellationToken currentCt = currentCts.Token;
         isDisplaying = true;
-        // isFading = true; // フェード開始
+        isFading = true; // フェード開始
 
         using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(token, currentCt, dct);
         CancellationToken linkedToken = linkedCts.Token;
@@ -143,15 +157,18 @@ public class GameTextDisplay : MonoBehaviour
             // フェードイン
             await FadeIn(linkedToken);
             
-            // isFading = false; // フェードイン完了
+            isFading = false; // フェードイン完了
             
             // 表示を維持（HideTextが呼ばれるまで待機）
+            displayCompleteTime = Time.time;
+            isFaded = false;
         }
         catch (System.OperationCanceledException)
         {
             // キャンセル時は正常終了
             isFading = false;
             isDisplaying = false;
+            isFaded = false;
         }
         catch (System.Exception e)
         {
@@ -161,6 +178,7 @@ public class GameTextDisplay : MonoBehaviour
             }
             isFading = false;
             isDisplaying = false;
+            isFaded = false;
         }
     }
 
@@ -171,10 +189,32 @@ public class GameTextDisplay : MonoBehaviour
         // 既にフェード中なら何もしない
         if (isFading)
         {
-            if (showDebugLogs) Debug.Log("⚠️ 既にフェード中のためスキップ");
-            return;
+            if (showDebugLogs) Debug.Log("⏳ フェードイン中のため、完了を待ちます...");
+             // isFadingがfalseになるまで待機
+             await UniTask.WaitWhile(() => isFading, cancellationToken: token);
         }
         
+        float timeSinceDisplay = Time.time - displayCompleteTime;
+        float remainingTime = minDisplayDuration - timeSinceDisplay;
+
+        // まだ3秒経っていなければ、残りの時間だけ待機する
+        if (remainingTime > 0)
+        {
+            if (showDebugLogs) Debug.Log($"⏳ 最低表示時間のため、あと {remainingTime:F2}秒 待機します");
+            
+            // ★重要: ここではまだ currentCts をキャンセルしてはいけない！
+            // 待機中もキャンセル可能にするため linkedToken を使う
+            using CancellationTokenSource waitCts = CancellationTokenSource.CreateLinkedTokenSource(token, dct);
+            try
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(remainingTime), cancellationToken: waitCts.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                return; // 待機中に親がキャンセルされたら終了
+            }
+        }
+
         isFading = true; // フェード開始
         
         // キャンセルトークンをキャンセル
@@ -206,6 +246,7 @@ public class GameTextDisplay : MonoBehaviour
         {
             isDisplaying = false;
             isFading = false; // フェードアウト完了
+            isFaded = false;
         }
     }
 
