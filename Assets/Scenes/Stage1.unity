@@ -16598,7 +16598,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameTextDisplay: {fileID: 1323112601}
-  tutorialText: "\u30AE\u30DF\u30C3\u30AF\u306E\u64CD\u4F5C\u3001\u80FD\u529B\u306E\u4F7F\u7528\u306F\u5168\u3066\u30A8\u30F3\u30BF\u30FC\u30AD\u30FC\u3067\u884C\u3046"
+  tutorialText: "\u30AE\u30DF\u30C3\u30AF\u306E\u64CD\u4F5C\u3001\u80FD\u529B\u306E\u4F7F\u7528\u306F\u5168\u3066
+    Enter\u30AD\u30FC \u3067\u884C\u3046"
 --- !u!61 &714038261
 BoxCollider2D:
   m_ObjectHideFlags: 0
