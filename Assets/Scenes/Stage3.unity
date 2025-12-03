@@ -5960,7 +5960,7 @@ GameObject:
   - component: {fileID: 358127355}
   m_Layer: 0
   m_Name: Goal
-  m_TagString: Untagged
+  m_TagString: PlayerDetection
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11399,7 +11399,7 @@ GameObject:
   - component: {fileID: 570932248}
   m_Layer: 0
   m_Name: Start
-  m_TagString: Untagged
+  m_TagString: PlayerDetection
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20803,6 +20803,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1981197939}
     m_Modifications:
+    - target: {fileID: 399054698950703484, guid: b6d5cd00a82304199b886077aebdc259, type: 3}
+      propertyPath: m_TagString
+      value: PlayerDetection
+      objectReference: {fileID: 0}
     - target: {fileID: 1532666601811238776, guid: b6d5cd00a82304199b886077aebdc259, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9.37
@@ -20843,6 +20847,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3770228051937333351, guid: b6d5cd00a82304199b886077aebdc259, type: 3}
+      propertyPath: m_TagString
+      value: BurningFire
+      objectReference: {fileID: 0}
     - target: {fileID: 4205849716985983500, guid: b6d5cd00a82304199b886077aebdc259, type: 3}
       propertyPath: m_Size.y
       value: 3.0609274
@@ -20850,6 +20858,10 @@ PrefabInstance:
     - target: {fileID: 4205849716985983500, guid: b6d5cd00a82304199b886077aebdc259, type: 3}
       propertyPath: m_Offset.y
       value: 1.0304637
+      objectReference: {fileID: 0}
+    - target: {fileID: 5082406405250866576, guid: b6d5cd00a82304199b886077aebdc259, type: 3}
+      propertyPath: m_TagString
+      value: BurningFire
       objectReference: {fileID: 0}
     - target: {fileID: 6645446787493680930, guid: b6d5cd00a82304199b886077aebdc259, type: 3}
       propertyPath: m_Size.y
@@ -20878,6 +20890,10 @@ PrefabInstance:
     - target: {fileID: 8688214183054122992, guid: b6d5cd00a82304199b886077aebdc259, type: 3}
       propertyPath: m_Name
       value: BurningFire
+      objectReference: {fileID: 0}
+    - target: {fileID: 8688214183054122992, guid: b6d5cd00a82304199b886077aebdc259, type: 3}
+      propertyPath: m_TagString
+      value: PlayerDetection
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -25217,7 +25233,7 @@ Transform:
   m_GameObject: {fileID: 1586923810}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40.714725, y: 4.251869, z: -10}
+  m_LocalPosition: {x: -40.71928, y: 4.251869, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
