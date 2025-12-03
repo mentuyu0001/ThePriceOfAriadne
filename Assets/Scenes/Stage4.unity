@@ -7211,6 +7211,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MuscleDocument
       objectReference: {fileID: 0}
+    - target: {fileID: 307976177607001044, guid: bff5a2d0d813a4d468e8ac4f9ff6d0be, type: 3}
+      propertyPath: m_TagString
+      value: PlayerDetection
+      objectReference: {fileID: 0}
     - target: {fileID: 3854383334386916195, guid: bff5a2d0d813a4d468e8ac4f9ff6d0be, type: 3}
       propertyPath: m_Size.x
       value: 0.5
@@ -9166,6 +9170,10 @@ PrefabInstance:
     - target: {fileID: 2079520431039721697, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
       propertyPath: m_Name
       value: MuscleDiary
+      objectReference: {fileID: 0}
+    - target: {fileID: 2079520431039721697, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
+      propertyPath: m_TagString
+      value: PlayerDetection
       objectReference: {fileID: 0}
     - target: {fileID: 4076350072892404869, guid: 6b3a003570beb4ca6ae3de2aa5f0c307, type: 3}
       propertyPath: itemID
@@ -47375,7 +47383,7 @@ Transform:
   m_GameObject: {fileID: 1586923810}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40.71931, y: 15.490014, z: -10}
+  m_LocalPosition: {x: -40.714764, y: 15.490014, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -48662,6 +48670,10 @@ PrefabInstance:
     - target: {fileID: 5932052068081975823, guid: 39f202dfb22724b338bda21c33ed3bca, type: 3}
       propertyPath: m_Name
       value: DoorKey
+      objectReference: {fileID: 0}
+    - target: {fileID: 5932052068081975823, guid: 39f202dfb22724b338bda21c33ed3bca, type: 3}
+      propertyPath: m_TagString
+      value: PlayerDetection
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
