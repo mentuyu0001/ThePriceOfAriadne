@@ -8,18 +8,18 @@ public class InventoryData : MonoBehaviour
     public static InventoryData Instance { get; private set; }
 
     // 研究報告書の取得状態
-    private bool playerReportObtained;
-    private bool theifReportObtained;
-    private bool muscleReportObtained;
-    private bool fireReportObtained;
-    private bool assassinReportObtained;
+    private bool playerReportObtained = false;
+    private bool theifReportObtained = false;
+    private bool muscleReportObtained = false;
+    private bool fireReportObtained = false;
+    private bool assassinReportObtained = false;
 
     // アイテムの取得状態
-    private bool playerItemObtained = true;
-    private bool theifItemObtained;
-    private bool muscleItemObtained;
-    private bool fireItemObtained;
-    private bool assassinItemObtained;
+    private bool playerItemObtained = false;
+    private bool theifItemObtained = false;
+    private bool muscleItemObtained = false;
+    private bool fireItemObtained = false;
+    private bool assassinItemObtained = false;
 
     private void Awake()
     {
