@@ -11,7 +11,7 @@ public class Knife : MonoBehaviour
     {
         Debug.Log(other);
 
-        if (other.CompareTag("PlayerDetection"))
+        if (other.CompareTag("PlayerDetection") || other.CompareTag("StopButton") || other.CompareTag("BurningFire") || other.CompareTag("WaterTank"))
         {
         return; // プレイヤー検知用の当たり判定と衝突した場合は消滅を回避
         }
