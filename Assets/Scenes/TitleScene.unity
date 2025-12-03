@@ -5717,6 +5717,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &587410854
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 587410856}
+  - component: {fileID: 587410855}
+  m_Layer: 0
+  m_Name: Fade
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &587410855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587410854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67acdb1c57f3cee4d81966ac3e62920b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeController: {fileID: 1262164434}
+--- !u!4 &587410856
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587410854}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 20.497793, y: 22.366953, z: -10.227454}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &597294499
 GameObject:
   m_ObjectHideFlags: 0
@@ -7090,6 +7135,7 @@ GameObject:
   - component: {fileID: 752088186}
   - component: {fileID: 752088185}
   - component: {fileID: 752088187}
+  - component: {fileID: 752088188}
   m_Layer: 5
   m_Name: SE
   m_TagString: Untagged
@@ -7201,6 +7247,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4ce6e1fa4afa63419d1b9aaab5d944d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &752088188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752088183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29094631a11658a45b3b6f5b5aee888b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &753823722
@@ -11558,6 +11616,7 @@ GameObject:
   - component: {fileID: 1217656770}
   - component: {fileID: 1217656771}
   - component: {fileID: 1217656772}
+  - component: {fileID: 1217656773}
   m_Layer: 5
   m_Name: BGM
   m_TagString: Untagged
@@ -11669,6 +11728,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4ce6e1fa4afa63419d1b9aaab5d944d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1217656773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217656768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29094631a11658a45b3b6f5b5aee888b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1259106618 stripped
@@ -20790,3 +20861,4 @@ SceneRoots:
   - {fileID: 325773463}
   - {fileID: 1156019296}
   - {fileID: 839178624}
+  - {fileID: 587410856}
