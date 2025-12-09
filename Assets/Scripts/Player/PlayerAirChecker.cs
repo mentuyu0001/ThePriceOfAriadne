@@ -17,7 +17,7 @@ public class PlayerAirChecker : MonoBehaviour
     public bool CanJumpFromGround => currentCoyoteTime > 0f;
 
     // コヨーテタイムの許容時間（秒）
-    private float coyoteTimeDuration = 0.1f; 
+    private float coyoteTimeDuration = 0.15f; 
     // 現在の残り時間を計測する変数
     private float currentCoyoteTime;
 
