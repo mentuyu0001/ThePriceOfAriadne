@@ -350,6 +350,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
         try
         {
             PrepareForAnimation();
+            playerAnimationManager.AniWalkFalse();
             playerAnimationManager.AniInteractTrue();
 
             // パーツチェンジSE（id:4）を再生
@@ -402,6 +403,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
         try
         {
             PrepareForAnimation();
+            playerAnimationManager.AniWalkFalse();
             playerAnimationManager.AniLeverTrue();
             component.RotateLever();
             await WaitForAnimationCompletion(leverAnimationDuration);
@@ -425,6 +427,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
         try
         {
             PrepareForAnimation();
+            playerAnimationManager.AniWalkFalse();
             playerAnimationManager.AniButtonTrue();
 
             // ボタンを押すSE（id:8）を再生
@@ -480,6 +483,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
             }
 
             PrepareForAnimation();
+            playerAnimationManager.AniWalkFalse();
             playerAnimationManager.AniInteractTrue();
             component.ChargeWater();
             await WaitForAnimationCompletion(interactAnimationDuration);
@@ -523,6 +527,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
             }
             
             PrepareForAnimation();
+            playerAnimationManager.AniWalkFalse();
             playerAnimationManager.AniShootWaterTrue();
             component.FireExtinguishedAsync(dct).Forget();
             // 放射のためモーションを待機(1.17秒)
