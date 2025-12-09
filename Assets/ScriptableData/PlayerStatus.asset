@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerStatus
   m_EditorClassIdentifier: 
   normalFriction: 3.5
-  normalAirResistance: 10
+  normalAirResistance: 5
   normalMoveSpeed: 7.5
   normalCanUnlock: 0
   normalJumpForce: 10
@@ -24,7 +24,7 @@ MonoBehaviour:
   normalCanDoubleJump: 0
   normalCanThrowKnife: 0
   theifFriction: 10
-  theifAirResistance: 10
+  theifAirResistance: 5
   thiefMoveSpeed: 12
   thiefCanUnlock: 1
   muscleJumpForce: 13
