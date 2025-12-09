@@ -134,6 +134,9 @@ public class HeavyObject : MonoBehaviour
                     StopPushing();
                 }
             }
+        }  else if (player != null && collision.gameObject != player && playerStatus != null)
+        {
+            rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
         }
     }
 
