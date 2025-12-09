@@ -13,6 +13,18 @@ public class PlayerAirChecker : MonoBehaviour
     private bool isGround = false; // 地面にいるかどうか
     public bool IsGround => isGround; // isGroundのgetter
 
+    // コヨーテタイム用のプロパティ: 地面にいる、またはコヨーテタイム内なら true
+    public bool CanJumpFromGround => currentCoyoteTime > 0f;
+
+    // コヨーテタイムの許容時間（秒）
+    private float coyoteTimeDuration = 0.1f; 
+    // 現在の残り時間を計測する変数
+    private float currentCoyoteTime;
+
+    // ジャンプ直後に地面判定を無効化するタイマー
+    private float jumpCooldownTimer = 0f;
+    private float jumpCooldownTime = 0.2f; // 0.2秒くらい判定を無視する
+
     private Collider2D col; // Collider2Dを追加
     [SerializeField] private LayerMask groundLayer; // 地面のレイヤーを指定
     [SerializeField] private Vector2 sizeModifier = new Vector2(0.8f, 0.1f); // レイを飛ばす際のコライダーサイズ 例：幅は90%、高さは20%
@@ -85,8 +97,35 @@ public class PlayerAirChecker : MonoBehaviour
         {
 
             // GetGroundHitInfo() を呼び出して地面との接触情報を取得
-            RaycastHit2D hit = GetGroundHitInfo();
-            isGround = hit.collider != null;
+            // RaycastHit2D hit = GetGroundHitInfo();
+            // isGround = hit.collider != null;
+
+            // コヨーテタイムの計算ロジック
+            if (jumpCooldownTimer > 0f)
+            {
+                jumpCooldownTimer -= Time.deltaTime;
+                
+                // クールダウン中は強制的に空中扱いにする
+                isGround = false;
+                
+                // コヨーテタイムも減らす（または0のまま維持）
+                currentCoyoteTime = 0f; 
+            }
+            else
+            {
+                // 通常の判定処理（クールダウンが終わったら実行）
+                RaycastHit2D hit = GetGroundHitInfo();
+                isGround = hit.collider != null;
+
+                if (isGround)
+                {
+                    currentCoyoteTime = coyoteTimeDuration;
+                }
+                else
+                {
+                    currentCoyoteTime -= Time.deltaTime;
+                }
+            }
 
             if (!wasGround && isGround)
             {
@@ -104,6 +143,15 @@ public class PlayerAirChecker : MonoBehaviour
             // 1フレーム待機
             await UniTask.Yield(PlayerLoopTiming.Update);
         }
+    }
+
+    public void NotifyJumpExecuted()
+    {
+        currentCoyoteTime = 0f;
+
+        jumpCooldownTimer = jumpCooldownTime;
+        
+        isGround = false;
     }
 
     // レイを飛ばし、地面との接触情報を取得する関数
