@@ -14,6 +14,7 @@ public class TitleEscAction : MonoBehaviour
     [SerializeField] private GameObject saves;
     [SerializeField] private GameObject saveConfirmation;
     [SerializeField] private GameObject settings;
+    [SerializeField] private GameObject itemDescroptionButtons;
 
     [Header("Escキーを押した時のReturnボタンのスクリプトの注入")]
     [SerializeField] private GameObject toTitleReturn;
@@ -22,6 +23,7 @@ public class TitleEscAction : MonoBehaviour
     [SerializeField] private GameObject savesReturn;
     [SerializeField] private GameObject saveConfirmationReturn;
     [SerializeField] private GameObject settingsReturn;
+    [SerializeField] private GameObject itemDescriptionReturn;
 
     private UnityEngine.UI.Button targetButton;
 
@@ -40,7 +42,13 @@ public class TitleEscAction : MonoBehaviour
             }
             else if (itemInventory.activeSelf)
             {
-                if (itemResetConfirmation.activeSelf)
+                if (itemDescroptionButtons.activeSelf)
+                {
+                    targetButton = itemDescriptionReturn.GetComponent<UnityEngine.UI.Button>();
+                    targetButton.onClick.Invoke();
+                    return;
+                }
+                else if (itemResetConfirmation.activeSelf)
                 {
                     targetButton = itemResetReturn.GetComponent<UnityEngine.UI.Button>();
                     targetButton.onClick.Invoke();

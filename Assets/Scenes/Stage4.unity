@@ -1725,10 +1725,12 @@ MonoBehaviour:
   itemResetConfirmation: {fileID: 731289816}
   settings: {fileID: 1267483374}
   toTitleConfirmation: {fileID: 772708243}
+  itemDescroptionButtons: {fileID: 965425181}
   toTitleReturn: {fileID: 1144307155}
   itemReturn: {fileID: 475614326}
   itemResetReturn: {fileID: 944760493}
   settingsReturn: {fileID: 638106525}
+  itemDescriptionReturn: {fileID: 1317403772}
   buttonSound: {fileID: 1235624556}
 --- !u!4 &283318550
 Transform:
@@ -47399,7 +47401,7 @@ Transform:
   m_GameObject: {fileID: 1586923810}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40.71931, y: 15.490014, z: -10}
+  m_LocalPosition: {x: -40.707474, y: 15.490014, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
