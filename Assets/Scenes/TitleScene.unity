@@ -3369,12 +3369,14 @@ MonoBehaviour:
   saves: {fileID: 1702908887}
   saveConfirmation: {fileID: 1940755041}
   settings: {fileID: 928420736}
+  itemDescroptionButtons: {fileID: 1319355648}
   toTitleReturn: {fileID: 1639112299}
   itemReturn: {fileID: 2086437251}
   itemResetReturn: {fileID: 74561753}
   savesReturn: {fileID: 1976684037}
   saveConfirmationReturn: {fileID: 346363752}
   settingsReturn: {fileID: 815546718}
+  itemDescriptionReturn: {fileID: 1852530822}
 --- !u!4 &325773463
 Transform:
   m_ObjectHideFlags: 0

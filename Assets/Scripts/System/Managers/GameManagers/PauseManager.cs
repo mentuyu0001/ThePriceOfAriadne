@@ -35,12 +35,14 @@ public class PauseManager : MonoBehaviour
     [SerializeField] private GameObject itemResetConfirmation;
     [SerializeField] private GameObject settings;
     [SerializeField] private GameObject toTitleConfirmation;
+    [SerializeField] private GameObject itemDescroptionButtons;
 
     [Header("Escキーを押した時のReturnボタンのスクリプトの注入")]
     [SerializeField] private GameObject toTitleReturn;
     [SerializeField] private GameObject itemReturn;
     [SerializeField] private GameObject itemResetReturn;
     [SerializeField] private GameObject settingsReturn;
+    [SerializeField] private GameObject itemDescriptionReturn;
 
     [SerializeField] private ButtonSound buttonSound;
     private UnityEngine.UI.Button targetButton;
@@ -98,7 +100,13 @@ public class PauseManager : MonoBehaviour
         }
         else if (itemInventory.activeSelf)
         {
-            if (itemResetConfirmation.activeSelf)
+            if (itemDescroptionButtons.activeSelf)
+            {
+                targetButton = itemDescriptionReturn.GetComponent<UnityEngine.UI.Button>();
+                targetButton.onClick.Invoke();
+                return;
+            }
+            else if (itemResetConfirmation.activeSelf)
             {
                 targetButton = itemResetReturn.GetComponent<UnityEngine.UI.Button>();
                 targetButton.onClick.Invoke();
