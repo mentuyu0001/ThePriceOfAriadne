@@ -306,8 +306,10 @@ public class Controller : MonoBehaviour
         if (!isInputEnabled) return; // 入力が無効な場合は何もしない
         if (context.performed && rb != null)
         {
-            if (airChecker != null && airChecker.IsGround)
+            if (airChecker != null && airChecker.CanJumpFromGround)
             {
+                Debug.Log("ジャンプした！");
+                airChecker.NotifyJumpExecuted();
                 SoundManager.Instance.StopSE();
                 isWalkSoundPlaying = false;
                 
