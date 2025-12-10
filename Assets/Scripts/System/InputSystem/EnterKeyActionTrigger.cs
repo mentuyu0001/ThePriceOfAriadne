@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using VContainer;
 using Parts.Types;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 /// <summary>
 /// Enteキーで発生するイベントを呼び出すスクリプト
@@ -93,9 +94,24 @@ public class EnterKeyActionTrigger : MonoBehaviour
 
     private CancellationToken dct; // DestroyCancellationToken
 
+    // キーボードUIの宣言
+    [SerializeField] private GameObject enterKeyUI;
+    [SerializeField] private TextMeshProUGUI enterKeyUIText;
+    
+    // キャンセル制御用トークンソース
+    private CancellationTokenSource _exitCts;
+    
+    // 現在入っているかどうかのフラグ
+    private bool _isInside = false;
+
+    // 注入成功したかのフラグ
+    private bool _isEnterKeyUI = false;
+
     // Unityの初期化処理
     private void Start()
     {
+        if (enterKeyUI != null) enterKeyUI.SetActive(false);
+
         if (SceneManager.GetActiveScene().name == "TitleScene") return;
 
         if (partsManager != null)
@@ -293,6 +309,34 @@ public class EnterKeyActionTrigger : MonoBehaviour
             collision.gameObject.CompareTag(burningFireTag))
         {
             touchingCollision = collision;
+
+            if (_exitCts != null)
+            {
+                _exitCts.Cancel();
+                _exitCts.Dispose();
+                _exitCts = null;
+            }
+
+            if (!_isInside)
+            {
+                _isInside = true;
+
+                enterKeyUI.SetActive(true);
+
+                if (!_isEnterKeyUI)
+                {
+                    //if (enterKeyUI == null) enterKeyUI = GameObject.Find("Canvas/KeyboardUI/EnterKeyAction");
+                    //if (enterKeyUIText == null) enterKeyUIText = GameObject.Find("Canvas/KeyboardUI/EnterKeyAction/Text").GetComponent<TextMeshProUGUI>();
+                    _isEnterKeyUI = true;
+                }
+                
+
+                if (collision.gameObject.CompareTag(partsTag)) enterKeyUIText.text = ":パーツを切り替える";
+                else if (collision.gameObject.CompareTag(leverTag)) enterKeyUIText.text = ":レバーを倒す";
+                else if (collision.gameObject.CompareTag(stopButtonTag)) enterKeyUIText.text = ":ボタンを押す";
+                else if (collision.gameObject.CompareTag(waterTankTag) && playerStatus.CanChargeWater) enterKeyUIText.text = ":水を補充する";
+                else if (collision.gameObject.CompareTag(burningFireTag) && playerRunTimeStatus.CanShootWater) enterKeyUIText.text = ":炎を消す";
+            }
         }
     }
 
@@ -302,7 +346,48 @@ public class EnterKeyActionTrigger : MonoBehaviour
         {
             touchingCollision = null;
             textDisplay.HideText(dct).Forget();
+
+            _exitCts?.Cancel();
+            _exitCts?.Dispose();
+
+            _exitCts = new CancellationTokenSource();
+
+            if (!_isEnterKeyUI)
+            {    
+                if (enterKeyUI == null) enterKeyUI = GameObject.Find("Canvas/KeyboardUI/EnterKeyAction");
+                if (enterKeyUIText == null) enterKeyUIText = GameObject.Find("Canvas/KeyboardUI/EnterKeyAction/Text").GetComponent<TextMeshProUGUI>();
+                _isEnterKeyUI = true;
+            }
+
+            ExitAfterDelay(_exitCts.Token).Forget();
+
         }
+    }
+
+    private async UniTaskVoid ExitAfterDelay(CancellationToken token)
+    {
+        // 物理演算のタイミングに合わせて1フレーム(FixedUpdate)待つ
+        // SuppressCancellationThrowを使うと、キャンセル時に例外を投げずにboolを返してくれるので扱いやすいです
+        bool isCanceled = await UniTask.WaitForFixedUpdate(cancellationToken: token)
+                                       .SuppressCancellationThrow();
+
+        // キャンセルされた（＝待ってる間にまたEnterした）なら何もしないで終了
+        if (isCanceled) return;
+
+        // --- ここから下は「本当にExitした」とみなされる場合の処理 ---
+        
+        _isInside = false;
+        enterKeyUI.SetActive(false);
+
+        // 使い終わったCTSの後始末
+        _exitCts?.Dispose();
+        _exitCts = null;
+    }
+
+    private void OnDestroy()
+    {
+        _exitCts?.Cancel();
+        _exitCts?.Dispose();
     }
 
     // コライダーのデバッグ描画
