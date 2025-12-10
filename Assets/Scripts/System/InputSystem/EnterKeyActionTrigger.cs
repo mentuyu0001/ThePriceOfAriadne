@@ -152,11 +152,13 @@ public class EnterKeyActionTrigger : MonoBehaviour
     {
         // テキスト表示中でEnterキー待ち状態の場合は何もしない
         // (GameTextDisplayがEnterキーを処理する)
+        /*
         if (textDisplay != null && textDisplay.IsDisplaying)
         {
             if (showDebugLogs) Debug.Log("テキスト表示中のため、オブジェクトインタラクションはスキップ");
             return;
         }
+        */
 
         // 実行中チェックのみ
         if (isInteracting)
@@ -384,16 +386,14 @@ public class EnterKeyActionTrigger : MonoBehaviour
 
             partsManager.ExchangeParts(component1, component2);
             ResteControllerInput();
+            isInteracting = false;
             await textDisplay.ShowText(getMessage);
         }
         catch (System.Exception e)
         {
             Debug.LogError($"パーツインタラクション処理中にエラー: {e.Message}");
-            ResteControllerInput();
-        }
-        finally
-        {
             isInteracting = false;
+            ResteControllerInput();
         }
     }
 
@@ -408,16 +408,14 @@ public class EnterKeyActionTrigger : MonoBehaviour
             component.RotateLever();
             await WaitForAnimationCompletion(leverAnimationDuration);
             ResteControllerInput();
+            isInteracting = false;
             await textDisplay.ShowText(leverUseMessage);
         }
         catch (System.Exception e)
         {
+            isInteracting = false;
             Debug.LogError($"レバーインタラクション処理中にエラー: {e.Message}");
             ResteControllerInput();
-        }
-        finally
-        {
-            isInteracting = false;
         }
     }
 
@@ -439,6 +437,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
             component.PressButton();
             await WaitForAnimationCompletion(buttonAnimationDuration);
             ResteControllerInput();
+            isInteracting = false;
             textDisplay.ShowTextByPartsRatio(
                 partsRatio,
                 objectTextData,
@@ -450,12 +449,9 @@ public class EnterKeyActionTrigger : MonoBehaviour
         }
         catch (System.Exception e)
         {
+            isInteracting = false;
             Debug.LogError($"ボタンインタラクション処理中にエラー: {e.Message}");
             ResteControllerInput();
-        }
-        finally
-        {
-            isInteracting = false;
         }
     }
 
@@ -488,7 +484,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
             component.ChargeWater();
             await WaitForAnimationCompletion(interactAnimationDuration);
             ResteControllerInput();
-            
+            isInteracting = false;
             textDisplay.ShowTextByPartsRatio(
                 partsRatio,
                 objectTextData,
@@ -501,12 +497,9 @@ public class EnterKeyActionTrigger : MonoBehaviour
         }
         catch (System.Exception e)
         {
+            isInteracting = false;
             Debug.LogError($"水タンクインタラクション処理中にエラー: {e.Message}");
             ResteControllerInput();
-        }
-        finally
-        {
-            isInteracting = false;
         }
     }
 
@@ -539,6 +532,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
                 SoundManager.Instance.PlaySE(7);
             }
             await WaitForAnimationCompletion(shootWaterAnimationDuration);
+            isInteracting = false;
             // 消火SEを停止
             if (SoundManager.Instance != null)
             {
@@ -558,12 +552,9 @@ public class EnterKeyActionTrigger : MonoBehaviour
         }
         catch (System.Exception e)
         {
+            isInteracting = false;
             Debug.LogError($"火災インタラクション処理中にエラー: {e.Message}");
             ResteControllerInput();
-        }
-        finally
-        {
-            isInteracting = false;
         }
     }
 
