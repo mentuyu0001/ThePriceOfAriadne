@@ -358,6 +358,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
             // パーツチェンジSE（id:4）を再生
             if (SoundManager.Instance != null)
             {
+                SoundManager.Instance.StopSE();
                 SoundManager.Instance.PlaySE(4);
             }
 
@@ -431,6 +432,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
             // ボタンを押すSE（id:8）を再生
             if (SoundManager.Instance != null)
             {
+                SoundManager.Instance.StopSE();
                 SoundManager.Instance.PlaySE(8);
             }
 
@@ -529,6 +531,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
             // 水を発射するSE（id:7）を再生
             if (SoundManager.Instance != null)
             {
+                SoundManager.Instance.StopSE();
                 SoundManager.Instance.PlaySE(7);
             }
             await WaitForAnimationCompletion(shootWaterAnimationDuration);
