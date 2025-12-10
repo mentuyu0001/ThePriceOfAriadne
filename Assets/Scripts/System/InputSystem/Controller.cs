@@ -314,6 +314,7 @@ public class Controller : MonoBehaviour
                 isWalkSoundPlaying = false;
                 
                 // 地面にいる場合のみジャンプ処理を実行
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0); // y成分の速さを0にしてからジャンプの力を入れる
                 rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
                 // ジャンプSE（id:3）を再生
