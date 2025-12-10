@@ -464,6 +464,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
         {
             if (!playerStatus.CanChargeWater)
             {
+                /*
                 if (textDisplay != null)
                 {
                     textDisplay.ShowTextByPartsRatio(
@@ -475,6 +476,7 @@ public class EnterKeyActionTrigger : MonoBehaviour
                         showDebugLogs
                     ).Forget();
                 }
+                */
 
                 isInteracting = false;
                 return;
