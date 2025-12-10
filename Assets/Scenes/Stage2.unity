@@ -22437,8 +22437,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 96, y: 3}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 175, y: 3}
+  m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1262613024
 MonoBehaviour:
@@ -22494,7 +22494,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -45788,9 +45788,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: df8313f7e0b6e4c0d95d0f312e8f45b5, type: 2}
     - target: {fileID: 3997120902696741069, guid: 16536c3107ae5472eb1befe2a870ba33, type: 3}
+      propertyPath: enterKeyUI
+      value: 
+      objectReference: {fileID: 492024310}
+    - target: {fileID: 3997120902696741069, guid: 16536c3107ae5472eb1befe2a870ba33, type: 3}
       propertyPath: showDebugLogs
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3997120902696741069, guid: 16536c3107ae5472eb1befe2a870ba33, type: 3}
+      propertyPath: enterKeyUIText
+      value: 
+      objectReference: {fileID: 1262613024}
     - target: {fileID: 3997120902696741069, guid: 16536c3107ae5472eb1befe2a870ba33, type: 3}
       propertyPath: noWaterMessage
       value: "\u6C34\u304C\u30C1\u30E3\u30FC\u30B8\u3055\u308C\u3066\u3044\u306A\u3044"
