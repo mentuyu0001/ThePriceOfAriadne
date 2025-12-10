@@ -31,4 +31,9 @@ public class KeyManager
         }
         return false; // 鍵がなかった
     }
+
+    static public void ResetKey()
+    {
+        keys.Clear();
+    }
 }
