@@ -32,6 +32,7 @@ public class GameStartManager : MonoBehaviour
     {
         // 初期化
         playerInput.SwitchCurrentActionMap("UI");
+        KeyManager.ResetKey();
         gameDataManager.SaveGame(1);
         gameDataManager.LoadItemData();
         itemManager.SyncInventoryToStage();
