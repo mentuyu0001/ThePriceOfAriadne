@@ -71,6 +71,11 @@ public class ItemSlot : Button
             Debug.LogError("IconImageが見つかりません。ItemSlotの子にIconImageという名前のImageを配置してください。");
         }
         UpdateIcon();
+
+        if (itemID == 1)
+        {
+            ShowFlervorText();
+        }
     }
 
     public void UpdateIcon()
@@ -139,6 +144,7 @@ public class ItemSlot : Button
         itemText.enabled = true;
         if (IsObtained)
         {
+
             itemText.text = itemData.GetAllQuartersTone(itemID);
         }
         else
